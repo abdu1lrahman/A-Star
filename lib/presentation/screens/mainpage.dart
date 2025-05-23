@@ -6,6 +6,7 @@ import 'package:you_are_a_star/presentation/screens/home.dart';
 import 'package:you_are_a_star/presentation/screens/intrests.dart';
 import 'package:you_are_a_star/presentation/screens/prev_messages.dart';
 import 'package:you_are_a_star/presentation/screens/settings.dart';
+import 'package:you_are_a_star/presentation/widgets/components/custom_GButton.dart';
 
 class Mainpage extends StatefulWidget {
   const Mainpage({super.key});
@@ -19,7 +20,7 @@ class _HomeState extends State<Mainpage> {
   List pages = [
     const Home(),
     const PrevMessages(),
-    const Intrests(),
+     Intrests(),
     const Account(),
     const Settings(),
   ];
@@ -40,70 +41,30 @@ class _HomeState extends State<Mainpage> {
           });
         },
         tabs: [
-          GButton(
-            gap: 2,
+          customGButton(
             icon: Icons.home_outlined,
-            iconSize: 23,
+            screenWidth: screenWidth,
             text: S.of(context).home,
-            textStyle: TextStyle(
-              fontSize: screenWidth * 0.03,
-              color: Colors.white,
-            ),
-            hoverColor: const Color(0xff232023),
-            backgroundColor: const Color(0xff232023),
-            padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 8.0),
           ),
-          GButton(
-            gap: 2,
+          customGButton(
             icon: Icons.message_outlined,
-            iconSize: 23,
             text: S.of(context).prev_messages2,
-            textStyle: TextStyle(
-              fontSize: screenWidth * 0.03,
-              color: Colors.white,
-            ),
-            hoverColor: const Color(0xff232023),
-            backgroundColor: const Color(0xff232023),
-            padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 8.0),
+            screenWidth: screenWidth,
           ),
-          GButton(
-            gap: 2,
+          customGButton(
             icon: Icons.interests_outlined,
-            iconSize: 23,
             text: S.of(context).intrests,
-            textStyle: TextStyle(
-              fontSize: screenWidth * 0.03,
-              color: Colors.white,
-            ),
-            hoverColor: const Color(0xff232023),
-            backgroundColor: const Color(0xff232023),
-            padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 8.0),
+            screenWidth: screenWidth,
           ),
-          GButton(
-            gap: 2,
+          customGButton(
             icon: Icons.account_circle_outlined,
-            iconSize: 23,
             text: S.of(context).account,
-            textStyle: TextStyle(
-              fontSize: screenWidth * 0.03,
-              color: Colors.white,
-            ),
-            hoverColor: const Color(0xff232023),
-            backgroundColor: const Color(0xff232023),
-            padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 10.0),
+            screenWidth: screenWidth,
           ),
-          GButton(
-            gap: 2,
+          customGButton(
             icon: Icons.settings_outlined,
-            iconSize: 23,
             text: S.of(context).settings,
-            textStyle: TextStyle(
-              fontSize: screenWidth * 0.03,
-              color: Colors.white,
-            ),
-            hoverColor: const Color(0xff232023),
-            backgroundColor: const Color(0xff232023),
-            padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 10.0),
+            screenWidth: screenWidth,
           ),
         ],
       ),

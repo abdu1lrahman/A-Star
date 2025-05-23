@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider extends ChangeNotifier {
-  String _userName = 'anyname';
+  String _userName = 'Abdulrahman';
   bool _userGender = true;
-  int _userAge = 18;
+  int _userAge = 20;
   File? _image = File('assets/icons/app_icon.png');
 
   String get userName => _userName;
@@ -63,10 +63,10 @@ class UserProvider extends ChangeNotifier {
         width: 140.0,
         height: 140.0,
         errorBuilder: (context, error, stackTrace) {
-          return const Icon(Icons.account_circle_outlined);
+          return const Icon(Icons.add_a_photo_outlined);
         },
       );
     }
-    return const Icon(Icons.account_circle_outlined);
+    return const Icon(Icons.add_a_photo_outlined);
   }
 }

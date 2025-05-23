@@ -259,6 +259,91 @@ class S {
   String get settings {
     return Intl.message('settings', name: 'settings', desc: '', args: []);
   }
+
+  /// `What are your intrests?`
+  String get what_intrests {
+    return Intl.message(
+      'What are your intrests?',
+      name: 'what_intrests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can choose up to 5 diffirent categories`
+  String get you_can_choose {
+    return Intl.message(
+      'You can choose up to 5 diffirent categories',
+      name: 'you_can_choose',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `health`
+  String get health {
+    return Intl.message('health', name: 'health', desc: '', args: []);
+  }
+
+  /// `Sport`
+  String get sport {
+    return Intl.message('Sport', name: 'sport', desc: '', args: []);
+  }
+
+  /// `Tech`
+  String get tech {
+    return Intl.message('Tech', name: 'tech', desc: '', args: []);
+  }
+
+  /// `Books`
+  String get books {
+    return Intl.message('Books', name: 'books', desc: '', args: []);
+  }
+
+  /// `Music`
+  String get music {
+    return Intl.message('Music', name: 'music', desc: '', args: []);
+  }
+
+  /// `Art`
+  String get art {
+    return Intl.message('Art', name: 'art', desc: '', args: []);
+  }
+
+  /// `Travel`
+  String get travel {
+    return Intl.message('Travel', name: 'travel', desc: '', args: []);
+  }
+
+  /// `Games`
+  String get games {
+    return Intl.message('Games', name: 'games', desc: '', args: []);
+  }
+
+  /// `Science`
+  String get science {
+    return Intl.message('Science', name: 'science', desc: '', args: []);
+  }
+
+  /// `Education`
+  String get education {
+    return Intl.message('Education', name: 'education', desc: '', args: []);
+  }
+
+  /// `History`
+  String get history {
+    return Intl.message('History', name: 'history', desc: '', args: []);
+  }
+
+  /// `Fashion`
+  String get fashion {
+    return Intl.message('Fashion', name: 'fashion', desc: '', args: []);
+  }
+
+  /// `Psychology`
+  String get psychology {
+    return Intl.message('Psychology', name: 'psychology', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

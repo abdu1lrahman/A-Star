@@ -19,7 +19,6 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     final userinfos = Provider.of<UserProvider>(context, listen: true);
-    final language = Provider.of<LanguageProvider>(context, listen: false);
     final screenWidth = MediaQuery.of(context).size.width;
     TextEditingController nameController = TextEditingController(text: userinfos.userName);
     TextEditingController ageController = TextEditingController(text: userinfos.userAge.toString());
@@ -78,6 +77,8 @@ class _AccountState extends State<Account> {
           Padding(
             padding: const EdgeInsets.all(14.0),
             child: TextField(
+              textAlign: TextAlign.center,
+              textCapitalization: TextCapitalization.characters,
               controller: nameController,
               decoration: InputDecoration(
                 prefixIcon: Image.asset(
@@ -110,16 +111,18 @@ class _AccountState extends State<Account> {
                 ),
                 const SizedBox(width: 14.0),
                 Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Image.asset(
-                        'assets/icons/male_icon.png',
-                        width: 40,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
+                    width: double.infinity,
+                    height: 56,
+                    child: userinfos.userGender == true
+                        ? Image.asset('assets/icons/male_icon.png')
+                        : Image.asset('assets/icons/female_icon.png'),
                   ),
                 ),
               ],

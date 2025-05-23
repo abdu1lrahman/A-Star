@@ -26,5 +26,20 @@
     "prev_messages": "Previous messages",
     "prev_messages2": "messages",
     "intrests": "Intrests",
-    "settings": "settings"
+    "settings": "settings",
+    "what_intrests": "What are your intrests?",
+    "you_can_choose": "You can choose up to 5 diffirent categories",
+    "health": "health",
+    "sport": "Sport",
+    "tech": "Tech",
+    "books": "Books",
+    "music": "Music",
+    "art": "Art",
+    "travel": "Travel",
+    "games": "Games",
+    "science": "Science",
+    "education": "Education",
+    "history": "History",
+    "fashion": "Fashion",
+    "psychology": "Psychology"
 }

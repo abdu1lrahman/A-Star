@@ -26,5 +26,20 @@
     "prev_messages": "الرسائل السابقة",
     "prev_messages2": "الرسائل",
     "intrests": "الاهتمامات",
-    "settings": "الإعدادات"
+    "settings": "الإعدادات",
+    "what_intrests": "ماهي اهتمامتك",
+    "you_can_choose": "يمكنك اختيار 5 اهتمامات مختلفة",
+    "health": "الصحة",
+    "sport": "الرياضة",
+    "tech": "التقنيات",
+    "books": "كتب",
+    "music": "موسيقى",
+    "art": "رسم",
+    "travel": "السفر",
+    "games": "ألعاب",
+    "science": "علوم",
+    "education": "التعليم",
+    "history": "التاريخ",
+    "fashion": "موضة",
+    "psychology": "علم النفس"
 }

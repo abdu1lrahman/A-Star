@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:you_are_a_star/data/api/ai_notifications.dart';
 
 class NotificationService {
   final notificationPlugin = FlutterLocalNotificationsPlugin();
@@ -67,31 +69,27 @@ class NotificationService {
 
   Future<void> scheduleNotification({
     int id = 1,
-    required String title,
-    required String body,
-    required int hour,
-    required int minute,
+    required BuildContext context,
   }) async {
     final now = tz.TZDateTime.now(tz.local);
+    var message = await AiNotifications().requestAIMessage(context);
+    final times = [
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 01), // 8:00 AM
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 03), // 2:00 PM
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 25), // 8:00 PM
+    ];
 
-    var scheduledDate = tz.TZDateTime(
-      tz.local,
-      now.year,
-      now.month,
-      now.day,
-      hour,
-      minute,
-    );
-
-    await notificationPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      scheduledDate,
-      notificationDetails(title, body),
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      matchDateTimeComponents: DateTimeComponents.time,
-    );
+    for (int i = 0; i < times.length; i++) {
+      await notificationPlugin.zonedSchedule(
+        i,
+        message[0],
+        message[1],
+        times[i],
+        notificationDetails(message[0], message[1]),
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    }
   }
 }

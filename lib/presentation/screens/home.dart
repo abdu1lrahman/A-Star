@@ -24,12 +24,9 @@ class Home extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 debugPrint('===============================********==================');
-                var message = await AiNotifications().requestAIMessage(context);
+                
                 NotificationService().scheduleNotification(
-                  title: message[0],
-                  body: message[1],
-                  hour: 1,
-                  minute: 8,
+                  context: context,
                 );
               },
               child: const Text("Schedule Noti"),

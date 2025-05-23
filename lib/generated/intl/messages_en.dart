@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "account": MessageLookupByLibrary.simpleMessage("My account"),
     "age": MessageLookupByLibrary.simpleMessage("Select your age"),
+    "art": MessageLookupByLibrary.simpleMessage("Art"),
+    "books": MessageLookupByLibrary.simpleMessage("Books"),
     "change_language": MessageLookupByLibrary.simpleMessage(
       "Do you want to change the app and notifications language?",
     ),
@@ -33,15 +35,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "dont": MessageLookupByLibrary.simpleMessage(
       "You can change these informations later",
     ),
+    "education": MessageLookupByLibrary.simpleMessage("Education"),
     "enter_name": MessageLookupByLibrary.simpleMessage(
       "Enter your name so we can send you more personalized notifications",
     ),
     "enter_new_name": MessageLookupByLibrary.simpleMessage(
       "Enter your new name",
     ),
+    "fashion": MessageLookupByLibrary.simpleMessage("Fashion"),
     "female": MessageLookupByLibrary.simpleMessage("Female"),
+    "games": MessageLookupByLibrary.simpleMessage("Games"),
     "gender": MessageLookupByLibrary.simpleMessage("Select your gender"),
     "getstarted": MessageLookupByLibrary.simpleMessage("let\'s start"),
+    "health": MessageLookupByLibrary.simpleMessage("health"),
+    "history": MessageLookupByLibrary.simpleMessage("History"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "intrests": MessageLookupByLibrary.simpleMessage("Intrests"),
     "language": MessageLookupByLibrary.simpleMessage("language"),
@@ -51,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "lets": MessageLookupByLibrary.simpleMessage("Let\'s get you started"),
     "letsgo": MessageLookupByLibrary.simpleMessage("Let\'s go"),
     "male": MessageLookupByLibrary.simpleMessage("Male"),
+    "music": MessageLookupByLibrary.simpleMessage("Music"),
     "name": MessageLookupByLibrary.simpleMessage("What\'s your name?"),
     "no": MessageLookupByLibrary.simpleMessage("No"),
     "perfect": MessageLookupByLibrary.simpleMessage(
@@ -58,17 +66,28 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "prev_messages": MessageLookupByLibrary.simpleMessage("Previous messages"),
     "prev_messages2": MessageLookupByLibrary.simpleMessage("messages"),
+    "psychology": MessageLookupByLibrary.simpleMessage("Psychology"),
+    "science": MessageLookupByLibrary.simpleMessage("Science"),
     "settings": MessageLookupByLibrary.simpleMessage("settings"),
+    "sport": MessageLookupByLibrary.simpleMessage("Sport"),
+    "tech": MessageLookupByLibrary.simpleMessage("Tech"),
     "this_info": MessageLookupByLibrary.simpleMessage(
       "This information helps us generate personalized motivational messages for you",
     ),
+    "travel": MessageLookupByLibrary.simpleMessage("Travel"),
     "wanna_be": MessageLookupByLibrary.simpleMessage(
       "Wanna be more positive and shine",
     ),
     "we_are_here": MessageLookupByLibrary.simpleMessage(
       "We are here to get the best version of you",
     ),
+    "what_intrests": MessageLookupByLibrary.simpleMessage(
+      "What are your intrests?",
+    ),
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),
     "you_are": MessageLookupByLibrary.simpleMessage("You are a star"),
+    "you_can_choose": MessageLookupByLibrary.simpleMessage(
+      "You can choose up to 5 diffirent categories",
+    ),
   };
 }

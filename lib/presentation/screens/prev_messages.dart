@@ -43,13 +43,30 @@ class _PrevMessagesState extends State<PrevMessages> {
           ? const Center(child: CircularProgressIndicator())
           : prevMessages.isEmpty
               ? const Center(child: Text('No Previous messages available.'))
-              : ListView.builder(
-                  itemCount: prevMessages.length,
-                  itemBuilder: (context, index) => Card(
-                    child: ListTile(
-                      title: Text(prevMessages[index]['title']),
-                      subtitle: Text(prevMessages[index]['body']),
-                      trailing: Text(prevMessages[index]['date']),
+              : Padding(
+                  padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                  child: ListView.builder(
+                    itemCount: prevMessages.length,
+                    itemBuilder: (context, index) => Card(
+                      child: ListTile(
+                        isThreeLine: true,
+                        title: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(prevMessages[index]['title']),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                prevMessages[index]['date'],
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            )
+                          ],
+                        ),
+                        subtitle: Text(prevMessages[index]['body']),
+                      ),
                     ),
                   ),
                 ),
