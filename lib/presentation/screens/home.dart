@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+import 'package:you_are_a_star/data/api/ai_notifications.dart';
+import 'package:you_are_a_star/data/services/notification_service.dart';
+import 'package:you_are_a_star/generated/l10n.dart';
+
+class Home extends StatelessWidget {
+  const Home({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          S.of(context).home,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                debugPrint('===============================********==================');
+                var message = await AiNotifications().requestAIMessage(context);
+                NotificationService().scheduleNotification(
+                  title: message[0],
+                  body: message[1],
+                  hour: 1,
+                  minute: 8,
+                );
+              },
+              child: const Text("Schedule Noti"),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.notification_add_outlined),
+        onPressed: () async {
+          var message = await AiNotifications().requestAIMessage(context);
+          NotificationService().showNotification(
+            title: message[0],
+            body: message[1],
+          );
+        },
+      ),
+    );
+  }
+}

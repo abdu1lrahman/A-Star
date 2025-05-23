@@ -1,0 +1,79 @@
+name: you_are_a_star
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  # These packages are for notifications
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.10.0
+  flutter_timezone: ^3.0.1
+  # and these two are for the splash screen and app Icons
+  flutter_native_splash: ^2.4.4
+  flutter_launcher_icons: ^0.14.3
+  # Shared Preference for local storage
+  shared_preferences: ^2.4.0
+  # packages which related to UI 
+  smooth_page_indicator: ^1.2.0+3
+  numberpicker: ^2.1.2
+  google_fonts: ^6.2.1
+  # for api handling and state mangement I used these packages
+  dio: ^5.8.0+1
+  provider: ^6.1.2
+  # These packages are for the language support
+  flutter_localization: ^0.3.1
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+  # Lottie package for the animations
+  lottie: ^3.2.0
+  # I will use .env package for hiding api key
+  flutter_dotenv: ^5.2.1
+  # This is the bottom navigation bar package
+  google_nav_bar: ^5.0.7
+  image_picker: ^1.1.2
+  permission_handler: ^12.0.0
+  sqflite: ^2.4.2
+
+  
+flutter_native_splash:
+  image: assets/icons/app_icon.png
+  branding: assets/icons/branding_text2.png
+  color: "#ffe5d9"
+  web: false
+  branding_bottom_padding : 24
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/icons/app_icon.png"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
+    - constants.env
+
+
+flutter_intl:
+  enabled: true

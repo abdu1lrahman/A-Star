@@ -1,0 +1,74 @@
+// DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
+// This is a library that provides messages for a en locale. All the
+// messages from the main program should be duplicated here with the same
+// function name.
+
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
+
+import 'package:intl/intl.dart';
+import 'package:intl/message_lookup_by_library.dart';
+
+final messages = new MessageLookup();
+
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
+
+class MessageLookup extends MessageLookupByLibrary {
+  String get localeName => 'en';
+
+  final messages = _notInlinedMessages(_notInlinedMessages);
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "account": MessageLookupByLibrary.simpleMessage("My account"),
+    "age": MessageLookupByLibrary.simpleMessage("Select your age"),
+    "change_language": MessageLookupByLibrary.simpleMessage(
+      "Do you want to change the app and notifications language?",
+    ),
+    "change_name": MessageLookupByLibrary.simpleMessage(
+      "Do you want to change your name",
+    ),
+    "dont": MessageLookupByLibrary.simpleMessage(
+      "You can change these informations later",
+    ),
+    "enter_name": MessageLookupByLibrary.simpleMessage(
+      "Enter your name so we can send you more personalized notifications",
+    ),
+    "enter_new_name": MessageLookupByLibrary.simpleMessage(
+      "Enter your new name",
+    ),
+    "female": MessageLookupByLibrary.simpleMessage("Female"),
+    "gender": MessageLookupByLibrary.simpleMessage("Select your gender"),
+    "getstarted": MessageLookupByLibrary.simpleMessage("let\'s start"),
+    "home": MessageLookupByLibrary.simpleMessage("Home"),
+    "intrests": MessageLookupByLibrary.simpleMessage("Intrests"),
+    "language": MessageLookupByLibrary.simpleMessage("language"),
+    "language_change_confirm": MessageLookupByLibrary.simpleMessage(
+      "The language has changed successfully",
+    ),
+    "lets": MessageLookupByLibrary.simpleMessage("Let\'s get you started"),
+    "letsgo": MessageLookupByLibrary.simpleMessage("Let\'s go"),
+    "male": MessageLookupByLibrary.simpleMessage("Male"),
+    "name": MessageLookupByLibrary.simpleMessage("What\'s your name?"),
+    "no": MessageLookupByLibrary.simpleMessage("No"),
+    "perfect": MessageLookupByLibrary.simpleMessage(
+      "You are in the perfect place",
+    ),
+    "prev_messages": MessageLookupByLibrary.simpleMessage("Previous messages"),
+    "prev_messages2": MessageLookupByLibrary.simpleMessage("messages"),
+    "settings": MessageLookupByLibrary.simpleMessage("settings"),
+    "this_info": MessageLookupByLibrary.simpleMessage(
+      "This information helps us generate personalized motivational messages for you",
+    ),
+    "wanna_be": MessageLookupByLibrary.simpleMessage(
+      "Wanna be more positive and shine",
+    ),
+    "we_are_here": MessageLookupByLibrary.simpleMessage(
+      "We are here to get the best version of you",
+    ),
+    "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+    "you_are": MessageLookupByLibrary.simpleMessage("You are a star"),
+  };
+}
