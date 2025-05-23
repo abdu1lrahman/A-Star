@@ -1,6 +1,6 @@
 # You are a star
 
-Motivational app with AI-generated scheduled messages. 
+Motivational app with AI-generated scheduled notifications. 
 
 - Fully support Arabic & English.
 - Great UI and user experience.
