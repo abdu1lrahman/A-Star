@@ -344,6 +344,16 @@ class S {
   String get psychology {
     return Intl.message('Psychology', name: 'psychology', desc: '', args: []);
   }
+
+  /// `+ Add your own (e.g. AI, Law)`
+  String get add_your_own {
+    return Intl.message(
+      '+ Add your own (e.g. AI, Law)',
+      name: 'add_your_own',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

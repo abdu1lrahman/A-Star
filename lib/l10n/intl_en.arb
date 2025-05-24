@@ -41,5 +41,6 @@
     "education": "Education",
     "history": "History",
     "fashion": "Fashion",
-    "psychology": "Psychology"
+    "psychology": "Psychology",
+    "add_your_own": "+ Add your own (e.g. AI, Law)"
 }

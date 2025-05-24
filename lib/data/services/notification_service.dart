@@ -33,6 +33,7 @@ class NotificationService {
     await notificationPlugin.initialize(initSettings);
 
     _isInitialized = true;
+
   }
 
   NotificationDetails notificationDetails(String? title, String? body) {
@@ -72,14 +73,14 @@ class NotificationService {
     required BuildContext context,
   }) async {
     final now = tz.TZDateTime.now(tz.local);
-    var message = await AiNotifications().requestAIMessage(context);
     final times = [
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 01), // 8:00 AM
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 03), // 2:00 PM
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 25), // 8:00 PM
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, 8, 00), // 8:00 AM
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, 14, 00), // 2:00 PM
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 0), // 8:00 PM
     ];
 
     for (int i = 0; i < times.length; i++) {
+      var message = await AiNotifications().requestAIMessage(context);
       await notificationPlugin.zonedSchedule(
         i,
         message[0],

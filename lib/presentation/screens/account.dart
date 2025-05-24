@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/presentation/providers/user_provider.dart';
-import 'package:you_are_a_star/presentation/providers/language_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Account extends StatefulWidget {
@@ -19,7 +18,7 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     final userinfos = Provider.of<UserProvider>(context, listen: true);
-    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenWidth = MediaQuery.of(context).size.width;
     TextEditingController nameController = TextEditingController(text: userinfos.userName);
     TextEditingController ageController = TextEditingController(text: userinfos.userAge.toString());
 

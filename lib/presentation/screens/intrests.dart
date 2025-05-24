@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Intrests extends StatefulWidget {
-  Intrests({super.key});
+  const Intrests({super.key});
 
   @override
   State<Intrests> createState() => _IntrestsState();
@@ -10,12 +12,28 @@ class Intrests extends StatefulWidget {
 
 class _IntrestsState extends State<Intrests> {
   Set<String> selectedInterests = {};
+  TextEditingController intrestController = TextEditingController();
 
-  bool is_selected = false;
+  void fetchSavedIntrests() async {
+    final prefs = await SharedPreferences.getInstance();
+    var response = prefs.getStringList('intrests');
+    if (response != null) {
+      setState(() {
+        selectedInterests = response.toSet();
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    fetchSavedIntrests();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+
     List<String> predefinedInterests = [
       S.of(context).health,
       S.of(context).sport,
@@ -70,22 +88,52 @@ class _IntrestsState extends State<Intrests> {
                     label: Text(interest),
                     selected: selectedInterests.contains(interest),
                     onSelected: (bool selected) {
-                      setState(() {
-                        if (selected) {
-                          if (selectedInterests.length < 5) {
-                            selectedInterests.add(interest);
+                      setState(
+                        () {
+                          if (selected) {
+                            if (selectedInterests.length < 5) {
+                              selectedInterests.add(interest);
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: 'You can only select 5 interests.',
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                              );
+                            }
                           } else {
-                            // Show feedback: selection limit reached
+                            selectedInterests.remove(interest);
                           }
-                        } else {
-                          selectedInterests.remove(interest);
-                        }
-                      });
+                        },
+                      );
                     },
                   );
                 }).toList(),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+              child: TextField(
+                controller: intrestController,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xffbdbdbd)),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  hintText: S.of(context).add_your_own,
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setStringList('intrests', selectedInterests.toList());
+                var response = prefs.getStringList('intrests');
+                debugPrint(response.toString());
+              },
+              child: const Text('save your intrests'),
+            ),
           ],
         ),
       ),

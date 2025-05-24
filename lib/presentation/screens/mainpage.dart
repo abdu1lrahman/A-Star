@@ -20,7 +20,7 @@ class _HomeState extends State<Mainpage> {
   List pages = [
     const Home(),
     const PrevMessages(),
-     Intrests(),
+    const Intrests(),
     const Account(),
     const Settings(),
   ];
