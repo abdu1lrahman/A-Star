@@ -31,6 +31,12 @@ class _IntrestsState extends State<Intrests> {
   }
 
   @override
+  void didChangeDependencies() {
+    fetchSavedIntrests();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -87,24 +93,24 @@ class _IntrestsState extends State<Intrests> {
                   return ChoiceChip(
                     label: Text(interest),
                     selected: selectedInterests.contains(interest),
-                    onSelected: (bool selected) {
-                      setState(
-                        () {
-                          if (selected) {
-                            if (selectedInterests.length < 5) {
-                              selectedInterests.add(interest);
-                            } else {
-                              Fluttertoast.showToast(
-                                msg: 'You can only select 5 interests.',
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                              );
-                            }
+                    onSelected: (bool selected) async {
+                      setState(() {
+                        if (selected) {
+                          if (selectedInterests.length < 5) {
+                            selectedInterests.add(interest);
                           } else {
-                            selectedInterests.remove(interest);
+                            Fluttertoast.showToast(
+                              msg: 'You can only select 5 interests.',
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                            );
                           }
-                        },
-                      );
+                        } else {
+                          selectedInterests.remove(interest);
+                        }
+                      });
+                      final prefs = await SharedPreferences.getInstance();
+                      prefs.setStringList('intrests', selectedInterests.toList());
                     },
                   );
                 }).toList(),
@@ -113,6 +119,13 @@ class _IntrestsState extends State<Intrests> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
               child: TextField(
+                onSubmitted: (value) {
+                  setState(() async {
+                    final prefs = await SharedPreferences.getInstance();
+                    prefs.setString('special_intrests', value);
+                    debugPrint(selectedInterests.toString());
+                  });
+                },
                 controller: intrestController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -124,15 +137,6 @@ class _IntrestsState extends State<Intrests> {
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
                 ),
               ),
-            ),
-            TextButton(
-              onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setStringList('intrests', selectedInterests.toList());
-                var response = prefs.getStringList('intrests');
-                debugPrint(response.toString());
-              },
-              child: const Text('save your intrests'),
             ),
           ],
         ),

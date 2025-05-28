@@ -22,6 +22,11 @@ class _PrevMessagesState extends State<PrevMessages> {
     });
   }
 
+  Future<void> _refresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getPreviousMessages();
+  }
+
   @override
   void initState() {
     getPreviousMessages();
@@ -39,37 +44,40 @@ class _PrevMessagesState extends State<PrevMessages> {
         backgroundColor: Colors.black,
         centerTitle: true,
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : prevMessages.isEmpty
-              ? const Center(child: Text('No Previous messages available.'))
-              : Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                  child: ListView.builder(
-                    itemCount: prevMessages.length,
-                    itemBuilder: (context, index) => Card(
-                      child: ListTile(
-                        isThreeLine: true,
-                        title: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Text(prevMessages[index]['title']),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Text(
-                                prevMessages[index]['date'],
-                                style: const TextStyle(fontSize: 12),
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : prevMessages.isEmpty
+                ? const Center(child: Text('No Previous messages available.'))
+                : Padding(
+                    padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                    child: ListView.builder(
+                      itemCount: prevMessages.length,
+                      itemBuilder: (context, index) => Card(
+                        child: ListTile(
+                          isThreeLine: true,
+                          title: Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Text(prevMessages[index]['title']),
                               ),
-                            )
-                          ],
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  prevMessages[index]['date'],
+                                  style: const TextStyle(fontSize: 12),
+                                ),
+                              )
+                            ],
+                          ),
+                          subtitle: Text(prevMessages[index]['body']),
                         ),
-                        subtitle: Text(prevMessages[index]['body']),
                       ),
                     ),
                   ),
-                ),
+      ),
     );
   }
 }

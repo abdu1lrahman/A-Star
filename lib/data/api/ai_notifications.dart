@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:you_are_a_star/presentation/providers/language_provider.dart';
 import 'package:you_are_a_star/presentation/providers/user_provider.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AiNotifications {
   final dio = Dio();
@@ -24,9 +25,10 @@ class AiNotifications {
     debugPrint('=======================U pressed the button=======================');
     final userProv = Provider.of<UserProvider>(context, listen: false);
     final langProv = Provider.of<LanguageProvider>(context, listen: false);
-
     final Response response;
-
+    final prefs = await SharedPreferences.getInstance();
+    var intrests = prefs.getStringList('intrests');
+    debugPrint(intrests.toString());
     var url = 'https://api.aimlapi.com/v1/chat/completions';
     var headers = {
       "Authorization": "Bearer ${dotenv.env['apikey']}",
@@ -38,10 +40,10 @@ class AiNotifications {
         {
           "role": "system",
           "content":
-              '''Write a short random motivational message for a motivational notifications app, the user name is
+              '''Write a short (No more than three sentences) motivational message or an advice for a notifications app, the user name is
             ${userProv.userName} and he/she is ${userProv.userAge} years old ${userProv.userGender == true ? 'male' : 'female'},
-            let the response match thier intrests in law, health, feelings,
-            make the response in ${langProv.local.languageCode}with this format {"title":"...", "body":"..."},
+            let the response match one or two of their intrests in ${intrests.toString()},
+            make the response in ${langProv.local.languageCode} with this format {"title":"...", "body":"..."},
           '''
         },
       ],
