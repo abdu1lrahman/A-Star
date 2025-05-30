@@ -57,14 +57,7 @@ class _IntrestsState extends State<Intrests> {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          S.of(context).intrests,
-          style: const TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.black,
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(S.of(context).intrests)),
       body: Center(
         child: Column(
           children: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/presentation/widgets/components/custom_app_bar.dart';
 
 class PrevMessages extends StatefulWidget {
   const PrevMessages({super.key});
@@ -36,14 +37,7 @@ class _PrevMessagesState extends State<PrevMessages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          S.of(context).prev_messages,
-          style: const TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.black,
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(S.of(context).prev_messages)),
       body: RefreshIndicator(
         onRefresh: _refresh,
         child: isLoading

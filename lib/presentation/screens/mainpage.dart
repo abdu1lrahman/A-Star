@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:you_are_a_star/presentation/screens/account.dart';
@@ -31,7 +32,7 @@ class _HomeState extends State<Mainpage> {
       body: pages[selectedIndex],
       bottomNavigationBar: GNav(
         tabMargin: const EdgeInsets.all(10),
-        backgroundColor: Colors.black,
+        backgroundColor: theme1.fifthColor,
         selectedIndex: selectedIndex,
         activeColor: Colors.white,
         color: Colors.white,

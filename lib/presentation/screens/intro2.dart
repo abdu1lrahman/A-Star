@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: secondColor,
+      backgroundColor: theme1.secondColor,
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -184,7 +184,7 @@ class _LoginState extends State<Login> {
                       child: Text(
                         S.of(context).letsgo,
                         style: TextStyle(
-                          color: secondColor,
+                          color: theme1.secondColor,
                           fontSize: screenWidth * 0.04,
                         ),
                       ),

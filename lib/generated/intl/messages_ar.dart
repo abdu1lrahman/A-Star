@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "+ أضف اهتمامات أخرى (مثل: AI, القانون)",
     ),
     "age": MessageLookupByLibrary.simpleMessage("اختر عمرك"),
+    "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
     "art": MessageLookupByLibrary.simpleMessage("رسم"),
     "books": MessageLookupByLibrary.simpleMessage("كتب"),
     "change_language": MessageLookupByLibrary.simpleMessage(
@@ -37,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "يمكنك تعديل هذه البيانات لاحقا",
     ),
     "education": MessageLookupByLibrary.simpleMessage("التعليم"),
+    "english": MessageLookupByLibrary.simpleMessage("الإنكليزية"),
     "enter_name": MessageLookupByLibrary.simpleMessage(
       "أدخل اسمك لنرسل لك إشعارات مخصصة أكثر",
     ),
@@ -45,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "female": MessageLookupByLibrary.simpleMessage("أنثى"),
     "games": MessageLookupByLibrary.simpleMessage("ألعاب"),
     "gender": MessageLookupByLibrary.simpleMessage("اختر جنسك"),
+    "general": MessageLookupByLibrary.simpleMessage("عامة"),
     "getstarted": MessageLookupByLibrary.simpleMessage("لنبدأ"),
     "health": MessageLookupByLibrary.simpleMessage("الصحة"),
     "history": MessageLookupByLibrary.simpleMessage("التاريخ"),
@@ -60,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "music": MessageLookupByLibrary.simpleMessage("موسيقى"),
     "name": MessageLookupByLibrary.simpleMessage("ما اسمك؟"),
     "no": MessageLookupByLibrary.simpleMessage("لا"),
+    "notification": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "perfect": MessageLookupByLibrary.simpleMessage("أنت في المكان المناسب"),
     "prev_messages": MessageLookupByLibrary.simpleMessage("الرسائل السابقة"),
     "prev_messages2": MessageLookupByLibrary.simpleMessage("الرسائل"),

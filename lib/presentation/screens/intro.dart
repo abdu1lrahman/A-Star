@@ -47,7 +47,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
     final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: theme1.mainColor,
       // we used stack because we have SmoothPageIndicator()
       body: Stack(
         alignment: Alignment.bottomCenter,
@@ -80,7 +80,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
                 ),
               ),
               Container(
-                color: mainColor,
+                color: theme1.mainColor,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
@@ -117,7 +117,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
                 ),
               ),
               Container(
-                color: mainColor,
+                color: theme1.mainColor,
                 child: Stack(
                   fit: StackFit.expand,
                   alignment: Alignment.center,
@@ -160,7 +160,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
                             S.of(context).getstarted,
                             style: TextStyle(
                               fontSize: screenWidth * 0.05,
-                              color: mainColor,
+                              color: theme1.mainColor,
                             ),
                           ),
                           onPressed: () {
@@ -202,7 +202,8 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
           color: Colors.white,
         ),
         onPressed: () {
-          languageProvider.changeLocale();
+          //TODO:fix this
+          // languageProvider.changeLocale();
         },
       ),
     );

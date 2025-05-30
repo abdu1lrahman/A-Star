@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LanguageProvider extends ChangeNotifier {
-  Locale _locale = const Locale('ar');
+  Locale _locale = const Locale('en');
 
   Locale get local => _locale;
 
@@ -11,8 +11,8 @@ class LanguageProvider extends ChangeNotifier {
     notifyListeners(); // Notify listeners to rebuild the UI
   }
 
-  void changeLocale() {
-    (_locale.languageCode == 'en') ? _locale = const Locale('ar') : _locale = const Locale('en');
+  void changeLocale(String newLang) {
+    (newLang == 'en') ? _locale = const Locale('en') : _locale = const Locale('ar');
     notifyListeners();
   }
 }

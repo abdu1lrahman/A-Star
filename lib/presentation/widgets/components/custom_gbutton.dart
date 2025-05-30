@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:you_are_a_star/core/theme/colors.dart';
 
 GButton customGButton({
   required IconData icon,
@@ -7,6 +8,7 @@ GButton customGButton({
   required double screenWidth,
 }) =>
     GButton(
+      style: GnavStyle.google,
       gap: 2,
       icon: icon,
       iconSize: 23,
@@ -15,7 +17,7 @@ GButton customGButton({
         fontSize: screenWidth * 0.03,
         color: Colors.white,
       ),
-      hoverColor: const Color(0xff232023),
-      backgroundColor: const Color(0xff232023),
+      hoverColor: theme1.sexthColor,
+      backgroundColor: theme1.sexthColor,
       padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 8.0),
     );

@@ -36,14 +36,7 @@ class _AccountState extends State<Account> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text(
-          S.of(context).account,
-          style: const TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(S.of(context).account)),
       body: Column(
         children: [
           const SizedBox(height: 20),

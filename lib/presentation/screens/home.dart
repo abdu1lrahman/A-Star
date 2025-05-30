@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:you_are_a_star/data/api/ai_notifications.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/presentation/widgets/components/custom_app_bar.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -9,14 +10,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          S.of(context).home,
-          style: const TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.black,
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(S.of(context).home)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +18,7 @@ class Home extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 debugPrint('===============================********==================');
-                
+
                 NotificationService().scheduleNotification(
                   context: context,
                 );

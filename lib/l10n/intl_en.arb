@@ -42,5 +42,10 @@
     "history": "History",
     "fashion": "Fashion",
     "psychology": "Psychology",
-    "add_your_own": "+ Add your own (e.g. AI, Law)"
+    "add_your_own": "+ Add your own (e.g. AI, Law)",
+    "english": "English",
+    "arabic": "Arabic",
+    "general": "General",
+    "notification": "Notifications"
+
 }

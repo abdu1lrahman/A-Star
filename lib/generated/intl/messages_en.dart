@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "+ Add your own (e.g. AI, Law)",
     ),
     "age": MessageLookupByLibrary.simpleMessage("Select your age"),
+    "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
     "art": MessageLookupByLibrary.simpleMessage("Art"),
     "books": MessageLookupByLibrary.simpleMessage("Books"),
     "change_language": MessageLookupByLibrary.simpleMessage(
@@ -39,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "You can change these informations later",
     ),
     "education": MessageLookupByLibrary.simpleMessage("Education"),
+    "english": MessageLookupByLibrary.simpleMessage("English"),
     "enter_name": MessageLookupByLibrary.simpleMessage(
       "Enter your name so we can send you more personalized notifications",
     ),
@@ -49,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "female": MessageLookupByLibrary.simpleMessage("Female"),
     "games": MessageLookupByLibrary.simpleMessage("Games"),
     "gender": MessageLookupByLibrary.simpleMessage("Select your gender"),
+    "general": MessageLookupByLibrary.simpleMessage("General"),
     "getstarted": MessageLookupByLibrary.simpleMessage("let\'s start"),
     "health": MessageLookupByLibrary.simpleMessage("health"),
     "history": MessageLookupByLibrary.simpleMessage("History"),
@@ -64,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "music": MessageLookupByLibrary.simpleMessage("Music"),
     "name": MessageLookupByLibrary.simpleMessage("What\'s your name?"),
     "no": MessageLookupByLibrary.simpleMessage("No"),
+    "notification": MessageLookupByLibrary.simpleMessage("Notifications"),
     "perfect": MessageLookupByLibrary.simpleMessage(
       "You are in the perfect place",
     ),
