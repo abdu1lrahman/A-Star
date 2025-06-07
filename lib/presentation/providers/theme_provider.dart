@@ -15,7 +15,7 @@ class AppTheme {
     required this.thirdColor,
     required this.forthColor,
     required this.fifthColor,
-    this.sixthColor,
+    required this.sixthColor,
   });
 }
 
@@ -28,6 +28,7 @@ class ThemeProvider extends ChangeNotifier {
     thirdColor: theme1.thirdColor,
     forthColor: theme1.forthColor,
     fifthColor: theme1.fifthColor,
+    sixthColor: theme1.sixthColor,
   );
 
   static final AppTheme _theme2 = AppTheme(
@@ -36,17 +37,13 @@ class ThemeProvider extends ChangeNotifier {
     thirdColor: theme2.thirdColor,
     forthColor: theme2.forthColor,
     fifthColor: theme2.fifthColor,
+    sixthColor: theme2.sixthColor,
   );
 
   AppTheme get currentAppTheme => _currentAppTheme;
 
-  void toggleTheme() {
-    _currentAppTheme = _currentAppTheme == _theme1 ? _theme2 : _theme1;
-    notifyListeners();
-  }
-
-  void setTheme(bool isTheme1) {
-    _currentAppTheme = isTheme1 ? _theme1 : _theme2;
+  void setTheme(String newTheme) {
+    _currentAppTheme = newTheme == 'theme1' ? _theme1 : _theme2;
     notifyListeners();
   }
 }

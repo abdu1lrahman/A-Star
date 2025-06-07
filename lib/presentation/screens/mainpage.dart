@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:you_are_a_star/core/theme/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
 import 'package:you_are_a_star/presentation/screens/account.dart';
 import 'package:you_are_a_star/presentation/screens/home.dart';
 import 'package:you_are_a_star/presentation/screens/intrests.dart';
@@ -28,11 +29,12 @@ class _HomeState extends State<Mainpage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       body: pages[selectedIndex],
       bottomNavigationBar: GNav(
         tabMargin: const EdgeInsets.all(10),
-        backgroundColor: theme1.fifthColor,
+        backgroundColor: themeProvider.currentAppTheme.fifthColor,
         selectedIndex: selectedIndex,
         activeColor: Colors.white,
         color: Colors.white,
@@ -46,26 +48,31 @@ class _HomeState extends State<Mainpage> {
             icon: Icons.home_outlined,
             screenWidth: screenWidth,
             text: S.of(context).home,
+            context: context,
           ),
           customGButton(
             icon: Icons.message_outlined,
             text: S.of(context).prev_messages2,
             screenWidth: screenWidth,
+            context: context,
           ),
           customGButton(
             icon: Icons.interests_outlined,
             text: S.of(context).intrests,
             screenWidth: screenWidth,
+            context: context,
           ),
           customGButton(
             icon: Icons.account_circle_outlined,
             text: S.of(context).account,
             screenWidth: screenWidth,
+            context: context,
           ),
           customGButton(
             icon: Icons.settings_outlined,
             text: S.of(context).settings,
             screenWidth: screenWidth,
+            context: context,
           ),
         ],
       ),

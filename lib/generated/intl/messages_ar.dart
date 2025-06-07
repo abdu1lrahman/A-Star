@@ -38,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "يمكنك تعديل هذه البيانات لاحقا",
     ),
     "education": MessageLookupByLibrary.simpleMessage("التعليم"),
+    "enable_noti": MessageLookupByLibrary.simpleMessage("تفعيل الإشعارات"),
     "english": MessageLookupByLibrary.simpleMessage("الإنكليزية"),
     "enter_name": MessageLookupByLibrary.simpleMessage(
       "أدخل اسمك لنرسل لك إشعارات مخصصة أكثر",
@@ -63,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "music": MessageLookupByLibrary.simpleMessage("موسيقى"),
     "name": MessageLookupByLibrary.simpleMessage("ما اسمك؟"),
     "no": MessageLookupByLibrary.simpleMessage("لا"),
+    "noti": MessageLookupByLibrary.simpleMessage("الإشعار"),
     "notification": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "perfect": MessageLookupByLibrary.simpleMessage("أنت في المكان المناسب"),
     "prev_messages": MessageLookupByLibrary.simpleMessage("الرسائل السابقة"),
@@ -72,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
     "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
     "tech": MessageLookupByLibrary.simpleMessage("التقنيات"),
+    "theme": MessageLookupByLibrary.simpleMessage("ألوان التطبيق"),
     "this_info": MessageLookupByLibrary.simpleMessage(
       "هذه المعلومات تساعدنا في توليد اشعارات مخصصة لك بالذكاء الصناعي",
     ),
@@ -87,6 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "you_are": MessageLookupByLibrary.simpleMessage("أنت نجمة"),
     "you_can_choose": MessageLookupByLibrary.simpleMessage(
       "يمكنك اختيار 5 اهتمامات مختلفة",
+    ),
+    "you_can_only_select": MessageLookupByLibrary.simpleMessage(
+      "يمكنك اختيار 5 اهتمامات فقط",
     ),
   };
 }

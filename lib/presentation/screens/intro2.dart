@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
@@ -164,7 +165,7 @@ class _LoginState extends State<Login> {
                         userProvider.changeName(name.text);
                         Navigator.pushNamedAndRemoveUntil(
                           context,
-                          "home",
+                          "mainPage",
                           (Route<dynamic> route) => false,
                         );
                       },
@@ -188,13 +189,15 @@ class _LoginState extends State<Login> {
                           fontSize: screenWidth * 0.04,
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         userProvider.changeName(name.text);
                         Navigator.pushNamedAndRemoveUntil(
                           context,
                           "mainPage",
                           (Route<dynamic> route) => false,
                         );
+                        final prefs = await SharedPreferences.getInstance();
+                        prefs.setBool('isFirstTime', true);
                       },
                     ),
                   ),

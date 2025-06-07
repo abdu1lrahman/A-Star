@@ -46,5 +46,9 @@
     "english": "الإنكليزية",
     "arabic": "العربية",
     "general": "عامة",
-    "notification": "الإشعارات"
+    "notification": "الإشعارات",
+    "theme": "ألوان التطبيق",
+    "enable_noti": "تفعيل الإشعارات",
+    "you_can_only_select": "يمكنك اختيار 5 اهتمامات فقط",
+    "noti": "الإشعار"
 }

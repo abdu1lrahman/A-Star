@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:you_are_a_star/presentation/providers/language_provider.dart';
-import 'package:you_are_a_star/presentation/providers/user_provider.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,13 +18,16 @@ class AiNotifications {
     _dateTimeString = DateFormat('EEE, M/d/y').format(now);
   }
 
-  Future<List<String>> requestAIMessage(BuildContext context) async {
-    debugPrint('=======================U pressed the button=======================');
-    final userProv = Provider.of<UserProvider>(context, listen: false);
-    final langProv = Provider.of<LanguageProvider>(context, listen: false);
+  Future<List<String>> requestAIMessage() async {
     final Response response;
     final prefs = await SharedPreferences.getInstance();
-    var intrests = prefs.getStringList('intrests');
+    List<String>? intrests = prefs.getStringList('intrests');
+    String? specialIntrests = prefs.getString('special_intrests');
+    String? name = prefs.getString('name');
+    int? age = prefs.getInt('age');
+    bool? gender = prefs.getBool('gender');
+    String? language = prefs.getString('language');
+
     debugPrint(intrests.toString());
     var url = 'https://api.aimlapi.com/v1/chat/completions';
     var headers = {
@@ -41,9 +41,9 @@ class AiNotifications {
           "role": "system",
           "content":
               '''Write a short (No more than three sentences) motivational message or an advice for a notifications app, the user name is
-            ${userProv.userName} and he/she is ${userProv.userAge} years old ${userProv.userGender == true ? 'male' : 'female'},
-            let the response match one or two of their intrests in ${intrests.toString()},
-            make the response in ${langProv.local.languageCode} with this format {"title":"...", "body":"..."},
+            $name and he/she is $age years old ${gender == true ? 'male' : 'female'},
+            let the response match one or two of their intrests in ${intrests.toString()} and special intrests in ${specialIntrests.toString()},
+            make the response in $language with this format {"title":"...", "body":"..."},
           '''
         },
       ],
@@ -57,6 +57,7 @@ class AiNotifications {
     };
 
     try {
+      debugPrint(data.toString());
       response = await dio.post(
         url,
         data: data,
@@ -68,7 +69,8 @@ class AiNotifications {
       final String body = decodedContent['body'];
       _getCurrentDateTime();
       db.insertData(
-          '''INSERT INTO messages ('title','body','date') VALUES ("$title","$body","$_dateTimeString")''');
+        '''INSERT INTO messages ('title','body','date') VALUES ("$title","$body","$_dateTimeString")''',
+      );
 
       debugPrint("=================It works!=================");
 

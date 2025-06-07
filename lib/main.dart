@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
@@ -16,22 +17,26 @@ import 'package:you_are_a_star/presentation/widgets/components/custom_app_bar.da
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotification();
+  NotificationService().scheduleNotification();
   await dotenv.load(fileName: "constants.env");
+  final prefs = await SharedPreferences.getInstance();
+  final isFirstTime = prefs.getBool('isFirstTime') ?? true;
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => ThemeProvider())
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
-      child: const MyApp(),
+      child: MyApp(isFirstTime: isFirstTime),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final bool isFirstTime;
+  const MyApp({super.key, required this.isFirstTime});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -39,17 +44,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    super.initState();
-    UserProvider().getUserData();
-    debugPrint(UserProvider().userName);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final languageProvider = Provider.of<LanguageProvider>(context, listen: true);
-    // final userInfoProvider = Provider.of<UserProvider>(context, listen: true);
-    final screenWidth = MediaQuery.of(context).size.width;
 
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
@@ -74,15 +70,12 @@ class _MyAppState extends State<MyApp> {
           ],
           locale: languageProvider.local,
           theme: ThemeData(
-            appBarTheme: appBarTheme(),
-            // primaryColor: themeProvider.currentAppTheme.mainColor,
-
+            appBarTheme: appBarTheme(context),
             // The font used in the app is notoKufiArabicTextTheme
             textTheme: GoogleFonts.notoKufiArabicTextTheme(),
           ),
 
-          // home: userInfoProvider.userName == 'anyname' ? const Intro() : const Mainpage(),
-          home: const Mainpage(),
+          home: widget.isFirstTime ? const Intro() : const Mainpage(),
         );
       },
     );

@@ -12,16 +12,14 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<Settings> {
-  String _theme = 'Light';
+  String _theme = 'theme1';
+
   bool _notificationsEnabled = true;
   final List<TimeOfDay> _notificationTimes = [
-    const TimeOfDay(hour: 8, minute: 0),
-    const TimeOfDay(hour: 14, minute: 0),
-    const TimeOfDay(hour: 20, minute: 0),
+    const TimeOfDay(hour: 8, minute: 00),
+    const TimeOfDay(hour: 14, minute: 00),
+    const TimeOfDay(hour: 20, minute: 00),
   ];
-  int _dailyGoal = 5;
-  String _startWeekOn = 'Sunday';
-
   Future<void> _pickTime(int index) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
@@ -30,6 +28,10 @@ class _SettingsPageState extends State<Settings> {
     if (picked != null) {
       setState(() => _notificationTimes[index] = picked);
     }
+  }
+
+  Image _getThemeImage(String key) {
+    return Image.asset('assets/images/$key.png', width: 120, height: 120);
   }
 
   @override
@@ -43,54 +45,61 @@ class _SettingsPageState extends State<Settings> {
         padding: const EdgeInsets.all(16),
         children: [
           _buildSectionHeader(S.of(context).general),
+          ////////////////////////////////////////////////
+          ////////////////////////////////////////////////
           _buildDropdownTile(
-              S.of(context).language,
-              langProvider.local.languageCode == 'en' ? 'English' : 'العربية',
-              ["English", "العربية"], (val) {
-            langProvider.changeLocale((val == "English") ? 'en' : 'ar');
-          }),
-          _buildDropdownTile('Theme', _theme, ['Light', 'Dark', 'System'], (val) {
-            setState(() {
-              _theme = val!;
-              themeProvider.toggleTheme();
-            });
-          }),
+            S.of(context).language,
+            langProvider.local.languageCode == 'en' ? 'English' : 'العربية',
+            ["English", "العربية"],
+            (val) {
+              langProvider.changeLocale((val == "English") ? 'en' : 'ar');
+            },
+          ),
+          ////////////////////////////////////////////////
+          ////////////////////////////////////////////////
+          _buildDropdownTile(
+            S.of(context).theme,
+            _theme,
+            ['theme1', 'theme2'],
+            (val) {
+              setState(() {
+                _theme = val!;
+                themeProvider.setTheme(val);
+              });
+            },
+            itemBuilder: (val) => _getThemeImage(val),
+          ),
+          ////////////////////////////////////////////////
+          ////////////////////////////////////////////////
           const SizedBox(height: 20),
           _buildSectionHeader(S.of(context).notification),
           SwitchListTile(
             value: _notificationsEnabled,
             onChanged: (val) => setState(() => _notificationsEnabled = val),
-            title: const Text('Enable Notifications'),
+            title: Text(S.of(context).enable_noti),
           ),
           if (_notificationsEnabled)
-            ...List.generate(3, (index) {
-              final time = _notificationTimes[index];
-              return ListTile(
-                title: Text('Notification ${index + 1}'),
-                trailing: Text(time.format(context)),
-                onTap: () => _pickTime(index),
-              );
-            }),
-          const SizedBox(height: 20),
-          _buildSectionHeader('User Preferences'),
-          ListTile(
-            title: const Text('Daily Goal'),
-            trailing: DropdownButton<int>(
-              value: _dailyGoal,
-              onChanged: (val) => setState(() => _dailyGoal = val!),
-              items: [1, 3, 5, 10]
-                  .map((num) => DropdownMenuItem(value: num, child: Text('$num tasks')))
-                  .toList(),
+            ...List.generate(
+              3,
+              (index) {
+                final time = _notificationTimes[index];
+                return ListTile(
+                  title: Text('${S.of(context).noti} ${index + 1}'),
+                  trailing: Text(time.format(context)),
+                  onTap: () {
+                    _pickTime(index);
+                  },
+                );
+              },
             ),
-          ),
-          _buildDropdownTile('Start Week On', _startWeekOn, ['Sunday', 'Monday'], (val) {
-            setState(() => _startWeekOn = val!);
-          }),
+
           const SizedBox(height: 20),
-          _buildSectionHeader('Account'),
+          _buildSectionHeader(S.of(context).account),
           ElevatedButton(
-            onPressed: () {},
-            child: Text('Delete my Data'),
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(context, 'intro', (Route<dynamic> route) => false);
+            },
+            child: const Text('Delete my Data'),
           ),
         ],
       ),
@@ -108,14 +117,20 @@ class _SettingsPageState extends State<Settings> {
     String title,
     T currentValue,
     List<T> options,
-    ValueChanged<T?> onChanged,
-  ) {
+    ValueChanged<T?> onChanged, {
+    Widget Function(T val)? itemBuilder,
+  }) {
     return ListTile(
       title: Text(title),
       trailing: DropdownButton<T>(
         value: currentValue,
         onChanged: onChanged,
-        items: options.map((val) => DropdownMenuItem(value: val, child: Text('$val'))).toList(),
+        items: options.map((val) {
+          return DropdownMenuItem<T>(
+            value: val,
+            child: itemBuilder != null ? itemBuilder(val) : Text('$val'),
+          );
+        }).toList(),
       ),
     );
   }

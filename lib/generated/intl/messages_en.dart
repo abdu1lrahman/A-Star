@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "You can change these informations later",
     ),
     "education": MessageLookupByLibrary.simpleMessage("Education"),
+    "enable_noti": MessageLookupByLibrary.simpleMessage("Enable Notifications"),
     "english": MessageLookupByLibrary.simpleMessage("English"),
     "enter_name": MessageLookupByLibrary.simpleMessage(
       "Enter your name so we can send you more personalized notifications",
@@ -67,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "music": MessageLookupByLibrary.simpleMessage("Music"),
     "name": MessageLookupByLibrary.simpleMessage("What\'s your name?"),
     "no": MessageLookupByLibrary.simpleMessage("No"),
+    "noti": MessageLookupByLibrary.simpleMessage("Notification"),
     "notification": MessageLookupByLibrary.simpleMessage("Notifications"),
     "perfect": MessageLookupByLibrary.simpleMessage(
       "You are in the perfect place",
@@ -78,6 +80,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "settings": MessageLookupByLibrary.simpleMessage("settings"),
     "sport": MessageLookupByLibrary.simpleMessage("Sport"),
     "tech": MessageLookupByLibrary.simpleMessage("Tech"),
+    "theme": MessageLookupByLibrary.simpleMessage("Theme"),
     "this_info": MessageLookupByLibrary.simpleMessage(
       "This information helps us generate personalized motivational messages for you",
     ),
@@ -95,6 +98,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "you_are": MessageLookupByLibrary.simpleMessage("You are a star"),
     "you_can_choose": MessageLookupByLibrary.simpleMessage(
       "You can choose up to 5 diffirent categories",
+    ),
+    "you_can_only_select": MessageLookupByLibrary.simpleMessage(
+      "You can only select 5 interests.",
     ),
   };
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
-import 'package:you_are_a_star/presentation/widgets/components/custom_app_bar.dart';
 
 class PrevMessages extends StatefulWidget {
   const PrevMessages({super.key});
@@ -24,7 +23,7 @@ class _PrevMessagesState extends State<PrevMessages> {
   }
 
   Future<void> _refresh() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     getPreviousMessages();
   }
 

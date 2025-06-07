@@ -379,6 +379,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Theme`
+  String get theme {
+    return Intl.message('Theme', name: 'theme', desc: '', args: []);
+  }
+
+  /// `Enable Notifications`
+  String get enable_noti {
+    return Intl.message(
+      'Enable Notifications',
+      name: 'enable_noti',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can only select 5 interests.`
+  String get you_can_only_select {
+    return Intl.message(
+      'You can only select 5 interests.',
+      name: 'you_can_only_select',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notification`
+  String get noti {
+    return Intl.message('Notification', name: 'noti', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -33,7 +33,6 @@ class NotificationService {
     await notificationPlugin.initialize(initSettings);
 
     _isInitialized = true;
-
   }
 
   NotificationDetails notificationDetails(String? title, String? body) {
@@ -70,17 +69,17 @@ class NotificationService {
 
   Future<void> scheduleNotification({
     int id = 1,
-    required BuildContext context,
+    List<TimeOfDay>? time ,
   }) async {
     final now = tz.TZDateTime.now(tz.local);
     final times = [
       tz.TZDateTime(tz.local, now.year, now.month, now.day, 8, 00), // 8:00 AM
       tz.TZDateTime(tz.local, now.year, now.month, now.day, 14, 00), // 2:00 PM
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 0), // 8:00 PM
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, 22, 47), // 8:00 PM
     ];
 
     for (int i = 0; i < times.length; i++) {
-      var message = await AiNotifications().requestAIMessage(context);
+      var message = await AiNotifications().requestAIMessage();
       await notificationPlugin.zonedSchedule(
         i,
         message[0],
@@ -88,7 +87,7 @@ class NotificationService {
         times[i],
         notificationDetails(message[0], message[1]),
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
       );
     }

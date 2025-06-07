@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
 
 class Intrests extends StatefulWidget {
   const Intrests({super.key});
@@ -17,9 +19,12 @@ class _IntrestsState extends State<Intrests> {
   void fetchSavedIntrests() async {
     final prefs = await SharedPreferences.getInstance();
     var response = prefs.getStringList('intrests');
+    var specialIntrests = prefs.getString('special_intrests');
+
     if (response != null) {
       setState(() {
         selectedInterests = response.toSet();
+        intrestController.value = TextEditingValue(text: specialIntrests.toString());
       });
     }
   }
@@ -39,6 +44,7 @@ class _IntrestsState extends State<Intrests> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     List<String> predefinedInterests = [
       S.of(context).health,
@@ -84,6 +90,7 @@ class _IntrestsState extends State<Intrests> {
                 spacing: 8.0,
                 children: predefinedInterests.map((interest) {
                   return ChoiceChip(
+                    selectedColor: themeProvider.currentAppTheme.thirdColor,
                     label: Text(interest),
                     selected: selectedInterests.contains(interest),
                     onSelected: (bool selected) async {
@@ -93,7 +100,7 @@ class _IntrestsState extends State<Intrests> {
                             selectedInterests.add(interest);
                           } else {
                             Fluttertoast.showToast(
-                              msg: 'You can only select 5 interests.',
+                              msg: S.of(context).you_can_only_select,
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                             );

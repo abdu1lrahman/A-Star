@@ -46,6 +46,9 @@
     "english": "English",
     "arabic": "Arabic",
     "general": "General",
-    "notification": "Notifications"
-
+    "notification": "Notifications",
+    "theme": "Theme",
+    "enable_noti": "Enable Notifications",
+    "you_can_only_select": "You can only select 5 interests.",
+    "noti": "Notification"
 }
