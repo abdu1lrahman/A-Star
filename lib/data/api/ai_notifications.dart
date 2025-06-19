@@ -28,30 +28,32 @@ class AiNotifications {
     bool? gender = prefs.getBool('gender');
     String? language = prefs.getString('language');
 
-    debugPrint(intrests.toString());
-    var url = 'https://api.aimlapi.com/v1/chat/completions';
+    debugPrint("This is before parsing the api${intrests.toString()}");
+    var url = 'https://chat.groq.com/?model=deepseek-r1-distill-llama-70b';
     var headers = {
       "Authorization": "Bearer ${dotenv.env['apikey']}",
       "Content-Type": "application/json",
     };
     var data = {
-      "model": "gpt-4o-mini",
+      "model": "deepseek-r1-distill-llama-70b",
       "messages": [
         {
-          "role": "system",
+          "role": "user",
           "content":
-              '''Write a short (No more than three sentences) motivational message or an advice for a notifications app, the user name is
-            $name and he/she is $age years old ${gender == true ? 'male' : 'female'},
-            let the response match one or two of their intrests in ${intrests.toString()} and special intrests in ${specialIntrests.toString()},
-            make the response in $language with this format {"title":"...", "body":"..."},
-          '''
-        },
+              '''Write a short (No more than three sentences) motivational message or an advice
+           for a notifications app, the user name is $name and he/she is $age years old
+            ${gender == true ? 'male' : 'female'}, let the response match one or two of their intrests
+             in ${intrests.toString()} and special intrests in ${specialIntrests.toString()},
+             in $language, Respond only with raw JSON. Do not include markdown or explanations.
+              Format: {"title":"...", "body":"..."}
+              '''
+        }
       ],
       "stream": false,
       "stream_options": {"include_usage": true},
-      "top_p": 1,
-      "temperature": 1,
-      "stop": "",
+      "top_p": 0.7,
+      "temperature": 0.7,
+      "stop": null,
       "reasoning_effort": "low",
       "modalities": ["text"]
     };

@@ -75,7 +75,8 @@ class _MyAppState extends State<MyApp> {
             textTheme: GoogleFonts.notoKufiArabicTextTheme(),
           ),
 
-          home: widget.isFirstTime ? const Intro() : const Mainpage(),
+          // home: widget.isFirstTime ? const Intro() : const Mainpage(),
+          home: const Mainpage(),
         );
       },
     );

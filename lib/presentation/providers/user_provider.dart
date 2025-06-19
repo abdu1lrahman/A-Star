@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider extends ChangeNotifier {
-  String _userName = 'غفران';
-  bool _userGender = false;
-  int _userAge = 21;
+  String _userName = 'عبدالرحمن';
+  bool _userGender = true;
+  int _userAge = 20;
   File? _image = File('assets/icons/app_icon.png');
 
   String get userName => _userName;

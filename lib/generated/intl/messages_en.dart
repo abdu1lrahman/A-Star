@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "+ Add your own (e.g. AI, Law)",
     ),
     "age": MessageLookupByLibrary.simpleMessage("Select your age"),
+    "age1": MessageLookupByLibrary.simpleMessage("age"),
     "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
     "art": MessageLookupByLibrary.simpleMessage("Art"),
     "books": MessageLookupByLibrary.simpleMessage("Books"),
@@ -52,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "female": MessageLookupByLibrary.simpleMessage("Female"),
     "games": MessageLookupByLibrary.simpleMessage("Games"),
     "gender": MessageLookupByLibrary.simpleMessage("Select your gender"),
+    "gender1": MessageLookupByLibrary.simpleMessage("gender"),
     "general": MessageLookupByLibrary.simpleMessage("General"),
     "getstarted": MessageLookupByLibrary.simpleMessage("let\'s start"),
     "health": MessageLookupByLibrary.simpleMessage("health"),
@@ -73,11 +75,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "perfect": MessageLookupByLibrary.simpleMessage(
       "You are in the perfect place",
     ),
+    "personal_info": MessageLookupByLibrary.simpleMessage(
+      "Personal Informations",
+    ),
     "prev_messages": MessageLookupByLibrary.simpleMessage("Previous messages"),
     "prev_messages2": MessageLookupByLibrary.simpleMessage("messages"),
     "psychology": MessageLookupByLibrary.simpleMessage("Psychology"),
     "science": MessageLookupByLibrary.simpleMessage("Science"),
     "settings": MessageLookupByLibrary.simpleMessage("settings"),
+    "share_motivation": MessageLookupByLibrary.simpleMessage(
+      "share the motivation with your friend ❤",
+    ),
     "sport": MessageLookupByLibrary.simpleMessage("Sport"),
     "tech": MessageLookupByLibrary.simpleMessage("Tech"),
     "theme": MessageLookupByLibrary.simpleMessage("Theme"),
@@ -85,6 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "This information helps us generate personalized motivational messages for you",
     ),
     "travel": MessageLookupByLibrary.simpleMessage("Travel"),
+    "username": MessageLookupByLibrary.simpleMessage("username"),
     "wanna_be": MessageLookupByLibrary.simpleMessage(
       "Wanna be more positive and shine",
     ),

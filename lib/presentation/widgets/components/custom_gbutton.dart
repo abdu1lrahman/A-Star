@@ -11,9 +11,9 @@ GButton customGButton({
 }) {
   final themeProvider = Provider.of<ThemeProvider>(context);
   return GButton(
-    style: GnavStyle.google,
     gap: 2,
     icon: icon,
+    style: GnavStyle.google,
     iconSize: 23,
     text: text,
     textStyle: TextStyle(

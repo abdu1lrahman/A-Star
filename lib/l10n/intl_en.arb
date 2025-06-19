@@ -50,5 +50,10 @@
     "theme": "Theme",
     "enable_noti": "Enable Notifications",
     "you_can_only_select": "You can only select 5 interests.",
-    "noti": "Notification"
+    "noti": "Notification",
+    "personal_info": "Personal Informations",
+    "username": "username",
+    "age1": "age",
+    "gender1": "gender",
+    "share_motivation": "share the motivation with your friend ❤"
 }

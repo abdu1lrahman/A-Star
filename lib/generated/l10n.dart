@@ -409,6 +409,41 @@ class S {
   String get noti {
     return Intl.message('Notification', name: 'noti', desc: '', args: []);
   }
+
+  /// `Personal Informations`
+  String get personal_info {
+    return Intl.message(
+      'Personal Informations',
+      name: 'personal_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `username`
+  String get username {
+    return Intl.message('username', name: 'username', desc: '', args: []);
+  }
+
+  /// `age`
+  String get age1 {
+    return Intl.message('age', name: 'age1', desc: '', args: []);
+  }
+
+  /// `gender`
+  String get gender1 {
+    return Intl.message('gender', name: 'gender1', desc: '', args: []);
+  }
+
+  /// `share the motivation with your friend ❤`
+  String get share_motivation {
+    return Intl.message(
+      'share the motivation with your friend ❤',
+      name: 'share_motivation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

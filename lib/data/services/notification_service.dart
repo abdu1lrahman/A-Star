@@ -5,6 +5,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:you_are_a_star/data/api/ai_notifications.dart';
+import 'package:you_are_a_star/presentation/providers/notification_time_provider.dart';
 
 class NotificationService {
   final notificationPlugin = FlutterLocalNotificationsPlugin();
@@ -21,7 +22,8 @@ class NotificationService {
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
 
-    const initSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
+    const initSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/launcher_icon');
 
     const initSettingsIOS = DarwinInitializationSettings();
 
@@ -67,11 +69,10 @@ class NotificationService {
     );
   }
 
-  Future<void> scheduleNotification({
-    int id = 1,
-    List<TimeOfDay>? time ,
-  }) async {
+  Future<void> scheduleNotification() async {
     final now = tz.TZDateTime.now(tz.local);
+    List<TimeOfDay> hoursAndMinutes =
+        NotificationTimeProvider().notificationTimes;
     final times = [
       tz.TZDateTime(tz.local, now.year, now.month, now.day, 8, 00), // 8:00 AM
       tz.TZDateTime(tz.local, now.year, now.month, now.day, 14, 00), // 2:00 PM
@@ -86,7 +87,8 @@ class NotificationService {
         message[1],
         times[i],
         notificationDetails(message[0], message[1]),
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
       );

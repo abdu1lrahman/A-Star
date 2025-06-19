@@ -47,19 +47,19 @@ class _IntrestsState extends State<Intrests> {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     List<String> predefinedInterests = [
-      S.of(context).health,
-      S.of(context).sport,
-      S.of(context).tech,
-      S.of(context).books,
-      S.of(context).music,
-      S.of(context).art,
-      S.of(context).travel,
-      S.of(context).games,
-      S.of(context).science,
-      S.of(context).education,
-      S.of(context).history,
-      S.of(context).fashion,
-      S.of(context).psychology,
+      "health",
+      "sport",
+      "tech",
+      "books",
+      "music",
+      "art",
+      "travel",
+      "games",
+      "science",
+      "education",
+      "history",
+      "fashion",
+      "psychology",
     ];
 
     return Scaffold(
