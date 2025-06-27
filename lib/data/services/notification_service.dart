@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:you_are_a_star/data/api/ai_notifications.dart';
@@ -18,7 +17,6 @@ class NotificationService {
     }
     if (_isInitialized) return;
 
-    tz.initializeTimeZones();
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
 
@@ -71,27 +69,54 @@ class NotificationService {
 
   Future<void> scheduleNotification() async {
     final now = tz.TZDateTime.now(tz.local);
-    List<TimeOfDay> hoursAndMinutes =
-        NotificationTimeProvider().notificationTimes;
+
+    List<TimeOfDay> newTimes = NotificationTimeProvider().notificationTimes;
+
     final times = [
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, 8, 00), // 8:00 AM
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, 14, 00), // 2:00 PM
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, 22, 47), // 8:00 PM
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, newTimes[0].hour,
+          newTimes[0].minute),
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, newTimes[1].hour,
+          newTimes[1].minute),
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, newTimes[2].hour,
+          newTimes[2].minute),
     ];
 
     for (int i = 0; i < times.length; i++) {
       var message = await AiNotifications().requestAIMessage();
       await notificationPlugin.zonedSchedule(
         i,
-        message[0],
-        message[1],
+        message?['title'],
+        message?['body'],
         times[i],
-        notificationDetails(message[0], message[1]),
+        notificationDetails(message?['title'], message?['body']),
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
       );
     }
+    debugPrint("========= Notification Scheduled =========");
+  }
+
+  Future<void> scheduleSpecialNotification(
+    int hour,
+    int minute,
+    String title,
+    String body,
+  ) async {
+    final now = tz.TZDateTime.now(tz.local);
+
+    await notificationPlugin.zonedSchedule(
+      3,
+      title,
+      body,
+      tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute),
+      notificationDetails(title, body),
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
+    debugPrint("========= Special Notification Scheduled =========");
   }
 }

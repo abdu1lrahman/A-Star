@@ -22,7 +22,7 @@ class _AccountState extends State<Account> {
   void fetchSavedIntrests() async {
     final prefs = await SharedPreferences.getInstance();
     var response = prefs.getStringList('intrests');
-    var specialIntrests = prefs.getString('special_intrests');
+    
 
     if (response != null) {
       setState(() {
@@ -33,7 +33,8 @@ class _AccountState extends State<Account> {
 
   Future<void> pickImage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
@@ -53,8 +54,7 @@ class _AccountState extends State<Account> {
     final userinfos = Provider.of<UserProvider>(context, listen: true);
     final themeProvider = Provider.of<ThemeProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
-    TextEditingController nameController = TextEditingController(text: userinfos.userName);
-    TextEditingController ageController = TextEditingController(text: userinfos.userAge.toString());
+    final screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).account)),
@@ -112,7 +112,8 @@ class _AccountState extends State<Account> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                    padding:
+                        const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                     child: Text(
                       S.of(context).personal_info,
                       style: TextStyle(
@@ -126,18 +127,19 @@ class _AccountState extends State<Account> {
                     thickness: 3,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                    padding:
+                        const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                     child: Row(
                       children: [
-                        Icon(Icons.account_box_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.account_box_outlined),
+                        const SizedBox(width: 8),
                         Text(
                           S.of(context).username,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(userinfos.userName)
                       ],
                     ),
@@ -147,14 +149,15 @@ class _AccountState extends State<Account> {
                     thickness: 3,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                    padding:
+                        const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                     child: Row(
                       children: [
-                        Icon(Icons.calendar_month_outlined),
+                        const Icon(Icons.calendar_month_outlined),
                         const SizedBox(width: 8.0),
                         Text(
                           S.of(context).age1,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 8.0),
                         Text(userinfos.userAge.toString()),
@@ -166,18 +169,21 @@ class _AccountState extends State<Account> {
                     thickness: 3,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                    padding:
+                        const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                     child: Row(
                       children: [
-                        Icon(Icons.theater_comedy_sharp),
+                        const Icon(Icons.theater_comedy_sharp),
                         const SizedBox(width: 8.0),
                         Text(
                           S.of(context).gender1,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          userinfos.userGender == true ? S.of(context).male : S.of(context).female,
+                          userinfos.userGender == true
+                              ? S.of(context).male
+                              : S.of(context).female,
                         ),
                       ],
                     ),
@@ -187,18 +193,18 @@ class _AccountState extends State<Account> {
                     thickness: 3,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                    padding:
+                        const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                     child: Row(
                       children: [
-                        Icon(Icons.interests),
+                        const Icon(Icons.interests),
                         const SizedBox(width: 8.0),
                         Text(
                           S.of(context).intrests,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          
                           selectedInterests
                               .toString()
                               .replaceAll('{', '')
@@ -211,7 +217,24 @@ class _AccountState extends State<Account> {
                 ],
               ),
             ),
-          )
+          ),
+          SizedBox(height: screenheight * 0.079),
+          Text(
+            'This app was developed by Abdulrahman',
+            style: TextStyle(fontSize: screenWidth * 0.04),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('built with Flutter Framework'),
+              const SizedBox(width: 3),
+              Image.asset(
+                'assets/icons/flutter_icon.png',
+                width: 30,
+              ),
+            ],
+          ),
+          const Text('All rights reserved 2025'),
         ],
       ),
     );

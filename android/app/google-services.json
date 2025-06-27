@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "400516322423",
+    "project_id": "astar-ad5e0",
+    "storage_bucket": "astar-ad5e0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400516322423:android:aecc90dfcf1ed04d592272",
+        "android_client_info": {
+          "package_name": "com.example.you_are_a_star"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDueY45ZQh7PnYAGqLQOvdCFmIpG6q_0so"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

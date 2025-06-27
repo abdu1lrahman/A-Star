@@ -55,5 +55,13 @@
     "username": "username",
     "age1": "age",
     "gender1": "gender",
-    "share_motivation": "share the motivation with your friend ❤"
+    "share_motivation": "share the motivation with your friend ❤",
+    "no_prev": "No Previous messages available.",
+    "today_quote": "Quote of the day",
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening",
+    "night": "Good night",
+    "todayQuote_message_error": "There was an error while getting your daily quote\n Please check your internet connection and try again",
+    "archived_message_confirm": "The messages scheduled successfully"
 }

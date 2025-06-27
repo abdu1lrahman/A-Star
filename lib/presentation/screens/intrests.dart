@@ -24,7 +24,8 @@ class _IntrestsState extends State<Intrests> {
     if (response != null) {
       setState(() {
         selectedInterests = response.toSet();
-        intrestController.value = TextEditingValue(text: specialIntrests.toString());
+        intrestController.value =
+            TextEditingValue(text: specialIntrests.toString());
       });
     }
   }
@@ -90,7 +91,7 @@ class _IntrestsState extends State<Intrests> {
                 spacing: 8.0,
                 children: predefinedInterests.map((interest) {
                   return ChoiceChip(
-                    selectedColor: themeProvider.currentAppTheme.thirdColor,
+                    selectedColor: themeProvider.currentAppTheme.mainColor,
                     label: Text(interest),
                     selected: selectedInterests.contains(interest),
                     onSelected: (bool selected) async {
@@ -110,14 +111,16 @@ class _IntrestsState extends State<Intrests> {
                         }
                       });
                       final prefs = await SharedPreferences.getInstance();
-                      prefs.setStringList('intrests', selectedInterests.toList());
+                      prefs.setStringList(
+                          'intrests', selectedInterests.toList());
                     },
                   );
                 }).toList(),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
               child: TextField(
                 onSubmitted: (value) {
                   setState(() async {
@@ -134,7 +137,8 @@ class _IntrestsState extends State<Intrests> {
                   ),
                   hintText: S.of(context).add_your_own,
                   hintStyle: const TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
                 ),
               ),
             ),

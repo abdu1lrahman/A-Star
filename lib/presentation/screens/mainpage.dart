@@ -20,7 +20,7 @@ class Mainpage extends StatefulWidget {
 class _HomeState extends State<Mainpage> {
   int selectedIndex = 0;
   List pages = [
-    Home(),
+    const Home(),
     const PrevMessages(),
     const Intrests(),
     const Account(),

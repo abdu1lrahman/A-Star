@@ -1,0 +1,2 @@
+C:/Users/Abdulrahman/Desktop/flutter_projects/you_are_a_star/android/app/.cxx/RelWithDebInfo/3u605o6u/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/Abdulrahman/Desktop/flutter_projects/you_are_a_star/android/app/.cxx/RelWithDebInfo/3u605o6u/arm64-v8a/CMakeFiles/rebuild_cache.dir

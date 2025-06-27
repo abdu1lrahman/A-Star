@@ -25,8 +25,7 @@ class _SettingsPageState extends State<Settings> {
   Widget build(BuildContext context) {
     final langProvider = Provider.of<LanguageProvider>(context, listen: false);
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    final timeProvider =
-        Provider.of<NotificationTimeProvider>(context, listen: false);
+    final timeProvider = Provider.of<NotificationTimeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).settings)),
@@ -34,8 +33,6 @@ class _SettingsPageState extends State<Settings> {
         padding: const EdgeInsets.all(16),
         children: [
           _buildSectionHeader(S.of(context).general),
-          ////////////////////////////////////////////////
-          ////////////////////////////////////////////////
           _buildDropdownTile(
             S.of(context).language,
             langProvider.local.languageCode == 'en' ? 'English' : 'العربية',
@@ -44,8 +41,6 @@ class _SettingsPageState extends State<Settings> {
               langProvider.changeLocale((val == "English") ? 'en' : 'ar');
             },
           ),
-          ////////////////////////////////////////////////
-          ////////////////////////////////////////////////
           _buildDropdownTile(
             S.of(context).theme,
             _theme,
@@ -58,8 +53,6 @@ class _SettingsPageState extends State<Settings> {
             },
             itemBuilder: (val) => _getThemeImage(val),
           ),
-          ////////////////////////////////////////////////
-          ////////////////////////////////////////////////
           const SizedBox(height: 20),
           _buildSectionHeader(S.of(context).notification),
           SwitchListTile(

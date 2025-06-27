@@ -26,9 +26,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "add_your_own": MessageLookupByLibrary.simpleMessage(
       "+ أضف اهتمامات أخرى (مثل: AI, القانون)",
     ),
+    "afternoon": MessageLookupByLibrary.simpleMessage("نهارك سعيد"),
     "age": MessageLookupByLibrary.simpleMessage("اختر عمرك"),
     "age1": MessageLookupByLibrary.simpleMessage("العمر"),
     "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
+    "archived_message_confirm": MessageLookupByLibrary.simpleMessage(
+      "تم جدولة الرسالة بنجاح",
+    ),
     "art": MessageLookupByLibrary.simpleMessage("رسم"),
     "books": MessageLookupByLibrary.simpleMessage("كتب"),
     "change_language": MessageLookupByLibrary.simpleMessage(
@@ -45,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "أدخل اسمك لنرسل لك إشعارات مخصصة أكثر",
     ),
     "enter_new_name": MessageLookupByLibrary.simpleMessage("أدخل اسمك الجديد"),
+    "evening": MessageLookupByLibrary.simpleMessage("مساء الخير"),
     "fashion": MessageLookupByLibrary.simpleMessage("موضة"),
     "female": MessageLookupByLibrary.simpleMessage("أنثى"),
     "games": MessageLookupByLibrary.simpleMessage("ألعاب"),
@@ -63,9 +68,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "lets": MessageLookupByLibrary.simpleMessage("دعنا نبدأ"),
     "letsgo": MessageLookupByLibrary.simpleMessage("لنبدأ"),
     "male": MessageLookupByLibrary.simpleMessage("ذكر"),
+    "morning": MessageLookupByLibrary.simpleMessage("صباح الخير"),
     "music": MessageLookupByLibrary.simpleMessage("موسيقى"),
     "name": MessageLookupByLibrary.simpleMessage("ما اسمك؟"),
+    "night": MessageLookupByLibrary.simpleMessage("مساء الخير"),
     "no": MessageLookupByLibrary.simpleMessage("لا"),
+    "no_prev": MessageLookupByLibrary.simpleMessage("لا يوجد رسائل محفوظة"),
     "noti": MessageLookupByLibrary.simpleMessage("الإشعار"),
     "notification": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "perfect": MessageLookupByLibrary.simpleMessage("أنت في المكان المناسب"),
@@ -84,6 +92,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "this_info": MessageLookupByLibrary.simpleMessage(
       "هذه المعلومات تساعدنا في توليد اشعارات مخصصة لك بالذكاء الصناعي",
     ),
+    "todayQuote_message_error": MessageLookupByLibrary.simpleMessage(
+      "حصل خطأ عند طلب حكمة اليوم الخاصة بك الرجاء التأكد من الاتصال بالانترنت والمحاولة مجددا",
+    ),
+    "today_quote": MessageLookupByLibrary.simpleMessage("حكمة اليوم"),
     "travel": MessageLookupByLibrary.simpleMessage("السفر"),
     "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
     "wanna_be": MessageLookupByLibrary.simpleMessage(

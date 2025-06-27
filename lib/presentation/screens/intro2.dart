@@ -197,7 +197,7 @@ class _LoginState extends State<Login> {
                           (Route<dynamic> route) => false,
                         );
                         final prefs = await SharedPreferences.getInstance();
-                        prefs.setBool('isFirstTime', true);
+                        prefs.setBool('isFirstTime', false);
                       },
                     ),
                   ),

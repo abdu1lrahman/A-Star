@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+// ignore: camel_case_types
 class theme1 {
   static Color mainColor = const Color(0xffD8E2DC);
   static Color secondColor = const Color(0xffFFE5D9);
@@ -9,6 +10,7 @@ class theme1 {
   static Color sixthColor = const Color(0xffb4919b);
 }
 
+// ignore: camel_case_types
 class theme2 {
   static Color mainColor = const Color(0xffFFE6A7);
   static Color secondColor = const Color(0xffBB9457);

@@ -26,9 +26,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "add_your_own": MessageLookupByLibrary.simpleMessage(
       "+ Add your own (e.g. AI, Law)",
     ),
+    "afternoon": MessageLookupByLibrary.simpleMessage("Good afternoon"),
     "age": MessageLookupByLibrary.simpleMessage("Select your age"),
     "age1": MessageLookupByLibrary.simpleMessage("age"),
     "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
+    "archived_message_confirm": MessageLookupByLibrary.simpleMessage(
+      "The messages scheduled successfully",
+    ),
     "art": MessageLookupByLibrary.simpleMessage("Art"),
     "books": MessageLookupByLibrary.simpleMessage("Books"),
     "change_language": MessageLookupByLibrary.simpleMessage(
@@ -49,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "enter_new_name": MessageLookupByLibrary.simpleMessage(
       "Enter your new name",
     ),
+    "evening": MessageLookupByLibrary.simpleMessage("Good evening"),
     "fashion": MessageLookupByLibrary.simpleMessage("Fashion"),
     "female": MessageLookupByLibrary.simpleMessage("Female"),
     "games": MessageLookupByLibrary.simpleMessage("Games"),
@@ -67,9 +72,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "lets": MessageLookupByLibrary.simpleMessage("Let\'s get you started"),
     "letsgo": MessageLookupByLibrary.simpleMessage("Let\'s go"),
     "male": MessageLookupByLibrary.simpleMessage("Male"),
+    "morning": MessageLookupByLibrary.simpleMessage("Good morning"),
     "music": MessageLookupByLibrary.simpleMessage("Music"),
     "name": MessageLookupByLibrary.simpleMessage("What\'s your name?"),
+    "night": MessageLookupByLibrary.simpleMessage("Good night"),
     "no": MessageLookupByLibrary.simpleMessage("No"),
+    "no_prev": MessageLookupByLibrary.simpleMessage(
+      "No Previous messages available.",
+    ),
     "noti": MessageLookupByLibrary.simpleMessage("Notification"),
     "notification": MessageLookupByLibrary.simpleMessage("Notifications"),
     "perfect": MessageLookupByLibrary.simpleMessage(
@@ -92,6 +102,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "this_info": MessageLookupByLibrary.simpleMessage(
       "This information helps us generate personalized motivational messages for you",
     ),
+    "todayQuote_message_error": MessageLookupByLibrary.simpleMessage(
+      "There was an error while getting your daily quote\n Please check your internet connection and try again",
+    ),
+    "today_quote": MessageLookupByLibrary.simpleMessage("Quote of the day"),
     "travel": MessageLookupByLibrary.simpleMessage("Travel"),
     "username": MessageLookupByLibrary.simpleMessage("username"),
     "wanna_be": MessageLookupByLibrary.simpleMessage(

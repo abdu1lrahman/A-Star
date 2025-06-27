@@ -444,6 +444,71 @@ class S {
       args: [],
     );
   }
+
+  /// `No Previous messages available.`
+  String get no_prev {
+    return Intl.message(
+      'No Previous messages available.',
+      name: 'no_prev',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quote of the day`
+  String get today_quote {
+    return Intl.message(
+      'Quote of the day',
+      name: 'today_quote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Good morning`
+  String get morning {
+    return Intl.message('Good morning', name: 'morning', desc: '', args: []);
+  }
+
+  /// `Good afternoon`
+  String get afternoon {
+    return Intl.message(
+      'Good afternoon',
+      name: 'afternoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Good evening`
+  String get evening {
+    return Intl.message('Good evening', name: 'evening', desc: '', args: []);
+  }
+
+  /// `Good night`
+  String get night {
+    return Intl.message('Good night', name: 'night', desc: '', args: []);
+  }
+
+  /// `There was an error while getting your daily quote\n Please check your internet connection and try again`
+  String get todayQuote_message_error {
+    return Intl.message(
+      'There was an error while getting your daily quote\n Please check your internet connection and try again',
+      name: 'todayQuote_message_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The messages scheduled successfully`
+  String get archived_message_confirm {
+    return Intl.message(
+      'The messages scheduled successfully',
+      name: 'archived_message_confirm',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
 
 class NotificationTimeProvider extends ChangeNotifier {
-  List<TimeOfDay> _notificationTimes = [
-    TimeOfDay(hour: 8, minute: 00),
-    TimeOfDay(hour: 14, minute: 00),
-    TimeOfDay(hour: 20, minute: 00),
+  final List<TimeOfDay> _notificationTimes = [
+    const TimeOfDay(hour: 8, minute: 00),
+    const TimeOfDay(hour: 14, minute: 00),
+    const TimeOfDay(hour: 20, minute: 00),
   ];
+
   List<TimeOfDay> get notificationTimes => _notificationTimes;
 
-  void changeNotificationTime(TimeOfDay newTime, int index) {
-    _notificationTimes[index] = newTime;
+  void changeNotificationTime(TimeOfDay newTime, int index) async {
+    switch (index) {
+      case 0:
+        {
+          _notificationTimes[index] = newTime;
+        }
+        break;
+      case 1:
+        {
+          _notificationTimes[index] = newTime;
+        }
+        break;
+      case 2:
+        {
+          _notificationTimes[index] = newTime;
+        }
+        break;
+      default:
+    }
     notifyListeners();
   }
 }
