@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
-import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
-import 'package:you_are_a_star/presentation/providers/user_provider.dart';
+import 'package:you_are_a_star/providers/theme_provider.dart';
+import 'package:you_are_a_star/providers/user_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Account extends StatefulWidget {
@@ -22,8 +22,6 @@ class _AccountState extends State<Account> {
   void fetchSavedIntrests() async {
     final prefs = await SharedPreferences.getInstance();
     var response = prefs.getStringList('intrests');
-    
-
     if (response != null) {
       setState(() {
         selectedInterests = response.toSet();
@@ -44,23 +42,18 @@ class _AccountState extends State<Account> {
   }
 
   @override
-  void initState() {
-    fetchSavedIntrests();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final userinfos = Provider.of<UserProvider>(context, listen: true);
     final themeProvider = Provider.of<ThemeProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenheight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).account)),
       body: Column(
         children: [
           const SizedBox(height: 20),
+          // The user Image
           Center(
             child: InkWell(
               onTap: pickImage,
@@ -87,10 +80,11 @@ class _AccountState extends State<Account> {
                 style: TextStyle(color: Colors.red),
               ),
             ),
+          // The user name
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              userinfos.userName,
+              userinfos.userName!,
               style: TextStyle(
                 fontSize: screenWidth * 0.06,
                 fontWeight: FontWeight.bold,
@@ -140,7 +134,7 @@ class _AccountState extends State<Account> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Text(userinfos.userName)
+                        Text(userinfos.userName!)
                       ],
                     ),
                   ),
@@ -218,7 +212,7 @@ class _AccountState extends State<Account> {
               ),
             ),
           ),
-          SizedBox(height: screenheight * 0.079),
+          SizedBox(height: screenHeight * 0.079),
           Text(
             'This app was developed by Abdulrahman',
             style: TextStyle(fontSize: screenWidth * 0.04),

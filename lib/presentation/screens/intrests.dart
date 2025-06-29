@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
+import 'package:you_are_a_star/providers/theme_provider.dart';
 
 class Intrests extends StatefulWidget {
   const Intrests({super.key});

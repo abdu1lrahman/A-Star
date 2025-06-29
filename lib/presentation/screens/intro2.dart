@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
-import 'package:you_are_a_star/presentation/providers/user_provider.dart';
+import 'package:you_are_a_star/providers/user_provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -161,13 +161,15 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: TextField(
-                      onSubmitted: (value) {
+                      onSubmitted: (value) async {
                         userProvider.changeName(name.text);
                         Navigator.pushNamedAndRemoveUntil(
                           context,
                           "mainPage",
                           (Route<dynamic> route) => false,
                         );
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool('isFirstTime', false);
                       },
                       controller: name,
                       decoration: InputDecoration(
@@ -180,7 +182,8 @@ class _LoginState extends State<Login> {
                   Visibility(
                     visible: _isButtonVisible,
                     child: MaterialButton(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
                       color: Colors.indigo,
                       child: Text(
                         S.of(context).letsgo,
@@ -197,7 +200,7 @@ class _LoginState extends State<Login> {
                           (Route<dynamic> route) => false,
                         );
                         final prefs = await SharedPreferences.getInstance();
-                        prefs.setBool('isFirstTime', false);
+                        await prefs.setBool('isFirstTime', false);
                       },
                     ),
                   ),

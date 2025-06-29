@@ -4,14 +4,12 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:you_are_a_star/data/api/ai_notifications.dart';
 import 'package:you_are_a_star/data/api/ai_quote.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
-import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
-import 'package:you_are_a_star/presentation/providers/language_provider.dart';
-import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
-import 'package:you_are_a_star/presentation/providers/user_provider.dart';
+import 'package:you_are_a_star/providers/language_provider.dart';
+import 'package:you_are_a_star/providers/theme_provider.dart';
+import 'package:you_are_a_star/providers/user_provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -145,7 +143,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Future<void> getTodayQuote() async {
     try {
       // TODO : Fix the today's AI quote language
-      final quote = await AiQuote().getAiQoute('en');
+      final quote = await AiQuote().getAiQoute('ar');
       final today = DateTime.now().toIso8601String().substring(0, 10);
 
       // Save the new quote and date
@@ -320,7 +318,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               onPressed: () {
                 getTodayQuote();
               },
-              child: Text('Get new Quote'),
+              child: Text(S.of(context).get_new_quote),
             ),
           ],
         ),

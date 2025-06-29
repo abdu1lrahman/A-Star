@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
-import 'package:you_are_a_star/presentation/providers/language_provider.dart';
-import 'package:you_are_a_star/presentation/providers/notification_time_provider.dart';
-import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
+import 'package:you_are_a_star/providers/language_provider.dart';
+import 'package:you_are_a_star/providers/notification_time_provider.dart';
+import 'package:you_are_a_star/providers/theme_provider.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -81,7 +81,6 @@ class _SettingsPageState extends State<Settings> {
                 );
               },
             ),
-
           const SizedBox(height: 20),
           _buildSectionHeader(S.of(context).account),
           ElevatedButton(

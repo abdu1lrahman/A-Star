@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
-import 'package:you_are_a_star/presentation/providers/language_provider.dart';
+import 'package:you_are_a_star/providers/language_provider.dart';
 
 class Intro extends StatefulWidget {
   const Intro({super.key});

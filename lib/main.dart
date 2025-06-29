@@ -7,13 +7,13 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
-import 'package:you_are_a_star/presentation/providers/notification_time_provider.dart';
-import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
-import 'package:you_are_a_star/presentation/providers/user_provider.dart';
+import 'package:you_are_a_star/providers/notification_time_provider.dart';
+import 'package:you_are_a_star/providers/theme_provider.dart';
+import 'package:you_are_a_star/providers/user_provider.dart';
 import 'package:you_are_a_star/presentation/screens/mainpage.dart';
 import 'package:you_are_a_star/presentation/screens/intro.dart';
 import 'package:you_are_a_star/presentation/screens/intro2.dart';
-import 'package:you_are_a_star/presentation/providers/language_provider.dart';
+import 'package:you_are_a_star/providers/language_provider.dart';
 import 'package:you_are_a_star/presentation/widgets/components/custom_app_bar.dart';
 import 'firebase_options.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -21,15 +21,14 @@ import 'package:timezone/data/latest.dart' as tz;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "constants.env");
+  final prefs = await SharedPreferences.getInstance();
+  final isFirstTime = prefs.getBool('isFirstTime') ?? true;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   tz.initializeTimeZones();
   NotificationService().initNotification();
   NotificationService().scheduleNotification();
-  final prefs = await SharedPreferences.getInstance();
-  final isFirstTime = prefs.getBool('isFirstTime') ?? true;
-
   runApp(
     MultiProvider(
       providers: [
@@ -38,57 +37,69 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => NotificationTimeProvider()),
       ],
-      child: MyApp(isFirstTime: isFirstTime),
+      child: MyApp(
+        isFirstTime: isFirstTime,
+        prefs: prefs,
+      ),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
   final bool isFirstTime;
-  const MyApp({super.key, required this.isFirstTime});
+  final SharedPreferences prefs;
+  const MyApp({super.key, required this.isFirstTime, required this.prefs});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  void triggerGetUserData() async {
+    UserProvider().getUserData(widget.prefs);
+  }
+
+  void setLanguage(SharedPreferences prefs) async {
+    String language = prefs.getString("language") ?? "ar";
+    LanguageProvider().setLocale(Locale(language));
+  }
+
+  @override
+  void initState() {
+    triggerGetUserData();
+    setLanguage(widget.prefs);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final languageProvider =
-        Provider.of<LanguageProvider>(context, listen: true);
-
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        return MaterialApp(
-          title: "A Star",
-          debugShowCheckedModeBanner: false,
-          routes: {
-            "mainPage": (context) => const Mainpage(),
-            "intro": (context) => const Intro(),
-            "login": (context) => const Login(),
-          },
-          // This one is for the app language
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
-          ],
-          supportedLocales: const [
-            Locale('en'),
-            Locale('ar'),
-          ],
-          locale: languageProvider.local,
-          theme: ThemeData(
-            appBarTheme: appBarTheme(context),
-            // The font used in the app is notoKufiArabicTextTheme
-            textTheme: GoogleFonts.notoKufiArabicTextTheme(),
-          ),
-
-          // home: widget.isFirstTime ? const Intro() : const Mainpage(),
-          home: const Mainpage(),
-        );
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    return MaterialApp(
+      title: "A Star",
+      debugShowCheckedModeBanner: false,
+      routes: {
+        "mainPage": (context) => const Mainpage(),
+        "intro": (context) => const Intro(),
+        "login": (context) => const Login(),
       },
+      // This one is for the app language
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
+      ],
+      locale: languageProvider.local,
+      theme: ThemeData(
+        appBarTheme: appBarTheme(context),
+        // The font used in the app is notoKufiArabicTextTheme
+        textTheme: GoogleFonts.notoKufiArabicTextTheme(),
+      ),
+      home: widget.isFirstTime ? const Intro() : const Mainpage(),
     );
   }
 }

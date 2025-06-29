@@ -4,7 +4,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:you_are_a_star/data/api/ai_notifications.dart';
-import 'package:you_are_a_star/presentation/providers/notification_time_provider.dart';
+import 'package:you_are_a_star/providers/notification_time_provider.dart';
 
 class NotificationService {
   final notificationPlugin = FlutterLocalNotificationsPlugin();

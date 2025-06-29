@@ -60,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "gender": MessageLookupByLibrary.simpleMessage("Select your gender"),
     "gender1": MessageLookupByLibrary.simpleMessage("gender"),
     "general": MessageLookupByLibrary.simpleMessage("General"),
+    "get_new_quote": MessageLookupByLibrary.simpleMessage("Get new quote"),
     "getstarted": MessageLookupByLibrary.simpleMessage("let\'s start"),
     "health": MessageLookupByLibrary.simpleMessage("health"),
     "history": MessageLookupByLibrary.simpleMessage("History"),

@@ -63,5 +63,6 @@
     "evening": "مساء الخير",
     "night": "مساء الخير",
     "todayQuote_message_error": "حصل خطأ عند طلب حكمة اليوم الخاصة بك الرجاء التأكد من الاتصال بالانترنت والمحاولة مجددا",
-    "archived_message_confirm": "تم جدولة الرسالة بنجاح"
+    "archived_message_confirm": "تم جدولة الرسالة بنجاح",
+    "get_new_quote": "أطلب حكمة جديدة"
 }

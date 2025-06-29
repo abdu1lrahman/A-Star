@@ -56,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "gender": MessageLookupByLibrary.simpleMessage("اختر جنسك"),
     "gender1": MessageLookupByLibrary.simpleMessage("الجنس"),
     "general": MessageLookupByLibrary.simpleMessage("عامة"),
+    "get_new_quote": MessageLookupByLibrary.simpleMessage("أطلب حكمة جديدة"),
     "getstarted": MessageLookupByLibrary.simpleMessage("لنبدأ"),
     "health": MessageLookupByLibrary.simpleMessage("الصحة"),
     "history": MessageLookupByLibrary.simpleMessage("التاريخ"),

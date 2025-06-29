@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:you_are_a_star/presentation/providers/language_provider.dart';
-import 'package:you_are_a_star/presentation/providers/user_provider.dart';
+import 'package:you_are_a_star/providers/language_provider.dart';
+import 'package:you_are_a_star/providers/user_provider.dart';
 
 class BaseContainer extends StatelessWidget {
   final String imagepath;

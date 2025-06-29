@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
-import 'package:you_are_a_star/presentation/providers/language_provider.dart';
-import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
+import 'package:you_are_a_star/providers/language_provider.dart';
+import 'package:you_are_a_star/providers/theme_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PrevMessages extends StatefulWidget {

@@ -509,6 +509,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Get new quote`
+  String get get_new_quote {
+    return Intl.message(
+      'Get new quote',
+      name: 'get_new_quote',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

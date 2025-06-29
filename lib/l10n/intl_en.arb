@@ -63,5 +63,6 @@
     "evening": "Good evening",
     "night": "Good night",
     "todayQuote_message_error": "There was an error while getting your daily quote\n Please check your internet connection and try again",
-    "archived_message_confirm": "The messages scheduled successfully"
+    "archived_message_confirm": "The messages scheduled successfully",
+    "get_new_quote": "Get new quote"
 }

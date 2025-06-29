@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:you_are_a_star/presentation/providers/theme_provider.dart';
+import 'package:you_are_a_star/providers/theme_provider.dart';
 import 'package:you_are_a_star/presentation/screens/account.dart';
 import 'package:you_are_a_star/presentation/screens/home.dart';
 import 'package:you_are_a_star/presentation/screens/intrests.dart';
