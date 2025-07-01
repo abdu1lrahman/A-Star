@@ -35,6 +35,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "art": MessageLookupByLibrary.simpleMessage("رسم"),
     "books": MessageLookupByLibrary.simpleMessage("كتب"),
+    "built_with": MessageLookupByLibrary.simpleMessage(
+      "تم بناءه باستخدام بيئة التطوير Flutter",
+    ),
     "change_language": MessageLookupByLibrary.simpleMessage(
       "هل تريد تغيير لغة التطبيق والإشعارات؟",
     ),
@@ -82,6 +85,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "prev_messages": MessageLookupByLibrary.simpleMessage("الرسائل السابقة"),
     "prev_messages2": MessageLookupByLibrary.simpleMessage("الرسائل"),
     "psychology": MessageLookupByLibrary.simpleMessage("علم النفس"),
+    "rights": MessageLookupByLibrary.simpleMessage("جميع الحقوق محفوظة 2025"),
     "science": MessageLookupByLibrary.simpleMessage("علوم"),
     "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
     "share_motivation": MessageLookupByLibrary.simpleMessage(
@@ -90,6 +94,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
     "tech": MessageLookupByLibrary.simpleMessage("التقنيات"),
     "theme": MessageLookupByLibrary.simpleMessage("ألوان التطبيق"),
+    "this_app_was_developed": MessageLookupByLibrary.simpleMessage(
+      "تم تطوير هذا التطبيق من قبل عبدالرحمن",
+    ),
     "this_info": MessageLookupByLibrary.simpleMessage(
       "هذه المعلومات تساعدنا في توليد اشعارات مخصصة لك بالذكاء الصناعي",
     ),

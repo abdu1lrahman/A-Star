@@ -35,6 +35,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "art": MessageLookupByLibrary.simpleMessage("Art"),
     "books": MessageLookupByLibrary.simpleMessage("Books"),
+    "built_with": MessageLookupByLibrary.simpleMessage(
+      "built with Flutter Framework",
+    ),
     "change_language": MessageLookupByLibrary.simpleMessage(
       "Do you want to change the app and notifications language?",
     ),
@@ -92,6 +95,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "prev_messages": MessageLookupByLibrary.simpleMessage("Previous messages"),
     "prev_messages2": MessageLookupByLibrary.simpleMessage("messages"),
     "psychology": MessageLookupByLibrary.simpleMessage("Psychology"),
+    "rights": MessageLookupByLibrary.simpleMessage("All rights reserved 2025"),
     "science": MessageLookupByLibrary.simpleMessage("Science"),
     "settings": MessageLookupByLibrary.simpleMessage("settings"),
     "share_motivation": MessageLookupByLibrary.simpleMessage(
@@ -100,6 +104,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "sport": MessageLookupByLibrary.simpleMessage("Sport"),
     "tech": MessageLookupByLibrary.simpleMessage("Tech"),
     "theme": MessageLookupByLibrary.simpleMessage("Theme"),
+    "this_app_was_developed": MessageLookupByLibrary.simpleMessage(
+      "This app was developed by Abdulrahman",
+    ),
     "this_info": MessageLookupByLibrary.simpleMessage(
       "This information helps us generate personalized motivational messages for you",
     ),

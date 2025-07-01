@@ -121,6 +121,7 @@ class _PrevMessagesState extends State<PrevMessages> {
                                     prevMessages[index]['body'],
                                   ); // TODO: the toast message doesn't appear doto build context across asnyc gaps error
                                   Fluttertoast.showToast(
+                                    // ignore: use_build_context_synchronously
                                     msg: S.of(context).archived_message_confirm,
                                   );
                                 },

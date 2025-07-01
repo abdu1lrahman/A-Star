@@ -519,6 +519,36 @@ class S {
       args: [],
     );
   }
+
+  /// `This app was developed by Abdulrahman`
+  String get this_app_was_developed {
+    return Intl.message(
+      'This app was developed by Abdulrahman',
+      name: 'this_app_was_developed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `built with Flutter Framework`
+  String get built_with {
+    return Intl.message(
+      'built with Flutter Framework',
+      name: 'built_with',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All rights reserved 2025`
+  String get rights {
+    return Intl.message(
+      'All rights reserved 2025',
+      name: 'rights',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

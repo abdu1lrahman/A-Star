@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/presentation/screens/intrests.dart';
 import 'package:you_are_a_star/providers/theme_provider.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,6 +28,18 @@ class _AccountState extends State<Account> {
         selectedInterests = response.toSet();
       });
     }
+  }
+
+  @override
+  void initState() {
+    fetchSavedIntrests();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    fetchSavedIntrests();
+    super.didChangeDependencies();
   }
 
   Future<void> pickImage() async {
@@ -94,7 +107,7 @@ class _AccountState extends State<Account> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Container(
-              height: 245,
+              height: 255,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
@@ -198,12 +211,16 @@ class _AccountState extends State<Account> {
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 8.0),
-                        Text(
-                          selectedInterests
-                              .toString()
-                              .replaceAll('{', '')
-                              .replaceAll('}', '')
-                              .replaceAll(',', ' .'),
+                        Flexible(
+                          child: Text(
+                            selectedInterests
+                                .map(
+                                  (e) => S.of(context).getInterestLabel(e),
+                                )
+                                .join(' · '),
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                          ),
                         ),
                       ],
                     ),
@@ -214,13 +231,13 @@ class _AccountState extends State<Account> {
           ),
           SizedBox(height: screenHeight * 0.079),
           Text(
-            'This app was developed by Abdulrahman',
+            S.of(context).this_app_was_developed,
             style: TextStyle(fontSize: screenWidth * 0.04),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('built with Flutter Framework'),
+              Text(S.of(context).built_with),
               const SizedBox(width: 3),
               Image.asset(
                 'assets/icons/flutter_icon.png',
@@ -228,7 +245,7 @@ class _AccountState extends State<Account> {
               ),
             ],
           ),
-          const Text('All rights reserved 2025'),
+          Text(S.of(context).rights),
         ],
       ),
     );

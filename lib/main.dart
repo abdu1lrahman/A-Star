@@ -27,6 +27,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   tz.initializeTimeZones();
+  NotificationTimeProvider().getNotificationTimes();
   NotificationService().initNotification();
   NotificationService().scheduleNotification();
   runApp(
@@ -68,6 +69,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     triggerGetUserData();
     setLanguage(widget.prefs);
+    
     super.initState();
   }
 

@@ -167,6 +167,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         };
       });
       Fluttertoast.showToast(
+        // ignore: use_build_context_synchronously
         msg: S.of(context).todayQuote_message_error,
         toastLength: Toast.LENGTH_LONG,
       );
@@ -226,6 +227,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
+                                // ignore: deprecated_member_use
                                 color: Colors.black.withOpacity(0.5),
                                 blurRadius: 10,
                                 offset: const Offset(0, 2),
@@ -249,6 +251,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                     decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
+                                          // ignore: deprecated_member_use
                                           color: Colors.black.withOpacity(0.5),
                                           blurRadius: 3,
                                           offset: const Offset(0, 2),

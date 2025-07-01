@@ -15,6 +15,21 @@ class Intrests extends StatefulWidget {
 class _IntrestsState extends State<Intrests> {
   Set<String> selectedInterests = {};
   TextEditingController intrestController = TextEditingController();
+  List<String> predefinedInterests = [
+    "health",
+    "sport",
+    "tech",
+    "books",
+    "music",
+    "art",
+    "travel",
+    "games",
+    "science",
+    "education",
+    "history",
+    "fashion",
+    "psychology",
+  ];
 
   void fetchSavedIntrests() async {
     final prefs = await SharedPreferences.getInstance();
@@ -47,22 +62,6 @@ class _IntrestsState extends State<Intrests> {
     final screenWidth = MediaQuery.of(context).size.width;
     final themeProvider = Provider.of<ThemeProvider>(context);
 
-    List<String> predefinedInterests = [
-      "health",
-      "sport",
-      "tech",
-      "books",
-      "music",
-      "art",
-      "travel",
-      "games",
-      "science",
-      "education",
-      "history",
-      "fashion",
-      "psychology",
-    ];
-
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).intrests)),
       body: Center(
@@ -92,7 +91,7 @@ class _IntrestsState extends State<Intrests> {
                 children: predefinedInterests.map((interest) {
                   return ChoiceChip(
                     selectedColor: themeProvider.currentAppTheme.mainColor,
-                    label: Text(interest),
+                    label: Text(S.of(context).getInterestLabel(interest)),
                     selected: selectedInterests.contains(interest),
                     onSelected: (bool selected) async {
                       setState(() {
@@ -146,5 +145,40 @@ class _IntrestsState extends State<Intrests> {
         ),
       ),
     );
+  }
+}
+
+extension InterestLocalization on S {
+  String getInterestLabel(String key) {
+    switch (key) {
+      case 'health':
+        return health;
+      case 'sport':
+        return sport;
+      case 'tech':
+        return tech;
+      case 'books':
+        return books;
+      case 'music':
+        return music;
+      case 'art':
+        return art;
+      case 'travel':
+        return travel;
+      case 'games':
+        return games;
+      case 'science':
+        return science;
+      case 'education':
+        return education;
+      case 'history':
+        return history;
+      case 'fashion':
+        return fashion;
+      case 'psychology':
+        return psychology;
+      default:
+        return key;
+    }
   }
 }

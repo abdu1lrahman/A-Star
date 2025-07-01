@@ -64,5 +64,8 @@
     "night": "Good night",
     "todayQuote_message_error": "There was an error while getting your daily quote\n Please check your internet connection and try again",
     "archived_message_confirm": "The messages scheduled successfully",
-    "get_new_quote": "Get new quote"
+    "get_new_quote": "Get new quote",
+    "this_app_was_developed": "This app was developed by Abdulrahman",
+    "built_with": "built with Flutter Framework",
+    "rights": "All rights reserved 2025"
 }
