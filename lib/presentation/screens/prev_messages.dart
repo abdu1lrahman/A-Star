@@ -81,11 +81,12 @@ class _PrevMessagesState extends State<PrevMessages> {
                               SlidableAction(
                                 onPressed: (context) async {
                                   final share = SharePlus.instance;
+                                  final _title = prevMessages[index]['title'];
+                                  final _body = prevMessages[index]['body'];
                                   await share.share(
                                     ShareParams(
                                       title: S.of(context).share_motivation,
-                                      text:
-                                          '${prevMessages[index]['title']}\n${prevMessages[index]['body']}',
+                                      text: '$_title\n$_body',
                                     ),
                                   );
                                 },
@@ -98,6 +99,8 @@ class _PrevMessagesState extends State<PrevMessages> {
                                 onPressed: (context) async {
                                   int hour = 10, minute = 10;
                                   final now = DateTime.now();
+                                  final toastMessage =
+                                      S.of(context).archived_message_confirm;
                                   final TimeOfDay? picked =
                                       await showTimePicker(
                                     context: context,
@@ -119,11 +122,8 @@ class _PrevMessagesState extends State<PrevMessages> {
                                     minute,
                                     prevMessages[index]['title'],
                                     prevMessages[index]['body'],
-                                  ); // TODO: the toast message doesn't appear doto build context across asnyc gaps error
-                                  Fluttertoast.showToast(
-                                    // ignore: use_build_context_synchronously
-                                    msg: S.of(context).archived_message_confirm,
                                   );
+                                  Fluttertoast.showToast(msg: toastMessage);
                                 },
                                 borderRadius:
                                     languageProvider.local.languageCode == 'en'
@@ -171,6 +171,18 @@ class _PrevMessagesState extends State<PrevMessages> {
                       ),
                     ),
                   ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: themeProvider.currentAppTheme.sixthColor,
+        shape: const CircleBorder(),
+        tooltip: S.of(context).add_new_messages,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          NotificationService().scheduleNotification();
+        },
       ),
     );
   }

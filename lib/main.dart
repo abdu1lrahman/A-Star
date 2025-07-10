@@ -23,6 +23,11 @@ void main() async {
   await dotenv.load(fileName: "constants.env");
   final prefs = await SharedPreferences.getInstance();
   final isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  final String? language = prefs.getString("language");
+  // Make arabic as a deafult language on First launch
+  if (language == null) {
+    await prefs.setString("language", "ar");
+  }
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -56,6 +61,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String appGroupId = "group.homeScreenApp";
+  String iOSWidgetName = "MyHomeWidget";
+  String androidWidgetName = "MyHomeWidget";
+  String datakey = "text_from_flutter_app";
+
   void triggerGetUserData() async {
     UserProvider().getUserData(widget.prefs);
   }
@@ -69,7 +79,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     triggerGetUserData();
     setLanguage(widget.prefs);
-    
     super.initState();
   }
 

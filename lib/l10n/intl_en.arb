@@ -67,5 +67,7 @@
     "get_new_quote": "Get new quote",
     "this_app_was_developed": "This app was developed by Abdulrahman",
     "built_with": "built with Flutter Framework",
-    "rights": "All rights reserved 2025"
+    "rights": "All rights reserved 2025",
+    "special_intrests_added": "Special intrest added successfully",
+    "add_new_messages": "Add new Messages"
 }

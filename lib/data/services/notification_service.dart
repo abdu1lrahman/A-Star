@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:you_are_a_star/data/api/ai_notifications.dart';
 import 'package:you_are_a_star/providers/notification_time_provider.dart';
 
@@ -12,10 +12,15 @@ class NotificationService {
   bool get isInitialized => _isInitialized;
 
   Future<void> initNotification() async {
-    if (await Permission.notification.isDenied) {
-      await Permission.notification.request();
+    final bool? granted = await notificationPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestExactAlarmsPermission();
+
+    if (granted != true) {
+      Fluttertoast.showToast(
+          msg: "Please give the app notifications permissions");
     }
-    if (_isInitialized) return;
 
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
@@ -73,12 +78,30 @@ class NotificationService {
     List<TimeOfDay> newTimes = NotificationTimeProvider().notificationTimes;
 
     final times = [
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, newTimes[0].hour,
-          newTimes[0].minute),
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, newTimes[1].hour,
-          newTimes[1].minute),
-      tz.TZDateTime(tz.local, now.year, now.month, now.day, newTimes[2].hour,
-          newTimes[2].minute),
+      tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        now.day,
+        newTimes[0].hour,
+        newTimes[0].minute,
+      ),
+      tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        now.day,
+        newTimes[1].hour,
+        newTimes[1].minute,
+      ),
+      tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        now.day,
+        newTimes[2].hour,
+        newTimes[2].minute,
+      ),
     ];
 
     for (int i = 0; i < times.length; i++) {
@@ -95,7 +118,6 @@ class NotificationService {
         matchDateTimeComponents: DateTimeComponents.time,
       );
     }
-    debugPrint("========= Notification Scheduled =========");
   }
 
   Future<void> scheduleSpecialNotification(

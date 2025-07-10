@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-  
-</selector>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background color -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#D8E2DC" /> <!-- Dark Purple -->
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
+
+    <!-- Starry overlay (optional) -->
+    <!-- You can use a semi-transparent png instead of drawing stars manually -->
+</layer-list>

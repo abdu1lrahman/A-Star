@@ -33,6 +33,7 @@ class _AccountState extends State<Account> {
   @override
   void initState() {
     fetchSavedIntrests();
+    UserProvider().loadImage();
     super.initState();
   }
 
@@ -49,9 +50,10 @@ class _AccountState extends State<Account> {
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
-        prefs.setString('user_image', pickedFile.path);
       });
+      await prefs.setString('user_image', pickedFile.path);
     }
+    UserProvider().loadImage();
   }
 
   @override
@@ -83,7 +85,7 @@ class _AccountState extends State<Account> {
             TextButton(
               onPressed: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setString('user_image', '');
+                await prefs.setString('user_image', '');
                 setState(() {
                   _image = null;
                 });

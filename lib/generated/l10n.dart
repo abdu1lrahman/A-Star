@@ -549,6 +549,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Special intrest added successfully`
+  String get special_intrests_added {
+    return Intl.message(
+      'Special intrest added successfully',
+      name: 'special_intrests_added',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add new Messages`
+  String get add_new_messages {
+    return Intl.message(
+      'Add new Messages',
+      name: 'add_new_messages',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

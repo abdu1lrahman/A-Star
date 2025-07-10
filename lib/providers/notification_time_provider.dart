@@ -15,8 +15,8 @@ class NotificationTimeProvider extends ChangeNotifier {
     List<TimeOfDay> savedNotificationTimes = [];
     for (int i = 0; i < 3; i++) {
       int hour, minute;
-      hour = prefs.getInt("firstHour") ?? 8;
-      minute = prefs.getInt("firstMinute") ?? 0;
+      hour = prefs.getInt("Hour$i") ?? 8 + (i * 6);
+      minute = prefs.getInt("Minute$i") ?? 0;
       savedNotificationTimes[i] = TimeOfDay(hour: hour, minute: minute);
     }
     _notificationTimes = savedNotificationTimes;
@@ -29,22 +29,22 @@ class NotificationTimeProvider extends ChangeNotifier {
       case 0:
         {
           _notificationTimes[index] = newTime;
-          await prefs.setInt("firstHour", newTime.hour);
-          await prefs.setInt("firstMinute", newTime.minute);
+          await prefs.setInt("Hour0", newTime.hour);
+          await prefs.setInt("Minute0", newTime.minute);
         }
         break;
       case 1:
         {
           _notificationTimes[index] = newTime;
-          await prefs.setInt("secondHour", newTime.hour);
-          await prefs.setInt("secondMinute", newTime.minute);
+          await prefs.setInt("Hour1", newTime.hour);
+          await prefs.setInt("Minute1", newTime.minute);
         }
         break;
       case 2:
         {
           _notificationTimes[index] = newTime;
-          await prefs.setInt("thirdHour", newTime.hour);
-          await prefs.setInt("thirdMinute", newTime.minute);
+          await prefs.setInt("Hour2", newTime.hour);
+          await prefs.setInt("Minute2", newTime.minute);
         }
         break;
       default:

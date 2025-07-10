@@ -23,6 +23,9 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "account": MessageLookupByLibrary.simpleMessage("My account"),
+    "add_new_messages": MessageLookupByLibrary.simpleMessage(
+      "Add new Messages",
+    ),
     "add_your_own": MessageLookupByLibrary.simpleMessage(
       "+ Add your own (e.g. AI, Law)",
     ),
@@ -100,6 +103,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "settings": MessageLookupByLibrary.simpleMessage("settings"),
     "share_motivation": MessageLookupByLibrary.simpleMessage(
       "share the motivation with your friend ❤",
+    ),
+    "special_intrests_added": MessageLookupByLibrary.simpleMessage(
+      "Special intrest added successfully",
     ),
     "sport": MessageLookupByLibrary.simpleMessage("Sport"),
     "tech": MessageLookupByLibrary.simpleMessage("Tech"),

@@ -123,9 +123,10 @@ class _IntrestsState extends State<Intrests> {
               child: TextField(
                 onSubmitted: (value) {
                   setState(() async {
+                    final toastMessage = S.of(context).special_intrests_added;
                     final prefs = await SharedPreferences.getInstance();
                     prefs.setString('special_intrests', value);
-                    debugPrint(selectedInterests.toString());
+                    Fluttertoast.showToast(msg: toastMessage);
                   });
                 },
                 controller: intrestController,

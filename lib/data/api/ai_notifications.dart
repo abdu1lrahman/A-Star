@@ -29,17 +29,17 @@ class AiNotifications {
     String? language = prefs.getString('language');
 
     debugPrint(
-        "This is before parsing the api the intrests ${intrests.toString()} and the name $name,age $age,gender $gender");
+        "===========================This is before parsing the api the intrests ${intrests.toString()} and the name $name,age $age,gender $gender and language is ${language}===============================================");
 
     final prompt = [
       Content.text(
           '''Write a short (No more than three sentences) motivational message or a quote from famous inspirational figures
            for a notifications app, the user name is $name and he/she is $age years old
-            ${gender == false ? 'male' : 'female'}, let the response match one or two of their intrests
-             in ${intrests.toString()} and special intrests in ${specialIntrests.toString()},
-             in '$language', Respond only with raw JSON. Do not include markdown or explanations.
-              Format: {"title":"...", "body":"..."}
-              ''')
+            ${gender == true ? 'male' : 'female'}, let the response match one or two of their intrests
+            in ${intrests.toString()} and special intrests in ${specialIntrests.toString()},
+            in '$language', Respond only with raw JSON. Do not include markdown or explanations.
+            Format: {"title":"...", "body":"..."}
+          ''')
     ];
 
     try {

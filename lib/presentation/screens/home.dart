@@ -6,10 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:you_are_a_star/data/api/ai_quote.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
+import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
 import 'package:you_are_a_star/providers/theme_provider.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
+import 'package:home_widget/home_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -47,25 +49,26 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-  Future<void> _initPrefsAndLoadQuote() async {
-    _prefs = await SharedPreferences.getInstance();
-    await _loadDailyQuote();
-  }
-
   @override
   void initState() {
+    _initPrefsAndLoadQuote();
+    HomeWidget.setAppGroupId("group.homeScreenApp");
     super.initState();
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 40),
     )..repeat();
-    _initPrefsAndLoadQuote();
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<void> _initPrefsAndLoadQuote() async {
+    _prefs = await SharedPreferences.getInstance();
+    await _loadDailyQuote();
   }
 
   Widget _buildShimmerQuote(double screenWidth) {
@@ -141,9 +144,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   Future<void> getTodayQuote() async {
+    final languageProvider =
+        Provider.of<LanguageProvider>(context, listen: false);
+    final toastMessage = S.of(context).todayQuote_message_error;
     try {
-      // TODO : Fix the today's AI quote language
-      final quote = await AiQuote().getAiQoute('ar');
+      final quote =
+          await AiQuote().getAiQoute(languageProvider.local.languageCode);
       final today = DateTime.now().toIso8601String().substring(0, 10);
 
       // Save the new quote and date
@@ -151,12 +157,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       await _prefs.setString('saved_quote_body', quote['body'] ?? '');
       await _prefs.setString('saved_quote_title', quote['title'] ?? '');
 
+      await HomeWidget.saveWidgetData(
+          "today_quote_body", "${today_quote['body']}");
+
+      await HomeWidget.saveWidgetData(
+          "today_quote_title", "${today_quote['title']}");
+
+      await HomeWidget.updateWidget(
+          iOSName: "MyHomeWidget", androidName: "MyHomeWidget");
+
       setState(() {
         today_quote = quote;
         isLoading = false;
       });
     } catch (e) {
-      // Fallback to saved quote if available
       final savedQuoteBody = _prefs.getString('saved_quote_body');
       final savedQuoteTitle = _prefs.getString('saved_quote_title');
 
@@ -166,9 +180,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           'title': savedQuoteTitle ?? 'Error'
         };
       });
+
       Fluttertoast.showToast(
-        // ignore: use_build_context_synchronously
-        msg: S.of(context).todayQuote_message_error,
+        msg: toastMessage,
         toastLength: Toast.LENGTH_LONG,
       );
     }

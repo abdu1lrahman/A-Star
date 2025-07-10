@@ -7,7 +7,7 @@ class UserProvider extends ChangeNotifier {
   static String? _userName;
   static bool? _userGender;
   static int _userAge = 18;
-  static File? _image;
+  File? _image;
 
   String? get userName => _userName;
   bool? get userGender => _userGender;
@@ -15,7 +15,6 @@ class UserProvider extends ChangeNotifier {
   File? get image => _image;
 
   void getUserData(SharedPreferences pref) async {
-    
     _userName = pref.getString('name')!;
     _userGender = pref.getBool('gender')!;
     _userAge = pref.getInt('age')!;
@@ -43,16 +42,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> loadImage() async {
+  Future<void> loadImage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? imagePath = prefs.getString('user_image');
     if (imagePath != null) {
       _image = File(imagePath);
       notifyListeners();
-      return true;
-    } else {
-      notifyListeners();
-      return false;
     }
   }
 
