@@ -29,7 +29,7 @@ class AiNotifications {
     String? language = prefs.getString('language');
 
     debugPrint(
-        "===========================This is before parsing the api the intrests ${intrests.toString()} and the name $name,age $age,gender $gender and language is ${language}===============================================");
+        "===========================This is before parsing the api the intrests ${intrests.toString()} and the name $name,age $age,gender $gender and language is $language===============================================");
 
     final prompt = [
       Content.text(

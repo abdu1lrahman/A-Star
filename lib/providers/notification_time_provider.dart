@@ -3,9 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationTimeProvider extends ChangeNotifier {
   List<TimeOfDay> _notificationTimes = [
-    TimeOfDay(hour: 8, minute: 00),
-    TimeOfDay(hour: 14, minute: 00),
-    TimeOfDay(hour: 20, minute: 00),
+    const TimeOfDay(hour: 8, minute: 00),
+    const TimeOfDay(hour: 14, minute: 00),
+    const TimeOfDay(hour: 20, minute: 00),
   ];
 
   List<TimeOfDay> get notificationTimes => _notificationTimes;
@@ -13,7 +13,7 @@ class NotificationTimeProvider extends ChangeNotifier {
   void getNotificationTimes() async {
     final prefs = await SharedPreferences.getInstance();
     List<TimeOfDay> savedNotificationTimes = [];
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < _notificationTimes.length; i++) {
       int hour, minute;
       hour = prefs.getInt("Hour$i") ?? 8 + (i * 6);
       minute = prefs.getInt("Minute$i") ?? 0;

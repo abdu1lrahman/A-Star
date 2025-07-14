@@ -5,6 +5,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:you_are_a_star/data/api/ai_notifications.dart';
 import 'package:you_are_a_star/providers/notification_time_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NotificationService {
   final notificationPlugin = FlutterLocalNotificationsPlugin();
@@ -16,6 +17,12 @@ class NotificationService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.requestExactAlarmsPermission();
+
+    if (await Permission.notification.isDenied) {
+      await Permission.notification.request();
+    }
+
+    if (_isInitialized) return;
 
     if (granted != true) {
       Fluttertoast.showToast(

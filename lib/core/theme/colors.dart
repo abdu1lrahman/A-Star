@@ -1,4 +1,5 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: camel_case_types
 class theme1 {
@@ -10,12 +11,42 @@ class theme1 {
   static Color sixthColor = const Color(0xffb4919b);
 }
 
-// ignore: camel_case_types
-class theme2 {
-  static Color mainColor = const Color(0xffFFE6A7);
-  static Color secondColor = const Color(0xffBB9457);
-  static Color thirdColor = const Color(0xff99582A);
-  static Color forthColor = const Color(0xff432818);
-  static Color fifthColor = const Color(0xff6F1D1B);
-  static Color sixthColor = const Color.fromARGB(255, 151, 43, 41);
-}
+ThemeData lightMode = ThemeData(
+  brightness: Brightness.light,
+  textTheme: GoogleFonts.notoKufiArabicTextTheme(),
+  appBarTheme: AppBarTheme(
+    backgroundColor: theme1.fifthColor,
+    centerTitle: true,
+    titleTextStyle: const TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+    ),
+  ),
+  scaffoldBackgroundColor: Colors.white,
+  colorScheme: const ColorScheme.light(
+    surface: Colors.white,
+    primary: Color(0xffD8E2DC),
+    secondary: Color(0xff9D8189),
+    tertiary: Color(0xffb4919b),
+  ),
+);
+
+ThemeData darkMode = ThemeData(
+  brightness: Brightness.dark,
+  textTheme: GoogleFonts.notoKufiArabicTextTheme(),
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Color(0xff3F2B30),
+    centerTitle: true,
+    titleTextStyle: TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+    ),
+  ),
+  scaffoldBackgroundColor: Colors.grey[200],
+  colorScheme: const ColorScheme.dark(
+    surface: Colors.white,
+    primary: Color.fromARGB(255, 56, 71, 66),
+    secondary: Color(0xff3F2B30),
+    tertiary: Color(0xff4B3842),
+  ),
+);

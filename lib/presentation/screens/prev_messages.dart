@@ -6,7 +6,6 @@ import 'package:you_are_a_star/data/database/sqflite_db.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
-import 'package:you_are_a_star/providers/theme_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PrevMessages extends StatefulWidget {
@@ -42,7 +41,6 @@ class _PrevMessagesState extends State<PrevMessages> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -59,7 +57,7 @@ class _PrevMessagesState extends State<PrevMessages> {
                     child: ListView.builder(
                       itemCount: prevMessages.length,
                       itemBuilder: (context, index) => Card(
-                        color: themeProvider.currentAppTheme.mainColor,
+                        color: Theme.of(context).colorScheme.primary,
                         child: Slidable(
                           endActionPane: ActionPane(
                             motion: const StretchMotion(),
@@ -73,25 +71,27 @@ class _PrevMessagesState extends State<PrevMessages> {
                                     getPreviousMessages();
                                   });
                                 },
+                                // TODO : fix the color
                                 backgroundColor:
-                                    themeProvider.currentAppTheme.fifthColor,
+                                const Color(0xff9D8189),
                                 foregroundColor: Colors.white,
                                 icon: Icons.delete,
                               ),
                               SlidableAction(
                                 onPressed: (context) async {
                                   final share = SharePlus.instance;
-                                  final _title = prevMessages[index]['title'];
-                                  final _body = prevMessages[index]['body'];
+                                  final title = prevMessages[index]['title'];
+                                  final body = prevMessages[index]['body'];
                                   await share.share(
                                     ShareParams(
                                       title: S.of(context).share_motivation,
-                                      text: '$_title\n$_body',
+                                      text: '$title\n$body',
                                     ),
                                   );
                                 },
+                                // TODO : fix the color
                                 backgroundColor:
-                                    themeProvider.currentAppTheme.forthColor,
+                                   const Color(0xffF4ACB7),
                                 foregroundColor: Colors.white,
                                 icon: Icons.share,
                               ),
@@ -135,8 +135,9 @@ class _PrevMessagesState extends State<PrevMessages> {
                                             topLeft: Radius.circular(12),
                                             bottomLeft: Radius.circular(12),
                                           ),
+                                          // TODO : fix the color
                                 backgroundColor:
-                                    themeProvider.currentAppTheme.thirdColor,
+                                    const Color(0xffFFCAD4),
                                 foregroundColor: Colors.white,
                                 icon: Icons.archive,
                               ),
@@ -150,8 +151,15 @@ class _PrevMessagesState extends State<PrevMessages> {
                                   flex: 2,
                                   child: Text(
                                     prevMessages[index]['title'],
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                                  .computeLuminance() >
+                                              0.5
+                                          ? Colors.black
+                                          : Colors.white,
                                     ),
                                   ),
                                 ),
@@ -159,13 +167,32 @@ class _PrevMessagesState extends State<PrevMessages> {
                                   flex: 1,
                                   child: Text(
                                     prevMessages[index]['date'],
-                                    style:
-                                        TextStyle(fontSize: screenWidth * 0.03),
+                                    style: TextStyle(
+                                      fontSize: screenWidth * 0.03,
+                                      color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                                  .computeLuminance() >
+                                              0.5
+                                          ? Colors.black
+                                          : Colors.white,
+                                    ),
                                   ),
                                 )
                               ],
                             ),
-                            subtitle: Text(prevMessages[index]['body']),
+                            subtitle: Text(
+                              prevMessages[index]['body'],
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                            .colorScheme
+                                            .primary
+                                            .computeLuminance() >
+                                        0.5
+                                    ? Colors.black
+                                    : Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -173,7 +200,7 @@ class _PrevMessagesState extends State<PrevMessages> {
                   ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: themeProvider.currentAppTheme.sixthColor,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
         shape: const CircleBorder(),
         tooltip: S.of(context).add_new_messages,
         child: const Icon(

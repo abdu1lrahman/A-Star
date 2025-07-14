@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
@@ -14,7 +13,6 @@ import 'package:you_are_a_star/presentation/screens/mainpage.dart';
 import 'package:you_are_a_star/presentation/screens/intro.dart';
 import 'package:you_are_a_star/presentation/screens/intro2.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
-import 'package:you_are_a_star/presentation/widgets/components/custom_app_bar.dart';
 import 'firebase_options.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -34,7 +32,6 @@ void main() async {
   tz.initializeTimeZones();
   NotificationTimeProvider().getNotificationTimes();
   NotificationService().initNotification();
-  NotificationService().scheduleNotification();
   runApp(
     MultiProvider(
       providers: [
@@ -105,11 +102,8 @@ class _MyAppState extends State<MyApp> {
         Locale('ar'),
       ],
       locale: languageProvider.local,
-      theme: ThemeData(
-        appBarTheme: appBarTheme(context),
-        // The font used in the app is notoKufiArabicTextTheme
-        textTheme: GoogleFonts.notoKufiArabicTextTheme(),
-      ),
+      theme: Provider.of<ThemeProvider>(context).currentAppTheme,
+
       home: widget.isFirstTime ? const Intro() : const Mainpage(),
     );
   }

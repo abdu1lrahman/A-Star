@@ -13,13 +13,9 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<Settings> {
-  String _theme = 'theme1';
+  String _theme = 'LightMode';
 
   bool _notificationsEnabled = true;
-
-  Image _getThemeImage(String key) {
-    return Image.asset('assets/images/$key.png', width: 120, height: 120);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,22 +40,24 @@ class _SettingsPageState extends State<Settings> {
           _buildDropdownTile(
             S.of(context).theme,
             _theme,
-            ['theme1', 'theme2'],
+            ['LightMode', 'DarkMode'],
             (val) {
               setState(() {
                 _theme = val!;
                 themeProvider.setTheme(val);
               });
             },
-            itemBuilder: (val) => _getThemeImage(val),
           ),
           const SizedBox(height: 20),
           _buildSectionHeader(S.of(context).notification),
           SwitchListTile(
-            activeColor: themeProvider.currentAppTheme.sixthColor,
+            activeColor: Theme.of(context).colorScheme.tertiary,
             value: _notificationsEnabled,
             onChanged: (val) => setState(() => _notificationsEnabled = val),
-            title: Text(S.of(context).enable_noti),
+            title: Text(
+              S.of(context).enable_noti,
+              style: const TextStyle(color: Colors.black),
+            ),
           ),
           if (_notificationsEnabled)
             ...List.generate(
@@ -67,8 +65,14 @@ class _SettingsPageState extends State<Settings> {
               (index) {
                 final time = timeProvider.notificationTimes[index];
                 return ListTile(
-                  title: Text('${S.of(context).noti} ${index + 1}'),
-                  trailing: Text(time.format(context)),
+                  title: Text(
+                    '${S.of(context).noti} ${index + 1}',
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  trailing: Text(
+                    time.format(context),
+                    style: const TextStyle(color: Colors.black),
+                  ),
                   onTap: () async {
                     final TimeOfDay? picked = await showTimePicker(
                       context: context,
@@ -98,8 +102,13 @@ class _SettingsPageState extends State<Settings> {
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Text(title,
-          style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 19,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 
@@ -107,18 +116,24 @@ class _SettingsPageState extends State<Settings> {
     String title,
     T currentValue,
     List<T> options,
-    ValueChanged<T?> onChanged, {
-    Widget Function(T val)? itemBuilder,
-  }) {
+    ValueChanged<T?> onChanged,
+  ) {
     return ListTile(
-      title: Text(title),
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.black),
+      ),
       trailing: DropdownButton<T>(
+        icon: const Icon(
+          Icons.arrow_drop_down,
+          color: Colors.black,
+        ),
         value: currentValue,
         onChanged: onChanged,
         items: options.map((val) {
           return DropdownMenuItem<T>(
             value: val,
-            child: itemBuilder != null ? itemBuilder(val) : Text('$val'),
+            child: Text('$val'),
           );
         }).toList(),
       ),

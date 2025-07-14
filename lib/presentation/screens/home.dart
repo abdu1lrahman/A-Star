@@ -6,10 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:you_are_a_star/data/api/ai_quote.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
-import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
-import 'package:you_are_a_star/providers/theme_provider.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
 import 'package:home_widget/home_widget.dart';
 
@@ -137,6 +135,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         today_quote = {'body': savedQuoteBody, 'title': savedQuoteTitle};
         isLoading = false;
       });
+      await HomeWidget.saveWidgetData("today_quote_body", savedQuoteBody);
+      await HomeWidget.saveWidgetData("today_quote_title", savedQuoteTitle);
+      await HomeWidget.updateWidget(
+        iOSName: "MyHomeWidget",
+        androidName: "messagesWidget",
+      );
     } else {
       // Fetch a new quote and save it
       await getTodayQuote();
@@ -147,6 +151,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     final languageProvider =
         Provider.of<LanguageProvider>(context, listen: false);
     final toastMessage = S.of(context).todayQuote_message_error;
+
+    setState(() {
+      isLoading = true;
+    });
+
     try {
       final quote =
           await AiQuote().getAiQoute(languageProvider.local.languageCode);
@@ -157,14 +166,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       await _prefs.setString('saved_quote_body', quote['body'] ?? '');
       await _prefs.setString('saved_quote_title', quote['title'] ?? '');
 
-      await HomeWidget.saveWidgetData(
-          "today_quote_body", "${today_quote['body']}");
-
-      await HomeWidget.saveWidgetData(
-          "today_quote_title", "${today_quote['title']}");
+      await HomeWidget.saveWidgetData("today_quote_body", "${quote['body']}");
+      await HomeWidget.saveWidgetData("today_quote_title", "${quote['title']}");
 
       await HomeWidget.updateWidget(
-          iOSName: "MyHomeWidget", androidName: "MyHomeWidget");
+        iOSName: "MyHomeWidget",
+        androidName: "messagesWidget",
+      );
 
       setState(() {
         today_quote = quote;
@@ -179,6 +187,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           'body': savedQuoteBody ?? 'Failed to load quote',
           'title': savedQuoteTitle ?? 'Error'
         };
+        isLoading = false;
       });
 
       Fluttertoast.showToast(
@@ -190,7 +199,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     final userInfoProvider = Provider.of<UserProvider>(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
 
@@ -248,7 +256,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               ),
                             ],
                             borderRadius: BorderRadius.circular(30),
-                            color: themeProvider.currentAppTheme.mainColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                           width: double.infinity,
                           padding: const EdgeInsets.all(10),
@@ -293,6 +301,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       child: Image.asset(
                                         "assets/icons/double_qoute.png",
                                         width: screenWidth * 0.12,
+                                        color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary
+                                                    .computeLuminance() >
+                                                0.5
+                                            ? Colors.black
+                                            : Colors.grey[200],
                                       ),
                                     ),
                                     Text(
@@ -305,6 +320,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       style: TextStyle(
                                         fontSize: screenWidth * 0.099,
                                         fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary
+                                                    .computeLuminance() >
+                                                0.5
+                                            ? Colors.black
+                                            : Colors.grey[200],
                                       ),
                                     ),
                                     Align(
@@ -316,7 +338,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       child: Text(
                                         today_quote['title']!,
                                         style: TextStyle(
-                                            fontSize: screenWidth * 0.05),
+                                          fontSize: screenWidth * 0.05,
+                                          color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary
+                                                      .computeLuminance() >
+                                                  0.5
+                                              ? Colors.black
+                                              : Colors.grey[200],
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -330,7 +360,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
             const SizedBox(height: 30),
             MaterialButton(
-              color: themeProvider.currentAppTheme.sixthColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+              color: Theme.of(context).colorScheme.secondary,
               textColor: Colors.white,
               onPressed: () {
                 getTodayQuote();

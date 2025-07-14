@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:you_are_a_star/providers/theme_provider.dart';
 
 class Intrests extends StatefulWidget {
   const Intrests({super.key});
@@ -34,7 +32,7 @@ class _IntrestsState extends State<Intrests> {
   void fetchSavedIntrests() async {
     final prefs = await SharedPreferences.getInstance();
     var response = prefs.getStringList('intrests');
-    var specialIntrests = prefs.getString('special_intrests');
+    var specialIntrests = prefs.getString('special_intrests') ?? '';
 
     if (response != null) {
       setState(() {
@@ -60,7 +58,6 @@ class _IntrestsState extends State<Intrests> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).intrests)),
@@ -90,8 +87,33 @@ class _IntrestsState extends State<Intrests> {
                 spacing: 8.0,
                 children: predefinedInterests.map((interest) {
                   return ChoiceChip(
-                    selectedColor: themeProvider.currentAppTheme.mainColor,
-                    label: Text(S.of(context).getInterestLabel(interest)),
+                    selectedColor: Theme.of(context).colorScheme.primary,
+                    label: Text(
+                      S.of(context).getInterestLabel(interest),
+                      style: TextStyle(
+                        color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .computeLuminance() >
+                                0.5
+                            ? Colors.black
+                            : Colors.white,
+                      ),
+                    ),
+                    backgroundColor: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .computeLuminance() >
+                            0.5
+                        ? Colors.white
+                        : Colors.grey[500],
+                    checkmarkColor: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .computeLuminance() >
+                            0.5
+                        ? Colors.black
+                        : Colors.white,
                     selected: selectedInterests.contains(interest),
                     onSelected: (bool selected) async {
                       setState(() {

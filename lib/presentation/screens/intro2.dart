@@ -77,6 +77,7 @@ class _LoginState extends State<Login> {
                           style: TextStyle(
                             fontSize: screenWidth * 0.04,
                             fontWeight: FontWeight.bold,
+                            color: Colors.indigo,
                           ),
                         ),
                       ),
@@ -93,6 +94,7 @@ class _LoginState extends State<Login> {
                           style: TextStyle(
                             fontSize: screenWidth * 0.04,
                             fontWeight: FontWeight.bold,
+                            color: Colors.indigo,
                           ),
                         ),
                       ),

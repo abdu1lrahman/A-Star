@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/presentation/screens/intrests.dart';
-import 'package:you_are_a_star/providers/theme_provider.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -59,7 +58,6 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     final userinfos = Provider.of<UserProvider>(context, listen: true);
-    final themeProvider = Provider.of<ThemeProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -113,7 +111,8 @@ class _AccountState extends State<Account> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
-                  color: themeProvider.currentAppTheme.fifthColor,
+                  // TODO : fix the color
+                  color:const Color(0xff9D8189),
                   width: 4,
                 ),
               ),
@@ -131,8 +130,8 @@ class _AccountState extends State<Account> {
                       ),
                     ),
                   ),
-                  Divider(
-                    color: themeProvider.currentAppTheme.sixthColor,
+                  const Divider(
+                    color: Color(0xffb4919b),
                     thickness: 3,
                   ),
                   Padding(
@@ -153,8 +152,8 @@ class _AccountState extends State<Account> {
                       ],
                     ),
                   ),
-                  Divider(
-                    color: themeProvider.currentAppTheme.sixthColor,
+                  const Divider(
+                    color: Color(0xffb4919b),
                     thickness: 3,
                   ),
                   Padding(
@@ -173,8 +172,8 @@ class _AccountState extends State<Account> {
                       ],
                     ),
                   ),
-                  Divider(
-                    color: themeProvider.currentAppTheme.sixthColor,
+                  const Divider(
+                    color: Color(0xffb4919b),
                     thickness: 3,
                   ),
                   Padding(
@@ -197,8 +196,9 @@ class _AccountState extends State<Account> {
                       ],
                     ),
                   ),
-                  Divider(
-                    color: themeProvider.currentAppTheme.sixthColor,
+                  // TODO : fix the color
+                  const Divider(
+                    color: Color(0xffb4919b),
                     thickness: 3,
                   ),
                   Padding(
