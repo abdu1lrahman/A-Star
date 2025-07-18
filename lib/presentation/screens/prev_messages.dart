@@ -71,9 +71,8 @@ class _PrevMessagesState extends State<PrevMessages> {
                                     getPreviousMessages();
                                   });
                                 },
-                                // TODO : fix the color
-                                backgroundColor:
-                                const Color(0xff9D8189),
+                                // TODO : fix the color light mode Color(0xff9D8189)
+                                backgroundColor: const Color(0xff9D8189),
                                 foregroundColor: Colors.white,
                                 icon: Icons.delete,
                               ),
@@ -89,9 +88,8 @@ class _PrevMessagesState extends State<PrevMessages> {
                                     ),
                                   );
                                 },
-                                // TODO : fix the color
-                                backgroundColor:
-                                   const Color(0xffF4ACB7),
+                                // TODO : fix the color light mode Color(0xffF4ACB7)
+                                backgroundColor: const Color(0xffF4ACB7),
                                 foregroundColor: Colors.white,
                                 icon: Icons.share,
                               ),
@@ -135,9 +133,8 @@ class _PrevMessagesState extends State<PrevMessages> {
                                             topLeft: Radius.circular(12),
                                             bottomLeft: Radius.circular(12),
                                           ),
-                                          // TODO : fix the color
-                                backgroundColor:
-                                    const Color(0xffFFCAD4),
+                                // TODO : fix the color light mode Color(0xffFFCAD4)
+                                backgroundColor: const Color(0xffFFCAD4),
                                 foregroundColor: Colors.white,
                                 icon: Icons.archive,
                               ),
@@ -208,7 +205,7 @@ class _PrevMessagesState extends State<PrevMessages> {
           color: Colors.white,
         ),
         onPressed: () {
-          NotificationService().scheduleNotification();
+          NotificationService().scheduleNotification(context);
         },
       ),
     );

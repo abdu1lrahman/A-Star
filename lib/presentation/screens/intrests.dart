@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 
 class Intrests extends StatefulWidget {
   const Intrests({super.key});
@@ -30,9 +30,8 @@ class _IntrestsState extends State<Intrests> {
   ];
 
   void fetchSavedIntrests() async {
-    final prefs = await SharedPreferences.getInstance();
-    var response = prefs.getStringList('intrests');
-    var specialIntrests = prefs.getString('special_intrests') ?? '';
+    var response = Prefs.prefs.getStringList('intrests');
+    var specialIntrests = Prefs.prefs.getString('special_intrests') ?? '';
 
     if (response != null) {
       setState(() {
@@ -87,6 +86,7 @@ class _IntrestsState extends State<Intrests> {
                 spacing: 8.0,
                 children: predefinedInterests.map((interest) {
                   return ChoiceChip(
+                    side: BorderSide(width: 0.5, color: Colors.grey[400]!),
                     selectedColor: Theme.of(context).colorScheme.primary,
                     label: Text(
                       S.of(context).getInterestLabel(interest),
@@ -106,7 +106,7 @@ class _IntrestsState extends State<Intrests> {
                                 .computeLuminance() >
                             0.5
                         ? Colors.white
-                        : Colors.grey[500],
+                        : Colors.grey[400],
                     checkmarkColor: Theme.of(context)
                                 .colorScheme
                                 .primary
@@ -131,8 +131,7 @@ class _IntrestsState extends State<Intrests> {
                           selectedInterests.remove(interest);
                         }
                       });
-                      final prefs = await SharedPreferences.getInstance();
-                      prefs.setStringList(
+                      Prefs.prefs.setStringList(
                           'intrests', selectedInterests.toList());
                     },
                   );
@@ -146,8 +145,7 @@ class _IntrestsState extends State<Intrests> {
                 onSubmitted: (value) {
                   setState(() async {
                     final toastMessage = S.of(context).special_intrests_added;
-                    final prefs = await SharedPreferences.getInstance();
-                    prefs.setString('special_intrests', value);
+                    Prefs.prefs.setString('special_intrests', value);
                     Fluttertoast.showToast(msg: toastMessage);
                   });
                 },

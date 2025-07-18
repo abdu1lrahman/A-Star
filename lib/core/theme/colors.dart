@@ -12,6 +12,25 @@ class theme1 {
 }
 
 ThemeData lightMode = ThemeData(
+  timePickerTheme: TimePickerThemeData(
+    backgroundColor: const Color(0xffffffff),
+    dialHandColor: const Color(0xff9D8189),
+    hourMinuteColor: const Color(0xff9D8189),
+    cancelButtonStyle: ButtonStyle(
+      foregroundColor: WidgetStateProperty.resolveWith<Color?>(
+        (Set<WidgetState> states) {
+          return Colors.black;
+        },
+      ),
+    ),
+    confirmButtonStyle: ButtonStyle(
+      foregroundColor: WidgetStateProperty.resolveWith<Color?>(
+        (Set<WidgetState> states) {
+          return Colors.black;
+        },
+      ),
+    ),
+  ),
   brightness: Brightness.light,
   textTheme: GoogleFonts.notoKufiArabicTextTheme(),
   appBarTheme: AppBarTheme(
@@ -32,6 +51,36 @@ ThemeData lightMode = ThemeData(
 );
 
 ThemeData darkMode = ThemeData(
+  timePickerTheme: TimePickerThemeData(
+    dayPeriodTextColor: Colors.black,
+    dayPeriodBorderSide: const BorderSide(color: Colors.black),
+    dialTextColor: Colors.black,
+    dayPeriodColor: const Color(0xff9D8189),
+    dialBackgroundColor: Colors.grey[200],
+    entryModeIconColor: Colors.black,
+    backgroundColor: Colors.grey[200],
+    dialHandColor: const Color(0xff9D8189),
+    hourMinuteColor: const Color(0xff9D8189),
+    timeSelectorSeparatorColor: WidgetStateProperty.resolveWith<Color?>(
+      (Set<WidgetState> states) {
+        return Colors.black;
+      },
+    ),
+    cancelButtonStyle: ButtonStyle(
+      foregroundColor: WidgetStateProperty.resolveWith<Color?>(
+        (Set<WidgetState> states) {
+          return Colors.black;
+        },
+      ),
+    ),
+    confirmButtonStyle: ButtonStyle(
+      foregroundColor: WidgetStateProperty.resolveWith<Color?>(
+        (Set<WidgetState> states) {
+          return Colors.black;
+        },
+      ),
+    ),
+  ),
   brightness: Brightness.dark,
   textTheme: GoogleFonts.notoKufiArabicTextTheme(),
   appBarTheme: const AppBarTheme(
@@ -44,8 +93,8 @@ ThemeData darkMode = ThemeData(
   ),
   scaffoldBackgroundColor: Colors.grey[200],
   colorScheme: const ColorScheme.dark(
-    surface: Colors.white,
-    primary: Color.fromARGB(255, 56, 71, 66),
+    surface: Colors.grey,
+    primary: Color(0xFF384742),
     secondary: Color(0xff3F2B30),
     tertiary: Color(0xff4B3842),
   ),

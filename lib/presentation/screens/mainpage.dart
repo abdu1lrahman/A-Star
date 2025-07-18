@@ -29,13 +29,13 @@ class _HomeState extends State<Mainpage> {
   @override
   void initState() {
     super.initState();
-      NotificationService().scheduleNotification();
+    NotificationService().scheduleNotification(context);
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    // final themeProvider = Provider.of<ThemeProvider>(context);
+
     return SafeArea(
       child: Scaffold(
         body: pages[selectedIndex],

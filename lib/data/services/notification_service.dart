@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:you_are_a_star/data/api/ai_notifications.dart';
@@ -79,10 +80,13 @@ class NotificationService {
     );
   }
 
-  Future<void> scheduleNotification() async {
+  Future<void> scheduleNotification(BuildContext context) async {
     final now = tz.TZDateTime.now(tz.local);
 
-    List<TimeOfDay> newTimes = NotificationTimeProvider().notificationTimes;
+    final timeProvider =
+        Provider.of<NotificationTimeProvider>(context, listen: false);
+
+    List<TimeOfDay> newTimes = timeProvider.notificationTimes;
 
     final times = [
       tz.TZDateTime(
@@ -112,7 +116,13 @@ class NotificationService {
     ];
 
     for (int i = 0; i < times.length; i++) {
-      var message = await AiNotifications().requestAIMessage();
+     Map<String, String>? message;
+      try {
+        message = await AiNotifications().requestAIMessage();
+      } catch (e) {
+        message = await AiNotifications().requestAIMessage();
+      }
+
       await notificationPlugin.zonedSchedule(
         i,
         message?['title'],

@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "change_name": MessageLookupByLibrary.simpleMessage(
       "Do you want to change your name",
     ),
+    "delete_my_data": MessageLookupByLibrary.simpleMessage("Delete my data"),
     "dont": MessageLookupByLibrary.simpleMessage(
       "You can change these informations later",
     ),

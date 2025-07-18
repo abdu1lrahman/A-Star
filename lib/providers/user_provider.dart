@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 
 class UserProvider extends ChangeNotifier {
   static String? _userName;
@@ -14,41 +15,67 @@ class UserProvider extends ChangeNotifier {
   int get userAge => _userAge;
   File? get image => _image;
 
-  void getUserData(SharedPreferences pref) async {
-    _userName = pref.getString('name')!;
-    _userGender = pref.getBool('gender')!;
-    _userAge = pref.getInt('age')!;
+  void getUserData() async {
+    _userName = Prefs.prefs.getString('name')!;
+    _userGender = Prefs.prefs.getBool('gender')!;
+    _userAge = Prefs.prefs.getInt('age')!;
     notifyListeners();
   }
 
   changeName(String newName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('name', newName);
+    await Prefs.prefs.setString('name', newName);
     _userName = newName;
     notifyListeners();
   }
 
   changeAge(int newAge) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('age', newAge);
+    await Prefs.prefs.setInt('age', newAge);
     _userAge = newAge;
     notifyListeners();
   }
 
   changeGender(bool newGender) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('gender', newGender);
+    await Prefs.prefs.setBool('gender', newGender);
     _userGender = newGender;
     notifyListeners();
   }
 
-  Future<void> loadImage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? imagePath = prefs.getString('user_image');
-    if (imagePath != null) {
-      _image = File(imagePath);
+  Future<void> pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      await Prefs.prefs.setString('user_image', pickedFile.path);
       notifyListeners();
     }
+  }
+
+  Future<void> loadImage() async {
+    String? imagePath = Prefs.prefs.getString('user_image');
+    if (imagePath != null && imagePath.isNotEmpty) {
+      try {
+        File imageFile = File(imagePath);
+        // Check if the file actually exists
+        if (await imageFile.exists()) {
+          _image = imageFile;
+        } else {
+          // Remove invalid path from preferences
+          await Prefs.prefs.remove('user_image');
+          _image = null;
+        }
+      } catch (e) {
+        debugPrint("========= error while loading the image: $e =========");
+        // Remove invalid path from preferences
+        await Prefs.prefs.remove('user_image');
+        _image = null;
+      }
+      notifyListeners();
+    }
+  }
+
+  Future<void> removeImage() async {
+    await Prefs.prefs.remove('user_image');
+    notifyListeners();
   }
 
   Widget getUserAvatar() {
@@ -59,7 +86,7 @@ class UserProvider extends ChangeNotifier {
         width: 140.0,
         height: 140.0,
         errorBuilder: (context, error, stackTrace) {
-          return const Icon(Icons.add_a_photo_outlined);
+          return const Icon(Icons.error);
         },
       );
     }

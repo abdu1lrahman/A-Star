@@ -2,7 +2,7 @@ name: you_are_a_star
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 2.0.0
 
 environment:
   sdk: ^3.5.3

@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:you_are_a_star/core/theme/colors.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
+
+enum ThemeModes {
+  light,
+  dark,
+  system,
+}
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _currentAppTheme = lightMode;
+  ThemeMode _themeMode = ThemeMode.system;
 
-  ThemeData get currentAppTheme => _currentAppTheme;
+  ThemeMode get themeMode => _themeMode;
 
-  void setTheme(String newTheme) {
-    _currentAppTheme = (newTheme == 'LightMode') ? lightMode : darkMode;
+  void loadTheme() {
+    String theme = Prefs.prefs.getString("theme") ?? "system";
+    if (theme == "LightMode") {
+      _themeMode = ThemeMode.light;
+    } else if (theme == "DarkMode") {
+      _themeMode = ThemeMode.dark;
+    } else {
+      _themeMode = ThemeMode.system;
+    }
     notifyListeners();
   }
 
-  void toggleTheme(){
-    if(_currentAppTheme == lightMode){
-      _currentAppTheme = darkMode;
-    } else {
-      _currentAppTheme = lightMode;
-    }
+  void setTheme(ThemeMode mode) async {
+    _themeMode = mode;
+    await Prefs.prefs.setString('theme', mode.name);
     notifyListeners();
   }
 }

@@ -13,14 +13,33 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<Settings> {
-  String _theme = 'LightMode';
-
   bool _notificationsEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<NotificationTimeProvider>(context, listen: false)
+          .getNotificationTimes();
+    });
+  }
+
+  // Helper method to get icon for theme mode
+  IconData _getThemeIcon(ThemeMode themeMode) {
+    switch (themeMode) {
+      case ThemeMode.light:
+        return Icons.wb_sunny;
+      case ThemeMode.dark:
+        return Icons.nightlight_round;
+      case ThemeMode.system:
+        return Icons.settings_brightness;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final langProvider = Provider.of<LanguageProvider>(context, listen: false);
-    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     final timeProvider = Provider.of<NotificationTimeProvider>(context);
 
     return Scaffold(
@@ -37,15 +56,16 @@ class _SettingsPageState extends State<Settings> {
               langProvider.changeLocale((val == "English") ? 'en' : 'ar');
             },
           ),
-          _buildDropdownTile(
+          _buildThemeDropdownTile(
             S.of(context).theme,
-            _theme,
-            ['LightMode', 'DarkMode'],
+            themeProvider.themeMode,
+            [ThemeMode.light, ThemeMode.dark, ThemeMode.system],
             (val) {
-              setState(() {
-                _theme = val!;
-                themeProvider.setTheme(val);
-              });
+              if (val != null) {
+                setState(() {
+                  themeProvider.setTheme(val);
+                });
+              }
             },
           ),
           const SizedBox(height: 20),
@@ -71,13 +91,15 @@ class _SettingsPageState extends State<Settings> {
                   ),
                   trailing: Text(
                     time.format(context),
-                    style: const TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
                   ),
                   onTap: () async {
                     final TimeOfDay? picked = await showTimePicker(
                       context: context,
-                      initialTime: timeProvider.notificationTimes[index],
+                      initialTime: time,
                     );
+                    debugPrint(
+                        "=====================${picked?.hour} : ${picked?.minute}=====================");
                     if (picked != null) {
                       timeProvider.changeNotificationTime(picked, index);
                     }
@@ -87,12 +109,25 @@ class _SettingsPageState extends State<Settings> {
             ),
           const SizedBox(height: 20),
           _buildSectionHeader(S.of(context).account),
+          const SizedBox(height: 10),
           ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+                (Set<WidgetState> states) {
+                  return const Color(0xff4B3842);
+                },
+              ),
+              foregroundColor: WidgetStateProperty.resolveWith<Color?>(
+                (Set<WidgetState> states) {
+                  return Colors.grey[200];
+                },
+              ),
+            ),
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(
                   context, 'intro', (Route<dynamic> route) => false);
             },
-            child: const Text('Delete my Data'),
+            child: Text(S.of(context).delete_my_data),
           ),
         ],
       ),
@@ -134,6 +169,49 @@ class _SettingsPageState extends State<Settings> {
           return DropdownMenuItem<T>(
             value: val,
             child: Text('$val'),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  // Special dropdown tile for theme with icons
+  Widget _buildThemeDropdownTile(
+    String title,
+    ThemeMode currentValue,
+    List<ThemeMode> options,
+    ValueChanged<ThemeMode?> onChanged,
+  ) {
+    return ListTile(
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.black),
+      ),
+      trailing: DropdownButton<ThemeMode>(
+        icon: const Icon(
+          Icons.arrow_drop_down,
+          color: Colors.black,
+        ),
+        value: currentValue,
+        onChanged: onChanged,
+        items: options.map((themeMode) {
+          return DropdownMenuItem<ThemeMode>(
+            value: themeMode,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  _getThemeIcon(themeMode),
+                  color: Colors.black,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  themeMode.name,
+                  style: const TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
           );
         }).toList(),
       ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 
 class AiNotifications {
   SqfliteDb db = SqfliteDb();
@@ -18,15 +18,14 @@ class AiNotifications {
   }
 
   Future<Map<String, String>?> requestAIMessage() async {
-    final prefs = await SharedPreferences.getInstance();
     final model =
         FirebaseAI.googleAI().generativeModel(model: 'gemini-2.5-flash');
-    List<String>? intrests = prefs.getStringList('intrests');
-    String? specialIntrests = prefs.getString('special_intrests');
-    String? name = prefs.getString('name');
-    int? age = prefs.getInt('age');
-    bool? gender = prefs.getBool('gender');
-    String? language = prefs.getString('language');
+    List<String>? intrests = Prefs.prefs.getStringList('intrests');
+    String? specialIntrests = Prefs.prefs.getString('special_intrests');
+    String? name = Prefs.prefs.getString('name');
+    int? age = Prefs.prefs.getInt('age');
+    bool? gender = Prefs.prefs.getBool('gender');
+    String? language = Prefs.prefs.getString('language');
 
     debugPrint(
         "===========================This is before parsing the api the intrests ${intrests.toString()} and the name $name,age $age,gender $gender and language is $language===============================================");

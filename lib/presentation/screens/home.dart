@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:you_are_a_star/data/api/ai_quote.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
 import 'package:home_widget/home_widget.dart';
 
@@ -25,7 +25,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     'body': 'Loading...',
     'title': 'Loading...'
   };
-  late SharedPreferences _prefs;
   late AnimationController _controller;
   late String animation;
   bool isLoading = true;
@@ -49,7 +48,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    _initPrefsAndLoadQuote();
+    _initLoadQuote();
     HomeWidget.setAppGroupId("group.homeScreenApp");
     super.initState();
     _controller = AnimationController(
@@ -64,8 +63,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  Future<void> _initPrefsAndLoadQuote() async {
-    _prefs = await SharedPreferences.getInstance();
+  Future<void> _initLoadQuote() async {
     await _loadDailyQuote();
   }
 
@@ -123,9 +121,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     final today = DateTime.now().toIso8601String().substring(0, 10);
 
     // Check if we have a saved quote and if it's from today
-    final lastQuoteDate = _prefs.getString('last_quote_date');
-    final savedQuoteBody = _prefs.getString('saved_quote_body');
-    final savedQuoteTitle = _prefs.getString('saved_quote_title');
+    final lastQuoteDate = Prefs.prefs.getString('last_quote_date');
+    final savedQuoteBody = Prefs.prefs.getString('saved_quote_body');
+    final savedQuoteTitle = Prefs.prefs.getString('saved_quote_title');
 
     if (lastQuoteDate == today &&
         savedQuoteBody != null &&
@@ -162,9 +160,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       final today = DateTime.now().toIso8601String().substring(0, 10);
 
       // Save the new quote and date
-      await _prefs.setString('last_quote_date', today);
-      await _prefs.setString('saved_quote_body', quote['body'] ?? '');
-      await _prefs.setString('saved_quote_title', quote['title'] ?? '');
+      await Prefs.prefs.setString('last_quote_date', today);
+      await Prefs.prefs.setString('saved_quote_body', quote['body'] ?? '');
+      await Prefs.prefs.setString('saved_quote_title', quote['title'] ?? '');
 
       await HomeWidget.saveWidgetData("today_quote_body", "${quote['body']}");
       await HomeWidget.saveWidgetData("today_quote_title", "${quote['title']}");
@@ -179,8 +177,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         isLoading = false;
       });
     } catch (e) {
-      final savedQuoteBody = _prefs.getString('saved_quote_body');
-      final savedQuoteTitle = _prefs.getString('saved_quote_title');
+      final savedQuoteBody = Prefs.prefs.getString('saved_quote_body');
+      final savedQuoteTitle = Prefs.prefs.getString('saved_quote_title');
 
       setState(() {
         today_quote = {

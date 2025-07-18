@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
 
 class Login extends StatefulWidget {
@@ -57,8 +57,10 @@ class _LoginState extends State<Login> {
                   Consumer<UserProvider>(
                     builder: (context, object, child) {
                       return (userProvider.userGender == true)
-                          ? Icon(Icons.man, size: screenWidth * 0.5)
-                          : Icon(Icons.woman, size: screenWidth * 0.5);
+                          ? Icon(Icons.man,
+                              size: screenWidth * 0.5, color: Colors.black)
+                          : Icon(Icons.woman,
+                              size: screenWidth * 0.5, color: Colors.black);
                     },
                   ),
                   Row(
@@ -170,15 +172,27 @@ class _LoginState extends State<Login> {
                           "mainPage",
                           (Route<dynamic> route) => false,
                         );
-                        final prefs = await SharedPreferences.getInstance();
-                        await prefs.setBool('isFirstTime', false);
+                        await Prefs.prefs.setBool('isFirstTime', false);
                       },
                       controller: name,
+                      cursorColor: Colors.indigo,
                       decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            color: Colors.indigo,
+                            width: 2,
+                          ),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
+                      onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     ),
                   ),
                   Visibility(
@@ -201,8 +215,7 @@ class _LoginState extends State<Login> {
                           "mainPage",
                           (Route<dynamic> route) => false,
                         );
-                        final prefs = await SharedPreferences.getInstance();
-                        await prefs.setBool('isFirstTime', false);
+                        await Prefs.prefs.setBool('isFirstTime', false);
                       },
                     ),
                   ),

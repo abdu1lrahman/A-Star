@@ -69,5 +69,6 @@
     "built_with": "built with Flutter Framework",
     "rights": "All rights reserved 2025",
     "special_intrests_added": "Special intrest added successfully",
-    "add_new_messages": "Add new Messages"
+    "add_new_messages": "Add new Messages",
+    "delete_my_data": "Delete my data"
 }

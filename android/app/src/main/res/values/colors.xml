@@ -1,7 +1,4 @@
 <resources>
-    <color name="light_blue_50">#FFE1F5FE</color>
-    <color name="light_blue_200">#ffFFCAD4</color>
-    <color name="light_blue_600">#ffF4ACB7</color>
-    <color name="light_blue_900">#ff9D8189</color>
-    <color name="black">#FF000000</color>
+    <color name="background_color">#FFD8E2DC</color>
+    <color name="text_color">#FF000000</color>
 </resources>

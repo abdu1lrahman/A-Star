@@ -13,7 +13,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:contentDescription="Star icon"
-        android:src="@drawable/double_qoute" />
+        android:src="@drawable/double_qoute"
+        android:tint="@color/text_color" />
 
     <TextView
         android:id="@+id/text_id"
@@ -23,7 +24,7 @@
         android:gravity="center"
         android:maxLines="5"
         android:text="The only limit to our realization of tomorrow is our doubts of today."
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:textSize="19sp"
         android:textStyle="bold" />
 
@@ -35,7 +36,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:text="Franklin D. Roosevelt"
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:textSize="17sp" />
 
 </RelativeLayout>

@@ -45,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "هل تريد تغيير لغة التطبيق والإشعارات؟",
     ),
     "change_name": MessageLookupByLibrary.simpleMessage("هل تريد تغيير اسمك؟"),
+    "delete_my_data": MessageLookupByLibrary.simpleMessage("حذف بياناتي"),
     "dont": MessageLookupByLibrary.simpleMessage(
       "يمكنك تعديل هذه البيانات لاحقا",
     ),

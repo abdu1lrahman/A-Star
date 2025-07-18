@@ -2,16 +2,14 @@ import 'dart:convert';
 
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 
 class AiQuote {
   Future<Map<String, String>> getAiQoute(String language) async {
     final model =
         FirebaseAI.googleAI().generativeModel(model: 'gemini-2.5-flash');
 
-    final prefs = await SharedPreferences.getInstance();
-
-    List<String>? intrests = prefs.getStringList('intrests');
+    List<String>? intrests = Prefs.prefs.getStringList('intrests');
 
     final prompt = [
       Content.text(

@@ -4,9 +4,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/providers/notification_time_provider.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/theme_provider.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
 import 'package:you_are_a_star/presentation/screens/mainpage.dart';
@@ -19,12 +21,13 @@ import 'package:timezone/data/latest.dart' as tz;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "constants.env");
-  final prefs = await SharedPreferences.getInstance();
-  final isFirstTime = prefs.getBool('isFirstTime') ?? true;
-  final String? language = prefs.getString("language");
+  await Prefs.init();
+  // This is to check if it's the first launch of the app, to take the user data
+  final isFirstTime = Prefs.prefs.getBool('isFirstTime') ?? true;
+  final String? language = Prefs.prefs.getString("language");
   // Make arabic as a deafult language on First launch
   if (language == null) {
-    await prefs.setString("language", "ar");
+    await Prefs.prefs.setString("language", "ar");
   }
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -42,7 +45,7 @@ void main() async {
       ],
       child: MyApp(
         isFirstTime: isFirstTime,
-        prefs: prefs,
+        prefs: Prefs.prefs,
       ),
     ),
   );
@@ -64,24 +67,25 @@ class _MyAppState extends State<MyApp> {
   String datakey = "text_from_flutter_app";
 
   void triggerGetUserData() async {
-    UserProvider().getUserData(widget.prefs);
+    UserProvider().getUserData();
   }
 
-  void setLanguage(SharedPreferences prefs) async {
-    String language = prefs.getString("language") ?? "ar";
+  void setLanguage() async {
+    String language = Prefs.prefs.getString("language") ?? "ar";
     LanguageProvider().setLocale(Locale(language));
   }
 
   @override
   void initState() {
     triggerGetUserData();
-    setLanguage(widget.prefs);
+    setLanguage();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final languageProvider = Provider.of<LanguageProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: "A Star",
       debugShowCheckedModeBanner: false,
@@ -102,8 +106,9 @@ class _MyAppState extends State<MyApp> {
         Locale('ar'),
       ],
       locale: languageProvider.local,
-      theme: Provider.of<ThemeProvider>(context).currentAppTheme,
-
+      theme: lightMode,
+      darkTheme: darkMode,
+      themeMode: themeProvider.themeMode,
       home: widget.isFirstTime ? const Intro() : const Mainpage(),
     );
   }
