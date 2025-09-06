@@ -455,10 +455,10 @@ class S {
     );
   }
 
-  /// `Quote of the day`
+  /// `Today's quote`
   String get today_quote {
     return Intl.message(
-      'Quote of the day',
+      'Today\'s quote',
       name: 'today_quote',
       desc: '',
       args: [],
@@ -578,6 +578,151 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Name`
+  String get name1 {
+    return Intl.message('Name', name: 'name1', desc: '', args: []);
+  }
+
+  /// `Do you want to change your age`
+  String get change_age {
+    return Intl.message(
+      'Do you want to change your age',
+      name: 'change_age',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Brighten your day and unlock your potential with personalized AI-powered motivation. Get inspiring messages crafted just for you, discover daily wisdom quotes, and let A Star guide you toward your goals, anytime, anywhere.`
+  String get description {
+    return Intl.message(
+      'Brighten your day and unlock your potential with personalized AI-powered motivation. Get inspiring messages crafted just for you, discover daily wisdom quotes, and let A Star guide you toward your goals, anytime, anywhere.',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get login {
+    return Intl.message('Login', name: 'login', desc: '', args: []);
+  }
+
+  /// `Create a new account`
+  String get create_new_account {
+    return Intl.message(
+      'Create a new account',
+      name: 'create_new_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create your account to start your journey`
+  String get create_your_account {
+    return Intl.message(
+      'Create your account to start your journey',
+      name: 'create_your_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your name`
+  String get enter_your_name {
+    return Intl.message(
+      'Enter your name',
+      name: 'enter_your_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your Email address`
+  String get enter_your_email {
+    return Intl.message(
+      'Enter your Email address',
+      name: 'enter_your_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message('Email', name: 'email', desc: '', args: []);
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message('Password', name: 'password', desc: '', args: []);
+  }
+
+  /// `Enter your password`
+  String get enter_your_password {
+    return Intl.message(
+      'Enter your password',
+      name: 'enter_your_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Up`
+  String get signup {
+    return Intl.message('Sign Up', name: 'signup', desc: '', args: []);
+  }
+
+  /// `Your journey is finally here`
+  String get your_journey {
+    return Intl.message(
+      'Your journey is finally here',
+      name: 'your_journey',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Out`
+  String get signout {
+    return Intl.message('Sign Out', name: 'signout', desc: '', args: []);
+  }
+
+  /// `Successfully logged in`
+  String get successfully_logged_in {
+    return Intl.message(
+      'Successfully logged in',
+      name: 'successfully_logged_in',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password?`
+  String get forgot_password {
+    return Intl.message(
+      'Forgot password?',
+      name: 'forgot_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't have account?`
+  String get dont_have_account {
+    return Intl.message(
+      'Don\'t have account?',
+      name: 'dont_have_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `create one`
+  String get create_one {
+    return Intl.message('create one', name: 'create_one', desc: '', args: []);
   }
 }
 

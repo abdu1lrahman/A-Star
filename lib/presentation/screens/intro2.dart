@@ -1,43 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/providers/language_provider.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Intro2 extends StatefulWidget {
+  const Intro2({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Intro2> createState() => _Intro2State();
 }
 
-class _LoginState extends State<Login> {
+class _Intro2State extends State<Intro2> {
+  final supabaseClient = Supabase.instance.client;
   final PageController _pageController = PageController();
-  bool _isButtonVisible = false;
-  TextEditingController name = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    name.addListener(() {
-      setState(() {
-        _isButtonVisible = name.text.isNotEmpty;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    name.dispose();
-    super.dispose();
-  }
+  Set<String> selectedInterests = {};
+  TextEditingController intrestController = TextEditingController();
+  List<String> predefinedInterests = [
+    "health",
+    "sport",
+    "tech",
+    "books",
+    "music",
+    "art",
+    "travel",
+    "games",
+    "science",
+    "education",
+    "history",
+    "fashion",
+    "psychology",
+  ];
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: theme1.secondColor,
@@ -57,10 +61,8 @@ class _LoginState extends State<Login> {
                   Consumer<UserProvider>(
                     builder: (context, object, child) {
                       return (userProvider.userGender == true)
-                          ? Icon(Icons.man,
-                              size: screenWidth * 0.5, color: Colors.black)
-                          : Icon(Icons.woman,
-                              size: screenWidth * 0.5, color: Colors.black);
+                          ? Icon(Icons.man, size: screenWidth * 0.5, color: Colors.black)
+                          : Icon(Icons.woman, size: screenWidth * 0.5, color: Colors.black);
                     },
                   ),
                   Row(
@@ -158,77 +160,136 @@ class _LoginState extends State<Login> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 15),
                   Text(
-                    S.of(context).name,
-                    style: TextStyle(fontSize: screenWidth * 0.05),
+                    S.of(context).what_intrests,
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.06,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    S.of(context).you_can_choose,
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.04,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 27.0),
+                    child: Wrap(
+                      spacing: 8.0,
+                      children: predefinedInterests.map((interest) {
+                        return ChoiceChip(
+                          side: BorderSide(width: 0.5, color: Colors.grey[400]!),
+                          selectedColor: Theme.of(context).colorScheme.primary,
+                          label: Text(
+                            S.of(context).getInterestLabel(interest),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary.computeLuminance() > 0.5
+                                  ? Colors.black
+                                  : Colors.white,
+                            ),
+                          ),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary.computeLuminance() > 0.5
+                                  ? Colors.white
+                                  : Colors.grey[400],
+                          checkmarkColor:
+                              Theme.of(context).colorScheme.primary.computeLuminance() > 0.5
+                                  ? Colors.black
+                                  : Colors.white,
+                          selected: selectedInterests.contains(interest),
+                          onSelected: (bool selected) async {
+                            setState(() {
+                              if (selected) {
+                                if (selectedInterests.length < 5) {
+                                  selectedInterests.add(interest);
+                                } else {
+                                  Fluttertoast.showToast(
+                                    msg: S.of(context).you_can_only_select,
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                  );
+                                }
+                              } else {
+                                selectedInterests.remove(interest);
+                              }
+                            });
+                            Prefs.prefs.setStringList(
+                              'intrests',
+                              selectedInterests.toList(),
+                            );
+                            try {
+                              final uuid = Supabase.instance.client.auth.currentUser!.id;
+                              final response = await Supabase.instance.client
+                                  .from('profiles')
+                                  .update({'intrests': selectedInterests.toString()}).eq(
+                                      'uuid', uuid);
+                            } catch (e) {
+                              debugPrint("++++++++++++++${e.toString()}=============");
+                            }
+                          },
+                        );
+                      }).toList(),
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
                     child: TextField(
-                      onSubmitted: (value) async {
-                        userProvider.changeName(name.text);
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          "mainPage",
-                          (Route<dynamic> route) => false,
-                        );
-                        await Prefs.prefs.setBool('isFirstTime', false);
+                      onSubmitted: (value) {
+                        setState(() async {
+                          final toastMessage = S.of(context).special_intrests_added;
+                          Prefs.prefs.setString('special_intrests', value);
+                          try {
+                            final uuid = Supabase.instance.client.auth.currentUser!.id;
+                            final response = await Supabase.instance.client
+                                .from('profiles')
+                                .update({'special_intrests': value}).eq('uuid', uuid);
+                          } catch (e) {
+                            debugPrint("++++++++++++++${e.toString()}=============");
+                          }
+                          Fluttertoast.showToast(msg: toastMessage);
+                        });
                       },
-                      controller: name,
-                      cursorColor: Colors.indigo,
+                      controller: intrestController,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
+                          borderSide: const BorderSide(color: Color(0xffbdbdbd)),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(
-                            color: Colors.indigo,
-                            width: 2,
-                          ),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+                        hintText: S.of(context).add_your_own,
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
                       ),
-                      onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     ),
                   ),
-                  Visibility(
-                    visible: _isButtonVisible,
-                    child: MaterialButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      color: Colors.indigo,
-                      child: Text(
-                        S.of(context).letsgo,
-                        style: TextStyle(
-                          color: theme1.secondColor,
-                          fontSize: screenWidth * 0.04,
-                        ),
-                      ),
-                      onPressed: () async {
-                        userProvider.changeName(name.text);
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          "mainPage",
-                          (Route<dynamic> route) => false,
-                        );
-                        await Prefs.prefs.setBool('isFirstTime', false);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
+                  MaterialButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    color: Colors.indigo,
                     child: Text(
-                      S.of(context).enter_name,
+                      S.of(context).letsgo,
                       style: TextStyle(
-                        fontSize: screenWidth * 0.03,
-                        color: Colors.grey[600],
+                        color: theme1.secondColor,
+                        fontSize: screenWidth * 0.04,
                       ),
-                      textAlign: TextAlign.center,
                     ),
+                    onPressed: () async {
+                      List<String>? intrests = Prefs.prefs.getStringList('intrests');
+                      try {
+                        await supabaseClient.from('profiles').insert({
+                          'user_gender': userProvider.userGender,
+                          'user_age': userProvider.userAge,
+                          'language': languageProvider.local.languageCode,
+                          'intrests': intrests.toString(),
+                        });
+                        Navigator.pushNamedAndRemoveUntil(context, "mainPage", (r) => false);
+                      } catch (e) {
+                        debugPrint("++++++++++++${e.toString()}=========");
+                      }
+                    },
                   ),
                 ],
               ),
@@ -251,5 +312,40 @@ class _LoginState extends State<Login> {
         ],
       ),
     );
+  }
+}
+
+extension InterestLocalization on S {
+  String getInterestLabel(String key) {
+    switch (key) {
+      case 'health':
+        return health;
+      case 'sport':
+        return sport;
+      case 'tech':
+        return tech;
+      case 'books':
+        return books;
+      case 'music':
+        return music;
+      case 'art':
+        return art;
+      case 'travel':
+        return travel;
+      case 'games':
+        return games;
+      case 'science':
+        return science;
+      case 'education':
+        return education;
+      case 'history':
+        return history;
+      case 'fashion':
+        return fashion;
+      case 'psychology':
+        return psychology;
+      default:
+        return key;
+    }
   }
 }

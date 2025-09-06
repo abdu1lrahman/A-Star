@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:you_are_a_star/data/services/auth_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/presentation/widgets/custom_dropdowntile.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
 import 'package:you_are_a_star/providers/notification_time_provider.dart';
 import 'package:you_are_a_star/providers/theme_provider.dart';
@@ -19,21 +21,8 @@ class _SettingsPageState extends State<Settings> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<NotificationTimeProvider>(context, listen: false)
-          .getNotificationTimes();
+      Provider.of<NotificationTimeProvider>(context, listen: false).getNotificationTimes();
     });
-  }
-
-  // Helper method to get icon for theme mode
-  IconData _getThemeIcon(ThemeMode themeMode) {
-    switch (themeMode) {
-      case ThemeMode.light:
-        return Icons.wb_sunny;
-      case ThemeMode.dark:
-        return Icons.nightlight_round;
-      case ThemeMode.system:
-        return Icons.settings_brightness;
-    }
   }
 
   @override
@@ -48,12 +37,12 @@ class _SettingsPageState extends State<Settings> {
         padding: const EdgeInsets.all(16),
         children: [
           _buildSectionHeader(S.of(context).general),
-          _buildDropdownTile(
-            S.of(context).language,
-            langProvider.local.languageCode == 'en' ? 'English' : 'العربية',
-            ["English", "العربية"],
-            (val) {
-              langProvider.changeLocale((val == "English") ? 'en' : 'ar');
+          CustomDropdowntile(
+            title: S.of(context).language,
+            currentValue: langProvider.local.languageCode == 'en' ? 'English' : 'العربية',
+            options: const ["English", "العربية"],
+            onChanged: (val) {
+              langProvider.toggleLanguage();
             },
           ),
           _buildThemeDropdownTile(
@@ -124,10 +113,28 @@ class _SettingsPageState extends State<Settings> {
               ),
             ),
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, 'intro', (Route<dynamic> route) => false);
+              Navigator.pushNamedAndRemoveUntil(context, 'intro', (Route<dynamic> route) => false);
             },
             child: Text(S.of(context).delete_my_data),
+          ),
+          ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+                (Set<WidgetState> states) {
+                  return const Color(0xff4B3842);
+                },
+              ),
+              foregroundColor: WidgetStateProperty.resolveWith<Color?>(
+                (Set<WidgetState> states) {
+                  return Colors.grey[200];
+                },
+              ),
+            ),
+            onPressed: () async {
+              await AuthService().signOut();
+              Navigator.pushNamedAndRemoveUntil(context, 'intro', (Route<dynamic> route) => false);
+            },
+            child: Text(S.of(context).signout),
           ),
         ],
       ),
@@ -147,32 +154,16 @@ class _SettingsPageState extends State<Settings> {
     );
   }
 
-  Widget _buildDropdownTile<T>(
-    String title,
-    T currentValue,
-    List<T> options,
-    ValueChanged<T?> onChanged,
-  ) {
-    return ListTile(
-      title: Text(
-        title,
-        style: const TextStyle(color: Colors.black),
-      ),
-      trailing: DropdownButton<T>(
-        icon: const Icon(
-          Icons.arrow_drop_down,
-          color: Colors.black,
-        ),
-        value: currentValue,
-        onChanged: onChanged,
-        items: options.map((val) {
-          return DropdownMenuItem<T>(
-            value: val,
-            child: Text('$val'),
-          );
-        }).toList(),
-      ),
-    );
+  // Helper method to get icon for theme mode
+  IconData _getThemeIcon(ThemeMode themeMode) {
+    switch (themeMode) {
+      case ThemeMode.light:
+        return Icons.wb_sunny;
+      case ThemeMode.dark:
+        return Icons.nightlight_round;
+      case ThemeMode.system:
+        return Icons.settings_brightness;
+    }
   }
 
   // Special dropdown tile for theme with icons

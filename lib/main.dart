@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:you_are_a_star/core/theme/colors.dart';
+import 'package:you_are_a_star/data/services/auth_gate.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
+import 'package:you_are_a_star/data/services/quote_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/presentation/routes.dart';
+import 'package:you_are_a_star/presentation/screens/login.dart';
 import 'package:you_are_a_star/providers/notification_time_provider.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/theme_provider.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
-import 'package:you_are_a_star/presentation/screens/mainpage.dart';
-import 'package:you_are_a_star/presentation/screens/intro.dart';
-import 'package:you_are_a_star/presentation/screens/intro2.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
 import 'firebase_options.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -21,14 +22,14 @@ import 'package:timezone/data/latest.dart' as tz;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "constants.env");
+  // Initialize SharedPreferences
   await Prefs.init();
-  // This is to check if it's the first launch of the app, to take the user data
-  final isFirstTime = Prefs.prefs.getBool('isFirstTime') ?? true;
-  final String? language = Prefs.prefs.getString("language");
-  // Make arabic as a deafult language on First launch
-  if (language == null) {
-    await Prefs.prefs.setString("language", "ar");
-  }
+  // Initialize Supabase
+  await Supabase.initialize(
+    url: 'https://xgrmklchcfcyntkqxrua.supabase.co',
+    anonKey: dotenv.env['SUPABASE_KEY']!,
+  );
+  // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -42,43 +43,28 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => NotificationTimeProvider()),
+        ChangeNotifierProvider(create: (_) => QuoteService()),
       ],
-      child: MyApp(
-        isFirstTime: isFirstTime,
-        prefs: Prefs.prefs,
-      ),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  final bool isFirstTime;
-  final SharedPreferences prefs;
-  const MyApp({super.key, required this.isFirstTime, required this.prefs});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  String appGroupId = "group.homeScreenApp";
-  String iOSWidgetName = "MyHomeWidget";
-  String androidWidgetName = "MyHomeWidget";
-  String datakey = "text_from_flutter_app";
-
   void triggerGetUserData() async {
     UserProvider().getUserData();
-  }
-
-  void setLanguage() async {
-    String language = Prefs.prefs.getString("language") ?? "ar";
-    LanguageProvider().setLocale(Locale(language));
   }
 
   @override
   void initState() {
     triggerGetUserData();
-    setLanguage();
     super.initState();
   }
 
@@ -89,12 +75,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "A Star",
       debugShowCheckedModeBanner: false,
-      routes: {
-        "mainPage": (context) => const Mainpage(),
-        "intro": (context) => const Intro(),
-        "login": (context) => const Login(),
-      },
-      // This one is for the app language
+      routes: routes,
+      // locale: languageProvider.local,
+      theme: lightMode,
+      darkTheme: darkMode,
+      themeMode: themeProvider.themeMode,
       localizationsDelegates: const [
         S.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -105,11 +90,7 @@ class _MyAppState extends State<MyApp> {
         Locale('en'),
         Locale('ar'),
       ],
-      locale: languageProvider.local,
-      theme: lightMode,
-      darkTheme: darkMode,
-      themeMode: themeProvider.themeMode,
-      home: widget.isFirstTime ? const Intro() : const Mainpage(),
+      home: const AuthGate(),
     );
   }
 }

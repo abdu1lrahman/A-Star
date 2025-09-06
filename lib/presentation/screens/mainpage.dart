@@ -7,7 +7,7 @@ import 'package:you_are_a_star/presentation/screens/home.dart';
 import 'package:you_are_a_star/presentation/screens/intrests.dart';
 import 'package:you_are_a_star/presentation/screens/prev_messages.dart';
 import 'package:you_are_a_star/presentation/screens/settings.dart';
-import 'package:you_are_a_star/presentation/widgets/components/custom_GButton.dart';
+import 'package:you_are_a_star/presentation/widgets/custom_GButton.dart';
 
 class Mainpage extends StatefulWidget {
   const Mainpage({super.key});

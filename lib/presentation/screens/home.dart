@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:you_are_a_star/data/api/ai_quote.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
+import 'package:you_are_a_star/data/services/quote_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/presentation/widgets/custom_shimmereffect.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
@@ -20,11 +22,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   SqfliteDb db = SqfliteDb();
+  final QuoteService _quoteService = QuoteService();
   // ignore: non_constant_identifier_names
-  Map<String, String> today_quote = {
-    'body': 'Loading...',
-    'title': 'Loading...'
-  };
+  Map<String, String> today_quote = {'body': 'Loading...', 'title': 'Loading...'};
   late AnimationController _controller;
   late String animation;
   bool isLoading = true;
@@ -67,55 +67,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     await _loadDailyQuote();
   }
 
-  Widget _buildShimmerQuote(double screenWidth) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.grey.shade300,
-      ),
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 130,
-              height: 45,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              height: 40,
-              width: screenWidth * 0.8,
-              color: Colors.white,
-            ),
-            const SizedBox(height: 10),
-            Container(
-              height: 40,
-              width: screenWidth * 0.6,
-              color: Colors.white,
-            ),
-            const SizedBox(height: 10),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                height: 40,
-                width: screenWidth * 0.3,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Future<void> _loadDailyQuote() async {
     // Get current date in YYYY-MM-DD format
     final today = DateTime.now().toIso8601String().substring(0, 10);
@@ -125,9 +76,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     final savedQuoteBody = Prefs.prefs.getString('saved_quote_body');
     final savedQuoteTitle = Prefs.prefs.getString('saved_quote_title');
 
-    if (lastQuoteDate == today &&
-        savedQuoteBody != null &&
-        savedQuoteTitle != null) {
+    if (lastQuoteDate == today && savedQuoteBody != null && savedQuoteTitle != null) {
       // Use the saved quote from today
       setState(() {
         today_quote = {'body': savedQuoteBody, 'title': savedQuoteTitle};
@@ -146,8 +95,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   Future<void> getTodayQuote() async {
-    final languageProvider =
-        Provider.of<LanguageProvider>(context, listen: false);
+    final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
     final toastMessage = S.of(context).todayQuote_message_error;
 
     setState(() {
@@ -155,8 +103,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
 
     try {
-      final quote =
-          await AiQuote().getAiQoute(languageProvider.local.languageCode);
+      final quote = await AiQuote().getAiQoute(languageProvider.local.languageCode);
       final today = DateTime.now().toIso8601String().substring(0, 10);
 
       // Save the new quote and date
@@ -171,6 +118,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         iOSName: "MyHomeWidget",
         androidName: "messagesWidget",
       );
+
+      await Prefs.prefs.setInt('quotes_count', UserProvider().quotesCount + 1);
 
       setState(() {
         today_quote = quote;
@@ -199,7 +148,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final userInfoProvider = Provider.of<UserProvider>(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
-
     final screenWidth = MediaQuery.of(context).size.width;
     final greeting = getGreeting(context);
 
@@ -209,6 +157,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // welcome message
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
               child: Row(
@@ -234,11 +183,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ],
               ),
             ),
+            // today's quote
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                 child: isLoading
-                    ? _buildShimmerQuote(screenWidth)
+                    ? CustomShimmereffect(screenWidth: screenWidth)
                     : ConstrainedBox(
                         constraints: BoxConstraints(
                           maxWidth: screenWidth,
@@ -263,8 +213,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               Align(
                                 alignment: Alignment.topRight,
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 5, right: 5),
+                                  padding: const EdgeInsets.only(top: 5, right: 5),
                                   child: Container(
                                     width: 140,
                                     height: 45,
@@ -284,7 +233,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       child: Text(
                                         S.of(context).today_quote,
                                         style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -309,11 +259,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       ),
                                     ),
                                     Text(
-                                      textDirection:
-                                          languageProvider.local.languageCode ==
-                                                  'ar'
-                                              ? TextDirection.rtl
-                                              : TextDirection.ltr,
+                                      textDirection: languageProvider.local.languageCode == 'ar'
+                                          ? TextDirection.rtl
+                                          : TextDirection.ltr,
                                       today_quote['body']!,
                                       style: TextStyle(
                                         fontSize: screenWidth * 0.099,
@@ -328,11 +276,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       ),
                                     ),
                                     Align(
-                                      alignment:
-                                          languageProvider.local.languageCode ==
-                                                  'ar'
-                                              ? Alignment.bottomLeft
-                                              : Alignment.bottomRight,
+                                      alignment: languageProvider.local.languageCode == 'ar'
+                                          ? Alignment.bottomLeft
+                                          : Alignment.bottomRight,
                                       child: Text(
                                         today_quote['title']!,
                                         style: TextStyle(
@@ -358,12 +304,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
             const SizedBox(height: 30),
             MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
               color: Theme.of(context).colorScheme.secondary,
               textColor: Colors.white,
-              onPressed: () {
-                getTodayQuote();
+              onPressed: () async {
+                await getTodayQuote();
               },
               child: Text(S.of(context).get_new_quote),
             ),

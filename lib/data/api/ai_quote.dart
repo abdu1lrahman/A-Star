@@ -2,19 +2,19 @@ import 'dart:convert';
 
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
 
 class AiQuote {
   Future<Map<String, String>> getAiQoute(String language) async {
-    final model =
-        FirebaseAI.googleAI().generativeModel(model: 'gemini-2.5-flash');
+    final model = FirebaseAI.googleAI().generativeModel(model: 'gemini-2.5-flash');
 
     List<String>? intrests = Prefs.prefs.getStringList('intrests');
 
     final prompt = [
       Content.text(
           '''Write a quote from random famous inspirational figures for a notifications app,             
-          in '$language' language, the user has intrests in ${intrests.toString()} Respond only with raw JSON. Do not include markdown or explanations,
+          in '$language' language, the user has intrests in ${intrests.toString()}  Respond with ONLY a single JSON object (not an array). Do not include markdown, explanations, or any other text.
           in this Format: {"title":"The quote's author", "body":"The Quote"}
           ''')
     ];
@@ -28,7 +28,7 @@ class AiQuote {
         return {'title': title, 'body': body};
       }
     } catch (e) {
-      debugPrint("==========${e.toString()}==========");
+      Fluttertoast.showToast(msg: e.toString(), toastLength: Toast.LENGTH_LONG);
     }
     throw {};
   }

@@ -202,7 +202,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
           color: Colors.white,
         ),
         onPressed: () {
-          languageProvider.changeLocale2();
+          languageProvider.toggleLanguage();
         },
       ),
     );

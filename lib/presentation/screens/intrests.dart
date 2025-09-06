@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
@@ -36,8 +37,7 @@ class _IntrestsState extends State<Intrests> {
     if (response != null) {
       setState(() {
         selectedInterests = response.toSet();
-        intrestController.value =
-            TextEditingValue(text: specialIntrests.toString());
+        intrestController.value = TextEditingValue(text: specialIntrests.toString());
       });
     }
   }
@@ -91,27 +91,15 @@ class _IntrestsState extends State<Intrests> {
                     label: Text(
                       S.of(context).getInterestLabel(interest),
                       style: TextStyle(
-                        color: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .computeLuminance() >
-                                0.5
+                        color: Theme.of(context).colorScheme.primary.computeLuminance() > 0.5
                             ? Colors.black
                             : Colors.white,
                       ),
                     ),
-                    backgroundColor: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .computeLuminance() >
-                            0.5
+                    backgroundColor: Theme.of(context).colorScheme.primary.computeLuminance() > 0.5
                         ? Colors.white
                         : Colors.grey[400],
-                    checkmarkColor: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .computeLuminance() >
-                            0.5
+                    checkmarkColor: Theme.of(context).colorScheme.primary.computeLuminance() > 0.5
                         ? Colors.black
                         : Colors.white,
                     selected: selectedInterests.contains(interest),
@@ -132,20 +120,37 @@ class _IntrestsState extends State<Intrests> {
                         }
                       });
                       Prefs.prefs.setStringList(
-                          'intrests', selectedInterests.toList());
+                        'intrests',
+                        selectedInterests.toList(),
+                      );
+                      try {
+                        final uuid = Supabase.instance.client.auth.currentUser!.id;
+                        final response = await Supabase.instance.client
+                            .from('profiles')
+                            .update({'intrests': selectedInterests.toString()}).eq('uuid', uuid);
+                      } catch (e) {
+                        debugPrint("++++++++++++++${e.toString()}=============");
+                      }
                     },
                   );
                 }).toList(),
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
               child: TextField(
                 onSubmitted: (value) {
                   setState(() async {
                     final toastMessage = S.of(context).special_intrests_added;
                     Prefs.prefs.setString('special_intrests', value);
+                    try {
+                      final uuid = Supabase.instance.client.auth.currentUser!.id;
+                      final response = await Supabase.instance.client
+                          .from('profiles')
+                          .update({'special_intrests': value}).eq('uuid', uuid);
+                    } catch (e) {
+                      debugPrint("++++++++++++++${e.toString()}=============");
+                    }
                     Fluttertoast.showToast(msg: toastMessage);
                   });
                 },
@@ -157,8 +162,7 @@ class _IntrestsState extends State<Intrests> {
                   ),
                   hintText: S.of(context).add_your_own,
                   hintStyle: const TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
                 ),
               ),
             ),

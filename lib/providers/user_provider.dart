@@ -8,17 +8,25 @@ class UserProvider extends ChangeNotifier {
   static String? _userName;
   static bool? _userGender;
   static int _userAge = 18;
+  static int _quotesCount = 0;
+  static int _messagesCount = 0;
+
   File? _image;
 
   String? get userName => _userName;
   bool? get userGender => _userGender;
   int get userAge => _userAge;
   File? get image => _image;
+  int get quotesCount => _quotesCount;
+  int get messagesCount => _messagesCount;
 
   void getUserData() async {
     _userName = Prefs.prefs.getString('name')!;
     _userGender = Prefs.prefs.getBool('gender')!;
     _userAge = Prefs.prefs.getInt('age')!;
+    _quotesCount = Prefs.prefs.getInt('quotes_count') ?? 0;
+    _messagesCount = Prefs.prefs.getInt('messages_count') ?? 0;
+
     notifyListeners();
   }
 
@@ -75,6 +83,7 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> removeImage() async {
     await Prefs.prefs.remove('user_image');
+    _image = null;
     notifyListeners();
   }
 
@@ -86,10 +95,14 @@ class UserProvider extends ChangeNotifier {
         width: 140.0,
         height: 140.0,
         errorBuilder: (context, error, stackTrace) {
-          return const Icon(Icons.error);
+          return const Icon(Icons.person);
         },
       );
     }
-    return const Icon(Icons.add_a_photo_outlined);
+    return Icon(
+      Icons.person,
+      color: Colors.grey[400],
+      size: 60,
+    );
   }
 }

@@ -7,6 +7,8 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:you_are_a_star/data/api/ai_notifications.dart';
 import 'package:you_are_a_star/providers/notification_time_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
+import 'package:you_are_a_star/providers/user_provider.dart';
 
 class NotificationService {
   final notificationPlugin = FlutterLocalNotificationsPlugin();
@@ -14,20 +16,26 @@ class NotificationService {
   bool get isInitialized => _isInitialized;
 
   Future<void> initNotification() async {
+    if (await Permission.notification.isDenied) {
+      final status = await Permission.notification.request();
+      if (status.isDenied) {
+        Fluttertoast.showToast(
+          msg:
+              "Please enable notifications in settings for the best experience",
+          toastLength: Toast.LENGTH_LONG,
+        );
+      }
+    }
     final bool? granted = await notificationPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.requestExactAlarmsPermission();
 
-    if (await Permission.notification.isDenied) {
-      await Permission.notification.request();
-    }
-
-    if (_isInitialized) return;
-
     if (granted != true) {
       Fluttertoast.showToast(
-          msg: "Please give the app notifications permissions");
+        msg: "Exact alarm permission needed for precise notifications",
+        toastLength: Toast.LENGTH_LONG,
+      );
     }
 
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
@@ -115,19 +123,22 @@ class NotificationService {
       ),
     ];
 
-    for (int i = 0; i < times.length; i++) {
-     Map<String, String>? message;
+    for (int attempt = 0; attempt < times.length; attempt++) {
+      Map<String, String>? message;
       try {
         message = await AiNotifications().requestAIMessage();
+        await Prefs.prefs
+            .setInt('messages_count', UserProvider().messagesCount + 1);
       } catch (e) {
+        await Future.delayed(const Duration(seconds: 2));
         message = await AiNotifications().requestAIMessage();
       }
 
       await notificationPlugin.zonedSchedule(
-        i,
+        attempt,
         message?['title'],
         message?['body'],
-        times[i],
+        times[attempt],
         notificationDetails(message?['title'], message?['body']),
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,

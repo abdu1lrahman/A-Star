@@ -41,17 +41,34 @@ class MessageLookup extends MessageLookupByLibrary {
     "built_with": MessageLookupByLibrary.simpleMessage(
       "built with Flutter Framework",
     ),
+    "change_age": MessageLookupByLibrary.simpleMessage(
+      "Do you want to change your age",
+    ),
     "change_language": MessageLookupByLibrary.simpleMessage(
       "Do you want to change the app and notifications language?",
     ),
     "change_name": MessageLookupByLibrary.simpleMessage(
       "Do you want to change your name",
     ),
+    "create_new_account": MessageLookupByLibrary.simpleMessage(
+      "Create a new account",
+    ),
+    "create_one": MessageLookupByLibrary.simpleMessage("create one"),
+    "create_your_account": MessageLookupByLibrary.simpleMessage(
+      "Create your account to start your journey",
+    ),
     "delete_my_data": MessageLookupByLibrary.simpleMessage("Delete my data"),
+    "description": MessageLookupByLibrary.simpleMessage(
+      "Brighten your day and unlock your potential with personalized AI-powered motivation. Get inspiring messages crafted just for you, discover daily wisdom quotes, and let A Star guide you toward your goals, anytime, anywhere.",
+    ),
     "dont": MessageLookupByLibrary.simpleMessage(
       "You can change these informations later",
     ),
+    "dont_have_account": MessageLookupByLibrary.simpleMessage(
+      "Don\'t have account?",
+    ),
     "education": MessageLookupByLibrary.simpleMessage("Education"),
+    "email": MessageLookupByLibrary.simpleMessage("Email"),
     "enable_noti": MessageLookupByLibrary.simpleMessage("Enable Notifications"),
     "english": MessageLookupByLibrary.simpleMessage("English"),
     "enter_name": MessageLookupByLibrary.simpleMessage(
@@ -60,9 +77,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "enter_new_name": MessageLookupByLibrary.simpleMessage(
       "Enter your new name",
     ),
+    "enter_your_email": MessageLookupByLibrary.simpleMessage(
+      "Enter your Email address",
+    ),
+    "enter_your_name": MessageLookupByLibrary.simpleMessage("Enter your name"),
+    "enter_your_password": MessageLookupByLibrary.simpleMessage(
+      "Enter your password",
+    ),
     "evening": MessageLookupByLibrary.simpleMessage("Good evening"),
     "fashion": MessageLookupByLibrary.simpleMessage("Fashion"),
     "female": MessageLookupByLibrary.simpleMessage("Female"),
+    "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot password?"),
     "games": MessageLookupByLibrary.simpleMessage("Games"),
     "gender": MessageLookupByLibrary.simpleMessage("Select your gender"),
     "gender1": MessageLookupByLibrary.simpleMessage("gender"),
@@ -79,10 +104,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "lets": MessageLookupByLibrary.simpleMessage("Let\'s get you started"),
     "letsgo": MessageLookupByLibrary.simpleMessage("Let\'s go"),
+    "login": MessageLookupByLibrary.simpleMessage("Login"),
     "male": MessageLookupByLibrary.simpleMessage("Male"),
     "morning": MessageLookupByLibrary.simpleMessage("Good morning"),
     "music": MessageLookupByLibrary.simpleMessage("Music"),
     "name": MessageLookupByLibrary.simpleMessage("What\'s your name?"),
+    "name1": MessageLookupByLibrary.simpleMessage("Name"),
     "night": MessageLookupByLibrary.simpleMessage("Good night"),
     "no": MessageLookupByLibrary.simpleMessage("No"),
     "no_prev": MessageLookupByLibrary.simpleMessage(
@@ -90,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "noti": MessageLookupByLibrary.simpleMessage("Notification"),
     "notification": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "password": MessageLookupByLibrary.simpleMessage("Password"),
     "perfect": MessageLookupByLibrary.simpleMessage(
       "You are in the perfect place",
     ),
@@ -105,10 +133,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "share_motivation": MessageLookupByLibrary.simpleMessage(
       "share the motivation with your friend ❤",
     ),
+    "signout": MessageLookupByLibrary.simpleMessage("Sign Out"),
+    "signup": MessageLookupByLibrary.simpleMessage("Sign Up"),
     "special_intrests_added": MessageLookupByLibrary.simpleMessage(
       "Special intrest added successfully",
     ),
     "sport": MessageLookupByLibrary.simpleMessage("Sport"),
+    "successfully_logged_in": MessageLookupByLibrary.simpleMessage(
+      "Successfully logged in",
+    ),
     "tech": MessageLookupByLibrary.simpleMessage("Tech"),
     "theme": MessageLookupByLibrary.simpleMessage("Theme"),
     "this_app_was_developed": MessageLookupByLibrary.simpleMessage(
@@ -120,7 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "todayQuote_message_error": MessageLookupByLibrary.simpleMessage(
       "There was an error while getting your daily quote\n Please check your internet connection and try again",
     ),
-    "today_quote": MessageLookupByLibrary.simpleMessage("Quote of the day"),
+    "today_quote": MessageLookupByLibrary.simpleMessage("Today\'s quote"),
     "travel": MessageLookupByLibrary.simpleMessage("Travel"),
     "username": MessageLookupByLibrary.simpleMessage("username"),
     "wanna_be": MessageLookupByLibrary.simpleMessage(
@@ -139,6 +172,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "you_can_only_select": MessageLookupByLibrary.simpleMessage(
       "You can only select 5 interests.",
+    ),
+    "your_journey": MessageLookupByLibrary.simpleMessage(
+      "Your journey is finally here",
     ),
   };
 }

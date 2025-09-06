@@ -41,24 +41,49 @@ class MessageLookup extends MessageLookupByLibrary {
     "built_with": MessageLookupByLibrary.simpleMessage(
       "تم بناءه باستخدام بيئة التطوير Flutter",
     ),
+    "change_age": MessageLookupByLibrary.simpleMessage("هل تريد تغيير عمرك ؟"),
     "change_language": MessageLookupByLibrary.simpleMessage(
       "هل تريد تغيير لغة التطبيق والإشعارات؟",
     ),
-    "change_name": MessageLookupByLibrary.simpleMessage("هل تريد تغيير اسمك؟"),
+    "change_name": MessageLookupByLibrary.simpleMessage(
+      "هل أنت متأكد من تغيير اسمك؟",
+    ),
+    "create_new_account": MessageLookupByLibrary.simpleMessage(
+      "إنشاء حساب جديد",
+    ),
+    "create_one": MessageLookupByLibrary.simpleMessage("أنشئ حسابا"),
+    "create_your_account": MessageLookupByLibrary.simpleMessage(
+      "أنشئ حسابا جديد لبدء رحلتك",
+    ),
     "delete_my_data": MessageLookupByLibrary.simpleMessage("حذف بياناتي"),
+    "description": MessageLookupByLibrary.simpleMessage(
+      "أضئ يومك وأطلق العنان لإمكانياتك مع تحفيز مُخصّص مُدعّم بالذكاء الاصطناعي. احصل على رسائل مُلهمة مُصمّمة خصيصًا لك، واكتشف اقتباسات يومية حكيمة، ودع نجم يُرشدك نحو أهدافك، في أي وقت وأي مكان.",
+    ),
     "dont": MessageLookupByLibrary.simpleMessage(
       "يمكنك تعديل هذه البيانات لاحقا",
     ),
+    "dont_have_account": MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
     "education": MessageLookupByLibrary.simpleMessage("التعليم"),
+    "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "enable_noti": MessageLookupByLibrary.simpleMessage("تفعيل الإشعارات"),
     "english": MessageLookupByLibrary.simpleMessage("الإنكليزية"),
     "enter_name": MessageLookupByLibrary.simpleMessage(
       "أدخل اسمك لنرسل لك إشعارات مخصصة أكثر",
     ),
     "enter_new_name": MessageLookupByLibrary.simpleMessage("أدخل اسمك الجديد"),
+    "enter_your_email": MessageLookupByLibrary.simpleMessage(
+      "أدخل بريدك الإلكتروني",
+    ),
+    "enter_your_name": MessageLookupByLibrary.simpleMessage("أدخل اسمك"),
+    "enter_your_password": MessageLookupByLibrary.simpleMessage(
+      "أدخل كلمة المرور",
+    ),
     "evening": MessageLookupByLibrary.simpleMessage("مساء الخير"),
     "fashion": MessageLookupByLibrary.simpleMessage("موضة"),
     "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+    "forgot_password": MessageLookupByLibrary.simpleMessage(
+      "هل نسيت كلمة المرور؟",
+    ),
     "games": MessageLookupByLibrary.simpleMessage("ألعاب"),
     "gender": MessageLookupByLibrary.simpleMessage("اختر جنسك"),
     "gender1": MessageLookupByLibrary.simpleMessage("الجنس"),
@@ -75,15 +100,18 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "lets": MessageLookupByLibrary.simpleMessage("دعنا نبدأ"),
     "letsgo": MessageLookupByLibrary.simpleMessage("لنبدأ"),
+    "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "male": MessageLookupByLibrary.simpleMessage("ذكر"),
     "morning": MessageLookupByLibrary.simpleMessage("صباح الخير"),
     "music": MessageLookupByLibrary.simpleMessage("موسيقى"),
     "name": MessageLookupByLibrary.simpleMessage("ما اسمك؟"),
+    "name1": MessageLookupByLibrary.simpleMessage("الأسم"),
     "night": MessageLookupByLibrary.simpleMessage("مساء الخير"),
     "no": MessageLookupByLibrary.simpleMessage("لا"),
     "no_prev": MessageLookupByLibrary.simpleMessage("لا يوجد رسائل محفوظة"),
     "noti": MessageLookupByLibrary.simpleMessage("الإشعار"),
     "notification": MessageLookupByLibrary.simpleMessage("الإشعارات"),
+    "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
     "perfect": MessageLookupByLibrary.simpleMessage("أنت في المكان المناسب"),
     "personal_info": MessageLookupByLibrary.simpleMessage("معلومات شخصية"),
     "prev_messages": MessageLookupByLibrary.simpleMessage("الرسائل السابقة"),
@@ -95,10 +123,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "share_motivation": MessageLookupByLibrary.simpleMessage(
       "شارك التحفيز مع أصدقائك ❤",
     ),
+    "signout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+    "signup": MessageLookupByLibrary.simpleMessage("التسجيل"),
     "special_intrests_added": MessageLookupByLibrary.simpleMessage(
       "تم إضافة الاهتمام الخاص بنجاح",
     ),
     "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
+    "successfully_logged_in": MessageLookupByLibrary.simpleMessage(
+      "تم تسجيل الدخول بنجاح",
+    ),
     "tech": MessageLookupByLibrary.simpleMessage("التقنيات"),
     "theme": MessageLookupByLibrary.simpleMessage("ألوان التطبيق"),
     "this_app_was_developed": MessageLookupByLibrary.simpleMessage(
@@ -127,6 +160,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "you_can_only_select": MessageLookupByLibrary.simpleMessage(
       "يمكنك اختيار 5 اهتمامات فقط",
+    ),
+    "your_journey": MessageLookupByLibrary.simpleMessage(
+      "فلتبدأ رحلتك من جديد",
     ),
   };
 }
