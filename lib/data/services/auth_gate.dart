@@ -1,5 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:you_are_a_star/presentation/screens/intro.dart';
 import 'package:you_are_a_star/presentation/screens/mainpage.dart';
 
@@ -8,16 +8,25 @@ class AuthGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Supabase.instance.client.auth.onAuthStateChange,
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: CircularProgressIndicator(),
+                ),
+                Text("Please wait")
+              ],
+            ),
           );
         }
-        final session = snapshot.hasData ? snapshot.data!.session : null;
-        if (session != null) {
+        final user = snapshot.hasData ? snapshot.data : null;
+        if (user != null) {
+          
           return const Mainpage();
         } else {
           return const Intro();

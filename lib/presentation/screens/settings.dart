@@ -112,24 +112,6 @@ class _SettingsPageState extends State<Settings> {
                 },
               ),
             ),
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(context, 'intro', (Route<dynamic> route) => false);
-            },
-            child: Text(S.of(context).delete_my_data),
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-                (Set<WidgetState> states) {
-                  return const Color(0xff4B3842);
-                },
-              ),
-              foregroundColor: WidgetStateProperty.resolveWith<Color?>(
-                (Set<WidgetState> states) {
-                  return Colors.grey[200];
-                },
-              ),
-            ),
             onPressed: () async {
               await AuthService().signOut();
               Navigator.pushNamedAndRemoveUntil(context, 'intro', (Route<dynamic> route) => false);

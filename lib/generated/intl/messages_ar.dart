@@ -32,6 +32,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "afternoon": MessageLookupByLibrary.simpleMessage("نهارك سعيد"),
     "age": MessageLookupByLibrary.simpleMessage("اختر عمرك"),
     "age1": MessageLookupByLibrary.simpleMessage("العمر"),
+    "already_have_account": MessageLookupByLibrary.simpleMessage(
+      "هل لديك حساب؟",
+    ),
     "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
     "archived_message_confirm": MessageLookupByLibrary.simpleMessage(
       "تم جدولة الرسالة بنجاح",
@@ -74,6 +77,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "enter_your_email": MessageLookupByLibrary.simpleMessage(
       "أدخل بريدك الإلكتروني",
     ),
+    "enter_your_email_address": MessageLookupByLibrary.simpleMessage(
+      "أدخل بريدك الالكتروني وسوف نقوم بإرسال رابط تفعيل إلى بريدك",
+    ),
     "enter_your_name": MessageLookupByLibrary.simpleMessage("أدخل اسمك"),
     "enter_your_password": MessageLookupByLibrary.simpleMessage(
       "أدخل كلمة المرور",
@@ -82,6 +88,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "fashion": MessageLookupByLibrary.simpleMessage("موضة"),
     "female": MessageLookupByLibrary.simpleMessage("أنثى"),
     "forgot_password": MessageLookupByLibrary.simpleMessage(
+      "هل نسيت كلمة المرور؟",
+    ),
+    "forgot_your_password": MessageLookupByLibrary.simpleMessage(
       "هل نسيت كلمة المرور؟",
     ),
     "games": MessageLookupByLibrary.simpleMessage("ألعاب"),
@@ -117,8 +126,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "prev_messages": MessageLookupByLibrary.simpleMessage("الرسائل السابقة"),
     "prev_messages2": MessageLookupByLibrary.simpleMessage("الرسائل"),
     "psychology": MessageLookupByLibrary.simpleMessage("علم النفس"),
+    "reset_link_sent": MessageLookupByLibrary.simpleMessage(
+      "تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني",
+    ),
     "rights": MessageLookupByLibrary.simpleMessage("جميع الحقوق محفوظة 2025"),
     "science": MessageLookupByLibrary.simpleMessage("علوم"),
+    "send_reset": MessageLookupByLibrary.simpleMessage("أرسل رابط التحقق"),
     "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
     "share_motivation": MessageLookupByLibrary.simpleMessage(
       "شارك التحفيز مع أصدقائك ❤",

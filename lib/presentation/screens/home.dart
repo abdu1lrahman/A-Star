@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:you_are_a_star/data/api/ai_quote.dart';
 import 'package:you_are_a_star/data/database/sqflite_db.dart';
 import 'package:you_are_a_star/data/services/quote_service.dart';
@@ -146,7 +145,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final userInfoProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final greeting = getGreeting(context);
@@ -173,7 +172,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    "$greeting,\n${userInfoProvider.userName}",
+                    "$greeting,\n${userProvider.userName}",
                     style: TextStyle(
                       color: Colors.grey[700],
                       fontSize: screenWidth * 0.05,

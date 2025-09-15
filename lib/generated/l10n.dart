@@ -610,10 +610,10 @@ class S {
     return Intl.message('Login', name: 'login', desc: '', args: []);
   }
 
-  /// `Create a new account`
+  /// `Create new account`
   String get create_new_account {
     return Intl.message(
-      'Create a new account',
+      'Create new account',
       name: 'create_new_account',
       desc: '',
       args: [],
@@ -723,6 +723,56 @@ class S {
   /// `create one`
   String get create_one {
     return Intl.message('create one', name: 'create_one', desc: '', args: []);
+  }
+
+  /// `Already have an account?`
+  String get already_have_account {
+    return Intl.message(
+      'Already have an account?',
+      name: 'already_have_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot your password?`
+  String get forgot_your_password {
+    return Intl.message(
+      'Forgot your password?',
+      name: 'forgot_your_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your email address below and we will send you a reset link`
+  String get enter_your_email_address {
+    return Intl.message(
+      'Enter your email address below and we will send you a reset link',
+      name: 'enter_your_email_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Reset link`
+  String get send_reset {
+    return Intl.message(
+      'Send Reset link',
+      name: 'send_reset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A reset link has been sent to your email`
+  String get reset_link_sent {
+    return Intl.message(
+      'A reset link has been sent to your email',
+      name: 'reset_link_sent',
+      desc: '',
+      args: [],
+    );
   }
 }
 

@@ -1,7 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:you_are_a_star/data/services/auth_service.dart';
+import 'package:you_are_a_star/generated/l10n.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -13,84 +13,6 @@ class ForgetPassword extends StatefulWidget {
 class _ForgetPasswordState extends State<ForgetPassword> {
   final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  Timer? _timer;
-  int _remainingSeconds = 120; // 2 minutes = 120 seconds
-  bool _isRunning = true;
-
-  void _startTimer() {
-    if (_timer != null) {
-      _timer!.cancel();
-    }
-
-    setState(() {
-      _remainingSeconds = 120; // Reset to 2 minutes
-      _isRunning = true;
-    });
-
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_remainingSeconds > 0) {
-          _remainingSeconds--;
-        } else {
-          _timer!.cancel();
-          _isRunning = false;
-          _onTimerFinished();
-        }
-      });
-    });
-  }
-
-  void _pauseTimer() {
-    if (_timer != null) {
-      _timer!.cancel();
-    }
-    setState(() {
-      _isRunning = false;
-    });
-  }
-
-  void _resetTimer() {
-    if (_timer != null) {
-      _timer!.cancel();
-    }
-    setState(() {
-      _remainingSeconds = 120;
-      _isRunning = false;
-    });
-  }
-
-  void _onTimerFinished() {
-    // This function is called when timer reaches 0:00
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Time\'s Up!'),
-          content: Text('The countdown has finished.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  String _formatTime(int seconds) {
-    int minutes = seconds ~/ 60;
-    int remainingSeconds = seconds % 60;
-    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,14 +22,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         key: _formKey,
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Forgot your password?",
-                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-                ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                S.of(context).forgot_your_password,
+                style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -115,7 +34,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 horizontal: 16.0,
               ),
               child: Text(
-                "Enter your email address below and we will send you a reset code",
+                S.of(context).enter_your_email_address,
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.grey[700],
@@ -163,19 +82,25 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     borderRadius: BorderRadius.circular(15),
                     hoverDuration: const Duration(seconds: 3),
                     onTap: () async {
-                      _startTimer();
                       try {
                         debugPrint(_emailController.text.trim());
                         await AuthService().forgetPassword(_emailController.text.trim());
-                        Navigator.pushNamed(context, "create_new_password");
+                        if (context.mounted) {
+                          Fluttertoast.showToast(
+                            toastLength: Toast.LENGTH_LONG,
+                            msg: S.of(context).reset_link_sent,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                          );
+                        }
                       } on Exception catch (e) {
                         debugPrint("====================${e.toString()}=============");
                       }
                     },
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        "Send Reset Code",
-                        style: TextStyle(
+                        S.of(context).send_reset,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                         ),
@@ -185,18 +110,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
               ),
             ),
-            const Text("Didn't reseve a code ?"),
-            Text(
-              _formatTime(_remainingSeconds),
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'monospace',
-                color: _remainingSeconds <= 10 ? Colors.red : Colors.black,
-              ),
-            ),
-
-            const SizedBox(height: 40),
           ],
         ),
       ),

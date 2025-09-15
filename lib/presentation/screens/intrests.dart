@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
@@ -123,14 +122,7 @@ class _IntrestsState extends State<Intrests> {
                         'intrests',
                         selectedInterests.toList(),
                       );
-                      try {
-                        final uuid = Supabase.instance.client.auth.currentUser!.id;
-                        final response = await Supabase.instance.client
-                            .from('profiles')
-                            .update({'intrests': selectedInterests.toString()}).eq('uuid', uuid);
-                      } catch (e) {
-                        debugPrint("++++++++++++++${e.toString()}=============");
-                      }
+                      
                     },
                   );
                 }).toList(),
@@ -143,14 +135,6 @@ class _IntrestsState extends State<Intrests> {
                   setState(() async {
                     final toastMessage = S.of(context).special_intrests_added;
                     Prefs.prefs.setString('special_intrests', value);
-                    try {
-                      final uuid = Supabase.instance.client.auth.currentUser!.id;
-                      final response = await Supabase.instance.client
-                          .from('profiles')
-                          .update({'special_intrests': value}).eq('uuid', uuid);
-                    } catch (e) {
-                      debugPrint("++++++++++++++${e.toString()}=============");
-                    }
                     Fluttertoast.showToast(msg: toastMessage);
                   });
                 },

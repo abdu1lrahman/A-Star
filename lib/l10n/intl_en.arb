@@ -75,7 +75,7 @@
     "change_age": "Do you want to change your age",
     "description": "Brighten your day and unlock your potential with personalized AI-powered motivation. Get inspiring messages crafted just for you, discover daily wisdom quotes, and let A Star guide you toward your goals, anytime, anywhere.",
     "login": "Login",
-    "create_new_account": "Create a new account",
+    "create_new_account": "Create new account",
     "create_your_account": "Create your account to start your journey",
     "enter_your_name": "Enter your name",
     "enter_your_email": "Enter your Email address",
@@ -88,5 +88,10 @@
     "successfully_logged_in": "Successfully logged in",
     "forgot_password": "Forgot password?",
     "dont_have_account": "Don't have account?",
-    "create_one": "create one"
+    "create_one": "create one",
+    "already_have_account": "Already have an account?",
+    "forgot_your_password": "Forgot your password?",
+    "enter_your_email_address": "Enter your email address below and we will send you a reset link",
+    "send_reset": "Send Reset link",
+    "reset_link_sent": "A reset link has been sent to your email"
 }

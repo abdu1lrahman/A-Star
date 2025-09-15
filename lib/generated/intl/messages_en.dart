@@ -32,6 +32,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "afternoon": MessageLookupByLibrary.simpleMessage("Good afternoon"),
     "age": MessageLookupByLibrary.simpleMessage("Select your age"),
     "age1": MessageLookupByLibrary.simpleMessage("age"),
+    "already_have_account": MessageLookupByLibrary.simpleMessage(
+      "Already have an account?",
+    ),
     "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
     "archived_message_confirm": MessageLookupByLibrary.simpleMessage(
       "The messages scheduled successfully",
@@ -51,7 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Do you want to change your name",
     ),
     "create_new_account": MessageLookupByLibrary.simpleMessage(
-      "Create a new account",
+      "Create new account",
     ),
     "create_one": MessageLookupByLibrary.simpleMessage("create one"),
     "create_your_account": MessageLookupByLibrary.simpleMessage(
@@ -80,6 +83,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "enter_your_email": MessageLookupByLibrary.simpleMessage(
       "Enter your Email address",
     ),
+    "enter_your_email_address": MessageLookupByLibrary.simpleMessage(
+      "Enter your email address below and we will send you a reset link",
+    ),
     "enter_your_name": MessageLookupByLibrary.simpleMessage("Enter your name"),
     "enter_your_password": MessageLookupByLibrary.simpleMessage(
       "Enter your password",
@@ -88,6 +94,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "fashion": MessageLookupByLibrary.simpleMessage("Fashion"),
     "female": MessageLookupByLibrary.simpleMessage("Female"),
     "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot password?"),
+    "forgot_your_password": MessageLookupByLibrary.simpleMessage(
+      "Forgot your password?",
+    ),
     "games": MessageLookupByLibrary.simpleMessage("Games"),
     "gender": MessageLookupByLibrary.simpleMessage("Select your gender"),
     "gender1": MessageLookupByLibrary.simpleMessage("gender"),
@@ -127,8 +136,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "prev_messages": MessageLookupByLibrary.simpleMessage("Previous messages"),
     "prev_messages2": MessageLookupByLibrary.simpleMessage("messages"),
     "psychology": MessageLookupByLibrary.simpleMessage("Psychology"),
+    "reset_link_sent": MessageLookupByLibrary.simpleMessage(
+      "A reset link has been sent to your email",
+    ),
     "rights": MessageLookupByLibrary.simpleMessage("All rights reserved 2025"),
     "science": MessageLookupByLibrary.simpleMessage("Science"),
+    "send_reset": MessageLookupByLibrary.simpleMessage("Send Reset link"),
     "settings": MessageLookupByLibrary.simpleMessage("settings"),
     "share_motivation": MessageLookupByLibrary.simpleMessage(
       "share the motivation with your friend ❤",

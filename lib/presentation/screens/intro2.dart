@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
@@ -18,7 +19,6 @@ class Intro2 extends StatefulWidget {
 }
 
 class _Intro2State extends State<Intro2> {
-  final supabaseClient = Supabase.instance.client;
   final PageController _pageController = PageController();
   Set<String> selectedInterests = {};
   TextEditingController intrestController = TextEditingController();
@@ -37,12 +37,14 @@ class _Intro2State extends State<Intro2> {
     "fashion",
     "psychology",
   ];
+  String? special_intrests;
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final languageProvider = Provider.of<LanguageProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
+    final FirebaseFirestore firestoreClient = FirebaseFirestore.instance;
     return Scaffold(
       backgroundColor: theme1.secondColor,
       body: Stack(
@@ -222,15 +224,6 @@ class _Intro2State extends State<Intro2> {
                               'intrests',
                               selectedInterests.toList(),
                             );
-                            try {
-                              final uuid = Supabase.instance.client.auth.currentUser!.id;
-                              final response = await Supabase.instance.client
-                                  .from('profiles')
-                                  .update({'intrests': selectedInterests.toString()}).eq(
-                                      'uuid', uuid);
-                            } catch (e) {
-                              debugPrint("++++++++++++++${e.toString()}=============");
-                            }
                           },
                         );
                       }).toList(),
@@ -240,18 +233,11 @@ class _Intro2State extends State<Intro2> {
                     padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
                     child: TextField(
                       onSubmitted: (value) {
+                        final toastMessage = S.of(context).special_intrests_added;
+                        Prefs.prefs.setString('special_intrests', value);
+                        Fluttertoast.showToast(msg: toastMessage);
                         setState(() async {
-                          final toastMessage = S.of(context).special_intrests_added;
-                          Prefs.prefs.setString('special_intrests', value);
-                          try {
-                            final uuid = Supabase.instance.client.auth.currentUser!.id;
-                            final response = await Supabase.instance.client
-                                .from('profiles')
-                                .update({'special_intrests': value}).eq('uuid', uuid);
-                          } catch (e) {
-                            debugPrint("++++++++++++++${e.toString()}=============");
-                          }
-                          Fluttertoast.showToast(msg: toastMessage);
+                          special_intrests = value;
                         });
                       },
                       controller: intrestController,
@@ -277,18 +263,26 @@ class _Intro2State extends State<Intro2> {
                       ),
                     ),
                     onPressed: () async {
-                      List<String>? intrests = Prefs.prefs.getStringList('intrests');
+                      final firebaseclient = FirebaseAuth.instance;
                       try {
-                        await supabaseClient.from('profiles').insert({
-                          'user_gender': userProvider.userGender,
-                          'user_age': userProvider.userAge,
-                          'language': languageProvider.local.languageCode,
-                          'intrests': intrests.toString(),
+                        await firestoreClient.collection("profiles").add({
+                          "uuid": firebaseclient.currentUser!.uid,
+                          "name": userProvider.userName,
+                          "age": userProvider.userAge,
+                          "gender": userProvider.userGender,
+                          "intrests": selectedInterests,
+                          "special_intrests": special_intrests,
+                          "createdAt": DateTime.now().toIso8601String(),
                         });
-                        Navigator.pushNamedAndRemoveUntil(context, "mainPage", (r) => false);
-                      } catch (e) {
-                        debugPrint("++++++++++++${e.toString()}=========");
+                        debugPrint(
+                            "=========firestore===========it works==========firestore===========");
+                      } on Exception catch (e) {
+                        debugPrint(
+                            "=========firestore===========${e.toString()}==========firestore===========");
                       }
+                      if (!mounted) return;
+
+                      Navigator.pushNamedAndRemoveUntil(context, "mainPage", (r) => false);
                     },
                   ),
                 ],

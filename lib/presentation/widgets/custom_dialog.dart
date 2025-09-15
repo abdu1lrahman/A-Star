@@ -15,7 +15,7 @@ class CustomDialog extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             S.of(context).yes,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
         ),
         TextButton(
@@ -24,7 +24,7 @@ class CustomDialog extends StatelessWidget {
           },
           child: Text(
             S.of(context).no,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
         ),
       ],

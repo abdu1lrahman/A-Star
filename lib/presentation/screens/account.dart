@@ -24,7 +24,6 @@ class _AccountState extends State<Account> {
 
   @override
   void didChangeDependencies() {
-    UserProvider().getUserData();
     UserProvider().loadImage();
 
     super.didChangeDependencies();

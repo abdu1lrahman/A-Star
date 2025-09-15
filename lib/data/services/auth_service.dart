@@ -1,46 +1,30 @@
 // This is the authentcation service class
-// here I will handle the subapase package
+// here I will handle the firebase_auth package
 
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  final supabaseClient = Supabase.instance.client;
+  final FirebaseAuth firebaseClient = FirebaseAuth.instance;
 
-  Future<AuthResponse> signInWithEmailPassword(String email, String password) async {
-    return await supabaseClient.auth.signInWithPassword(
+  Future<UserCredential> signInWithEmailPassword(String email, String password) async {
+    return await firebaseClient.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
   }
 
-  Future<AuthResponse> signUpWithEmailPassword(String email, String password, String name) async {
-    return await supabaseClient.auth.signUp(
+  Future<UserCredential> signUpWithEmailPassword(String email, String password) async {
+    return await firebaseClient.createUserWithEmailAndPassword(
       email: email,
       password: password,
-      data: {
-        "name": name,
-        "display_name": name,
-      },
     );
   }
 
   Future<void> signOut() async {
-    try {
-      await supabaseClient.auth.signOut();
-    } catch (e) {
-      debugPrint("====================$e===================");
-      Fluttertoast.showToast(msg: e.toString());
-    }
+    await firebaseClient.signOut();
   }
 
   Future<void> forgetPassword(String email) async {
-    debugPrint("Forgot password triggerd");
-    await supabaseClient.auth.resetPasswordForEmail(email);
-  }
-
-  Future<void> updatePassword(String password) async {
-    await supabaseClient.auth.updateUser(UserAttributes(password: password));
+    await firebaseClient.sendPasswordResetEmail(email: email);
   }
 }

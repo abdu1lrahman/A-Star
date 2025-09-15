@@ -88,5 +88,10 @@
     "successfully_logged_in": "تم تسجيل الدخول بنجاح",
     "forgot_password": "هل نسيت كلمة المرور؟",
     "dont_have_account": "ليس لديك حساب؟",
-    "create_one": "أنشئ حسابا"
+    "create_one": "أنشئ حسابا",
+    "already_have_account": "هل لديك حساب؟",
+    "forgot_your_password": "هل نسيت كلمة المرور؟",
+    "enter_your_email_address": "أدخل بريدك الالكتروني وسوف نقوم بإرسال رابط تفعيل إلى بريدك",
+    "send_reset": "أرسل رابط التحقق",
+    "reset_link_sent": "تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني"
 }

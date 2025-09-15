@@ -93,6 +93,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
+                          isScrollControlled: true,
                           builder: (context) {
                             return const SigninFormSheet();
                           },
@@ -127,6 +128,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
+                          isScrollControlled: true,
                           builder: (context) {
                             return const SignUpFormSheet();
                           },

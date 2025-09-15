@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/data/services/auth_gate.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/data/services/quote_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/presentation/routes.dart';
-import 'package:you_are_a_star/presentation/screens/login.dart';
 import 'package:you_are_a_star/providers/notification_time_provider.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/theme_provider.dart';
@@ -25,10 +23,10 @@ void main() async {
   // Initialize SharedPreferences
   await Prefs.init();
   // Initialize Supabase
-  await Supabase.initialize(
-    url: 'https://xgrmklchcfcyntkqxrua.supabase.co',
-    anonKey: dotenv.env['SUPABASE_KEY']!,
-  );
+  // await Supabase.initialize(
+  //   url: 'https://xgrmklchcfcyntkqxrua.supabase.co',
+  //   anonKey: dotenv.env['SUPABASE_KEY']!,
+  // );
   // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -50,23 +48,8 @@ void main() async {
   );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  void triggerGetUserData() async {
-    UserProvider().getUserData();
-  }
-
-  @override
-  void initState() {
-    triggerGetUserData();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +59,7 @@ class _MyAppState extends State<MyApp> {
       title: "A Star",
       debugShowCheckedModeBanner: false,
       routes: routes,
-      // locale: languageProvider.local,
+      locale: languageProvider.local,
       theme: lightMode,
       darkTheme: darkMode,
       themeMode: themeProvider.themeMode,
