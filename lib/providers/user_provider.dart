@@ -12,16 +12,26 @@ class UserProvider extends ChangeNotifier {
   static int _userAge = 18;
   static int _quotesCount = 0;
   static int _messagesCount = 0;
+  static String? _intrests;
+  static String? _specialIntrests;
 
-  File? _image;
+  String? _imagePath;
 
   String? get uuid => _uuid;
   String? get userName => _userName;
   bool? get userGender => _userGender;
   int get userAge => _userAge;
-  File? get image => _image;
+  String? get imagePath => _imagePath;
   int get quotesCount => _quotesCount;
   int get messagesCount => _messagesCount;
+  Set<String>? get intrests => _intrests!
+      .replaceAll('{', '')
+      .replaceAll('}', '')
+      .split(',')
+      .map((s) => s.trim())
+      .where((s) => s.isNotEmpty)
+      .toSet();
+  String? get specialIntrests => _specialIntrests;
 
   changeUserId(String uuid) {
     _uuid = uuid;
@@ -46,48 +56,37 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  changeIntrests(String intrests) async {
+    await Prefs.prefs.setString('intrests', intrests);
+    _intrests = intrests;
+    notifyListeners();
+  }
+
+  changeSpecialIntrests(String newSpecialIntrests) async {
+    await Prefs.prefs.setString('special_intrests', newSpecialIntrests);
+    _specialIntrests = newSpecialIntrests;
+    notifyListeners();
+  }
+
   Future<void> pickImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      _image = File(pickedFile.path);
       await Prefs.prefs.setString('user_image', pickedFile.path);
-      notifyListeners();
-    }
-  }
-
-  Future<void> loadImage() async {
-    String? imagePath = Prefs.prefs.getString('user_image');
-    if (imagePath != null && imagePath.isNotEmpty) {
-      try {
-        File imageFile = File(imagePath);
-        // Check if the file actually exists
-        if (await imageFile.exists()) {
-          _image = imageFile;
-        } else {
-          // Remove invalid path from preferences
-          await Prefs.prefs.remove('user_image');
-          _image = null;
-        }
-      } catch (e) {
-        debugPrint("========= error while loading the image: $e =========");
-        // Remove invalid path from preferences
-        await Prefs.prefs.remove('user_image');
-        _image = null;
-      }
+      _imagePath = pickedFile.path;
       notifyListeners();
     }
   }
 
   Future<void> removeImage() async {
     await Prefs.prefs.remove('user_image');
-    _image = null;
+    _imagePath = null;
     notifyListeners();
   }
 
   Widget getUserAvatar() {
-    if (image != null) {
+    if (_imagePath != null) {
       return Image.file(
-        image!,
+        File(_imagePath!),
         fit: BoxFit.cover,
         width: 140.0,
         height: 140.0,
@@ -103,8 +102,8 @@ class UserProvider extends ChangeNotifier {
     );
   }
 
-  getDataFromDatabase(String uuid) async {
-    debugPrint("=======================Let's try==============================");
+  _getDataFromDatabase(String uuid) async {
+    debugPrint("====================Get Data From Database====================");
     try {
       final FirebaseFirestore firestoreClient = FirebaseFirestore.instance;
       QuerySnapshot querySnapshot = await firestoreClient
@@ -112,22 +111,18 @@ class UserProvider extends ChangeNotifier {
           .where('uuid', isEqualTo: uuid)
           .limit(1)
           .get();
-      // Check if document exists
       if (querySnapshot.docs.isNotEmpty) {
-        // Get data as Map
         DocumentSnapshot doc = querySnapshot.docs.first;
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-        // Access specific fields
-        _userName = data['name'] ?? '';
-        _userAge = data['age'] ?? 0;
-        _userGender = data['gender'] ?? true;
-        debugPrint("====================name:$_userName=============================");
-        debugPrint("====================age:$_userAge==============================");
-        debugPrint("====================gender:$_userGender================================");
+        changeName(data['name'] ?? 'User');
+        changeAge(data['age'] ?? 0);
+        changeGender(data['gender'] ?? true);
+        changeSpecialIntrests(data['special_intrests'] ?? '');
+        changeIntrests(data['intrests'] ?? '');
 
-        debugPrint("=============================it works=================================");
-
+        debugPrint(
+            "====================Get Data From Database finished successfuly====================");
         notifyListeners();
       }
     } catch (e) {
@@ -136,17 +131,19 @@ class UserProvider extends ChangeNotifier {
   }
 
   getUserData(String uuid) {
-    // if (Prefs.prefs.getString('name') == null) {
-      getDataFromDatabase(uuid);
+    if (Prefs.prefs.getString('name') == null) {
+      _getDataFromDatabase(uuid);
       notifyListeners();
-    // } else {
-    //   _userName = Prefs.prefs.getString('name')!;
-    //   _userGender = Prefs.prefs.getBool('gender')!;
-    //   _userAge = Prefs.prefs.getInt('age')!;
-    //   _quotesCount = Prefs.prefs.getInt('quotes_count') ?? 0;
-    //   _messagesCount = Prefs.prefs.getInt('messages_count') ?? 0;
-
-    //   notifyListeners();
-    // }
+    } else {
+      _userName = Prefs.prefs.getString('name')!;
+      _userGender = Prefs.prefs.getBool('gender')!;
+      _userAge = Prefs.prefs.getInt('age')!;
+      _intrests = Prefs.prefs.getString('intrests') ?? '';
+      _specialIntrests = Prefs.prefs.getString('special_intrests') ?? '';
+      _quotesCount = Prefs.prefs.getInt('quotes_count') ?? 0;
+      _messagesCount = Prefs.prefs.getInt('messages_count') ?? 0;
+      _imagePath = Prefs.prefs.getString('user_image');
+      notifyListeners();
+    }
   }
 }

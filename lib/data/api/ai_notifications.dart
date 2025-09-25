@@ -20,7 +20,7 @@ class AiNotifications {
   Future<Map<String, String>?> requestAIMessage() async {
     final model =
         FirebaseAI.googleAI().generativeModel(model: 'gemini-2.5-flash');
-    List<String>? intrests = Prefs.prefs.getStringList('intrests');
+    String? intrests = Prefs.prefs.getString('intrests');
     String? specialIntrests = Prefs.prefs.getString('special_intrests');
     String? name = Prefs.prefs.getString('name');
     int? age = Prefs.prefs.getInt('age');

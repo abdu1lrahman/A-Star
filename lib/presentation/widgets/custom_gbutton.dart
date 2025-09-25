@@ -7,12 +7,11 @@ GButton customGButton({
   required double screenWidth,
   required BuildContext context,
 }) {
-  
   return GButton(
     gap: 2,
     icon: icon,
     style: GnavStyle.google,
-    iconSize: 23,
+    iconSize: screenWidth / 17.2,
     text: text,
     textStyle: TextStyle(
       fontSize: screenWidth * 0.03,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:you_are_a_star/data/api/ai_quote.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
@@ -11,11 +10,14 @@ import 'package:you_are_a_star/providers/user_provider.dart';
 
 class QuoteService extends ChangeNotifier {
   bool _isLoading = false;
-  final supabaseClient = Supabase.instance.client;
+  Map<String, String> _todayQuote = {'body': 'Loading...', 'title': 'Loading...'};
 
   bool get isLoading => _isLoading;
+  Map<String, String> get todayQuote => _todayQuote;
 
-  Future<Map<String, String>> getTodayQuote(BuildContext context) async {
+  Future<void> getTodayQuote(BuildContext context) async {
+    HomeWidget.setAppGroupId("group.homeScreenApp");
+    debugPrint("=========Get Today Quote=========");
     final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
     final toastMessage = S.of(context).todayQuote_message_error;
     AiQuote aiQuote = AiQuote();
@@ -32,17 +34,6 @@ class QuoteService extends ChangeNotifier {
       await Prefs.prefs.setString('saved_quote_body', quote['body'] ?? '');
       await Prefs.prefs.setString('saved_quote_title', quote['title'] ?? '');
 
-      // Save the new quote and date in the Database
-      try {
-        await supabaseClient.from('todays_quote').insert({
-          'id': Supabase.instance.client.auth.currentUser!.id,
-          'quote': quote['body'],
-          'quote_author': quote['title']
-        });
-      } on Exception catch (e) {
-        debugPrint("anything $e");
-      }
-
       // This is for the app widget on android
       await HomeWidget.saveWidgetData("today_quote_body", "${quote['body']}");
       await HomeWidget.saveWidgetData("today_quote_title", "${quote['title']}");
@@ -54,14 +45,18 @@ class QuoteService extends ChangeNotifier {
 
       await Prefs.prefs.setInt('quotes_count', UserProvider().quotesCount + 1);
       _isLoading = false;
+      _todayQuote = quote;
       notifyListeners();
-      return quote;
     } catch (e) {
       // if there's any error role back to the last saved offline quote
-
+      debugPrint("=========Get Today Quote error ${e.toString()}=========");
       final savedQuoteBody = Prefs.prefs.getString('saved_quote_body');
       final savedQuoteTitle = Prefs.prefs.getString('saved_quote_title');
 
+      _todayQuote = {
+        'body': savedQuoteBody ?? 'Failed to load quote',
+        'title': savedQuoteTitle ?? 'Error'
+      };
       _isLoading = false;
       notifyListeners();
 
@@ -69,14 +64,11 @@ class QuoteService extends ChangeNotifier {
         msg: toastMessage,
         toastLength: Toast.LENGTH_LONG,
       );
-      return {
-        'body': savedQuoteBody ?? 'Failed to load quote',
-        'title': savedQuoteTitle ?? 'Error'
-      };
     }
   }
 
-  Future<Map<String, String>> loadDailyQuote(BuildContext context) async {
+  Future<void> loadDailyQuote(BuildContext context) async {
+    HomeWidget.setAppGroupId("group.homeScreenApp");
     // Get current date in YYYY-MM-DD format
     final today = DateTime.now().toIso8601String().substring(0, 10);
 
@@ -87,7 +79,7 @@ class QuoteService extends ChangeNotifier {
 
     if (lastQuoteDate == today && savedQuoteBody != null && savedQuoteTitle != null) {
       // Use the saved quote from today
-
+      _todayQuote = {'body': savedQuoteBody, 'title': savedQuoteTitle};
       _isLoading = false;
       notifyListeners();
 
@@ -97,11 +89,9 @@ class QuoteService extends ChangeNotifier {
         iOSName: "MyHomeWidget",
         androidName: "messagesWidget",
       );
-
-      return {'body': savedQuoteBody, 'title': savedQuoteTitle};
     } else {
       // Fetch a new quote and save it
-      return getTodayQuote(context);
+      await getTodayQuote(context);
     }
   }
 }

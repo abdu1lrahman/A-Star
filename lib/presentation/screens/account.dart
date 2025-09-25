@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -15,19 +16,12 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController =
-      TextEditingController(text: UserProvider().userName);
+  final TextEditingController _emailControler =
+      TextEditingController(text: FirebaseAuth.instance.currentUser!.email);
   final TextEditingController _ageController =
       TextEditingController(text: UserProvider().userAge.toString());
   final TextEditingController _genderController =
       TextEditingController(text: UserProvider().userGender == true ? "Male" : "Female");
-
-  @override
-  void didChangeDependencies() {
-    UserProvider().loadImage();
-
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +74,7 @@ class _AccountState extends State<Account> {
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
-                            debugPrint("HELOOWORLD++++++++++++++++");
+                            debugPrint("===userProvider===PickImage()==userProvider===");
                             userinfos.pickImage();
                           },
                           child: Stack(
@@ -132,83 +126,136 @@ class _AccountState extends State<Account> {
                 const SizedBox(height: 55),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    userinfos.userName!,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                // Email Field
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
                   child: TextFormField(
-                    // initialValue: userinfos.userName,
-                    controller: _nameController,
+                    controller: _emailControler,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+                      icon: Icon(Icons.email_outlined),
+                      labelStyle: TextStyle(color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      label: Text(S.of(context).name1),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     onFieldSubmitted: (value) {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomDialog(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              userinfos.changeName(value);
-                              Fluttertoast.showToast(msg: "Name Changed succesfully");
-                            },
-                            title: Text(S.of(context).change_name),
-                          );
-                        },
-                      );
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) {
+                      //     return CustomDialog(
+                      //       onPressed: () {
+                      //         Navigator.of(context).pop();
+                      //         userinfos.changeAge(int.parse(value));
+                      //         Fluttertoast.showToast(msg: "Age Changed Succesfully");
+                      //       },
+                      //       title: Text(S.of(context).change_age),
+                      //     );
+                      //   },
+                      // );
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
-                  child: TextFormField(
-                    controller: _ageController,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      label: Text(S.of(context).age1),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    onFieldSubmitted: (value) {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomDialog(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              userinfos.changeAge(int.parse(value));
-                              Fluttertoast.showToast(msg: "Age Changed Succesfully");
-                            },
-                            title: Text(S.of(context).change_age),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
-                  child: TextFormField(
-                    controller: _genderController,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      label: Text(S.of(context).gender1),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
+                Row(
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 10.0, right: 10.0, top: 4.0, bottom: 8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.calendar_month_outlined),
+                          SizedBox(width: 20),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: Center(child: Text(_ageController.text)),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 10.0, right: 10.0, top: 4.0, bottom: 8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.contact_mail_outlined),
+                          SizedBox(width: 20),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: Center(child: Text(_genderController.text)),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
+                //   child: TextFormField(
+                //     controller: _ageController,
+                //     decoration: InputDecoration(
+                //       labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+                //       enabledBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(20),
+                //       ),
+                //       label: Text(S.of(context).age1),
+                //       border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(20),
+                //       ),
+                //     ),
+                //     onFieldSubmitted: (value) {
+                //       showDialog(
+                //         context: context,
+                //         builder: (context) {
+                //           return CustomDialog(
+                //             onPressed: () {
+                //               Navigator.of(context).pop();
+                //               userinfos.changeAge(int.parse(value));
+                //               Fluttertoast.showToast(msg: "Age Changed Succesfully");
+                //             },
+                //             title: Text(S.of(context).change_age),
+                //           );
+                //         },
+                //       );
+                //     },
+                //   ),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
+                //   child: TextFormField(
+                //     controller: _genderController,
+                //     decoration: InputDecoration(
+                //       labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+                //       enabledBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(20),
+                //       ),
+                //       label: Text(S.of(context).gender1),
+                //       border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(20),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -230,7 +277,7 @@ class _AccountState extends State<Account> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            "Status",
+                            S.of(context).status,
                             style: TextStyle(
                               fontSize: 19,
                               fontWeight: FontWeight.bold,
@@ -246,7 +293,7 @@ class _AccountState extends State<Account> {
                             Column(
                               children: [
                                 Text(
-                                  "Quotes count",
+                                  S.of(context).quotes_count,
                                   style: TextStyle(
                                     color:
                                         Theme.of(context).colorScheme.primary.computeLuminance() >
@@ -257,7 +304,7 @@ class _AccountState extends State<Account> {
                                 ),
                                 AnimatedCounter(
                                   targetCount: userinfos.quotesCount,
-                                  duration: Duration(milliseconds: 1500),
+                                  duration: const Duration(milliseconds: 1500),
                                 ),
                               ],
                             ),
@@ -265,7 +312,7 @@ class _AccountState extends State<Account> {
                             Column(
                               children: [
                                 Text(
-                                  "Messages count",
+                                  S.of(context).messages_count,
                                   style: TextStyle(
                                     color:
                                         Theme.of(context).colorScheme.primary.computeLuminance() >
@@ -276,7 +323,7 @@ class _AccountState extends State<Account> {
                                 ),
                                 AnimatedCounter(
                                   targetCount: userinfos.messagesCount,
-                                  duration: Duration(milliseconds: 2000),
+                                  duration: const Duration(milliseconds: 2000),
                                 ),
                               ],
                             )

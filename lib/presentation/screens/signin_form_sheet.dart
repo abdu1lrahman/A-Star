@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:you_are_a_star/data/services/auth_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 
 class SigninFormSheet extends StatefulWidget {
   const SigninFormSheet({super.key});
@@ -46,13 +47,14 @@ class _SigninFormSheetState extends State<SigninFormSheet> {
       await _authService.signInWithEmailPassword(
         _emailController.text,
         _passwordController.text,
-        
       );
+      await Prefs.prefs.setString('uuid', _authService.firebaseClient.currentUser!.uid);
       Fluttertoast.showToast(
         msg: confirmMessage,
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: Colors.green,
       );
+      if(!mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, "mainPage", (r) => false);
     } on FirebaseAuthException catch (e) {
       String errorMessage;

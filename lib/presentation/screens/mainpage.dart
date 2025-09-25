@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:you_are_a_star/data/services/notification_service.dart';
+import 'package:you_are_a_star/data/services/quote_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:you_are_a_star/presentation/screens/account.dart';
@@ -8,6 +10,8 @@ import 'package:you_are_a_star/presentation/screens/intrests.dart';
 import 'package:you_are_a_star/presentation/screens/prev_messages.dart';
 import 'package:you_are_a_star/presentation/screens/settings.dart';
 import 'package:you_are_a_star/presentation/widgets/custom_GButton.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
+import 'package:you_are_a_star/providers/user_provider.dart';
 
 class Mainpage extends StatefulWidget {
   const Mainpage({super.key});
@@ -29,6 +33,17 @@ class _HomeState extends State<Mainpage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final String? uuid = Prefs.prefs.getString("uuid");
+      if (uuid != null) {
+        userProvider.getUserData(uuid);
+      }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<QuoteService>(context, listen: false).loadDailyQuote(context);
+    });
+    
     NotificationService().scheduleNotification(context);
   }
 

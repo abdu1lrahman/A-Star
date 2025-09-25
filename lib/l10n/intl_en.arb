@@ -93,5 +93,8 @@
     "forgot_your_password": "Forgot your password?",
     "enter_your_email_address": "Enter your email address below and we will send you a reset link",
     "send_reset": "Send Reset link",
-    "reset_link_sent": "A reset link has been sent to your email"
+    "reset_link_sent": "A reset link has been sent to your email",
+    "status": "Status",
+    "quotes_count": "Quotes count",
+    "messages_count": "Messages count"
 }

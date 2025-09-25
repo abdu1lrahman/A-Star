@@ -115,6 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "letsgo": MessageLookupByLibrary.simpleMessage("Let\'s go"),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
     "male": MessageLookupByLibrary.simpleMessage("Male"),
+    "messages_count": MessageLookupByLibrary.simpleMessage("Messages count"),
     "morning": MessageLookupByLibrary.simpleMessage("Good morning"),
     "music": MessageLookupByLibrary.simpleMessage("Music"),
     "name": MessageLookupByLibrary.simpleMessage("What\'s your name?"),
@@ -136,6 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "prev_messages": MessageLookupByLibrary.simpleMessage("Previous messages"),
     "prev_messages2": MessageLookupByLibrary.simpleMessage("messages"),
     "psychology": MessageLookupByLibrary.simpleMessage("Psychology"),
+    "quotes_count": MessageLookupByLibrary.simpleMessage("Quotes count"),
     "reset_link_sent": MessageLookupByLibrary.simpleMessage(
       "A reset link has been sent to your email",
     ),
@@ -152,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Special intrest added successfully",
     ),
     "sport": MessageLookupByLibrary.simpleMessage("Sport"),
+    "status": MessageLookupByLibrary.simpleMessage("Status"),
     "successfully_logged_in": MessageLookupByLibrary.simpleMessage(
       "Successfully logged in",
     ),

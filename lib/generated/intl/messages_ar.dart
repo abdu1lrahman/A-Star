@@ -111,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "letsgo": MessageLookupByLibrary.simpleMessage("لنبدأ"),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "male": MessageLookupByLibrary.simpleMessage("ذكر"),
+    "messages_count": MessageLookupByLibrary.simpleMessage("عدد الرسائل"),
     "morning": MessageLookupByLibrary.simpleMessage("صباح الخير"),
     "music": MessageLookupByLibrary.simpleMessage("موسيقى"),
     "name": MessageLookupByLibrary.simpleMessage("ما اسمك؟"),
@@ -126,6 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "prev_messages": MessageLookupByLibrary.simpleMessage("الرسائل السابقة"),
     "prev_messages2": MessageLookupByLibrary.simpleMessage("الرسائل"),
     "psychology": MessageLookupByLibrary.simpleMessage("علم النفس"),
+    "quotes_count": MessageLookupByLibrary.simpleMessage("عدد الاقتباسات"),
     "reset_link_sent": MessageLookupByLibrary.simpleMessage(
       "تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني",
     ),
@@ -142,6 +144,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "تم إضافة الاهتمام الخاص بنجاح",
     ),
     "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
+    "status": MessageLookupByLibrary.simpleMessage("الحالة"),
     "successfully_logged_in": MessageLookupByLibrary.simpleMessage(
       "تم تسجيل الدخول بنجاح",
     ),

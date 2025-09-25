@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
+import 'package:you_are_a_star/providers/user_provider.dart';
 
 class Intrests extends StatefulWidget {
   const Intrests({super.key});
@@ -12,7 +16,6 @@ class Intrests extends StatefulWidget {
 
 class _IntrestsState extends State<Intrests> {
   Set<String> selectedInterests = {};
-  TextEditingController intrestController = TextEditingController();
   List<String> predefinedInterests = [
     "health",
     "sport",
@@ -29,33 +32,18 @@ class _IntrestsState extends State<Intrests> {
     "psychology",
   ];
 
-  void fetchSavedIntrests() async {
-    var response = Prefs.prefs.getStringList('intrests');
-    var specialIntrests = Prefs.prefs.getString('special_intrests') ?? '';
-
-    if (response != null) {
-      setState(() {
-        selectedInterests = response.toSet();
-        intrestController.value = TextEditingValue(text: specialIntrests.toString());
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    fetchSavedIntrests();
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    fetchSavedIntrests();
-    super.didChangeDependencies();
-  }
+  // @override
+  // void initState() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     selectedInterests = Provider.of<UserProvider>(context, listen: false).intrests!;
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).intrests)),
@@ -101,12 +89,13 @@ class _IntrestsState extends State<Intrests> {
                     checkmarkColor: Theme.of(context).colorScheme.primary.computeLuminance() > 0.5
                         ? Colors.black
                         : Colors.white,
-                    selected: selectedInterests.contains(interest),
+                    selected: userProvider.intrests!.contains(interest),
                     onSelected: (bool selected) async {
                       setState(() {
                         if (selected) {
                           if (selectedInterests.length < 5) {
-                            selectedInterests.add(interest);
+                            userProvider.intrests!.add(interest);
+                            userProvider.changeIntrests(selectedInterests.toString());
                           } else {
                             Fluttertoast.showToast(
                               msg: S.of(context).you_can_only_select,
@@ -115,14 +104,28 @@ class _IntrestsState extends State<Intrests> {
                             );
                           }
                         } else {
-                          selectedInterests.remove(interest);
+                          userProvider.intrests!.remove(interest);
                         }
                       });
-                      Prefs.prefs.setStringList(
+                      Prefs.prefs.setString(
                         'intrests',
-                        selectedInterests.toList(),
+                        userProvider.intrests!.toString(),
                       );
-                      
+
+                      final FirebaseFirestore firestoreClient = FirebaseFirestore.instance;
+                      try {
+                        await firestoreClient
+                            .collection("profiles")
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update({'intrests': selectedInterests.toString()});
+                        debugPrint(
+                            "=========firestore===========Updated intrests in Database==========firestore===========");
+                        if (!mounted) return;
+                        Navigator.pushNamedAndRemoveUntil(context, "mainPage", (r) => false);
+                      } on Exception catch (e) {
+                        debugPrint(
+                            "=========firestore=========error while updating data to Database==${e.toString()}==========firestore===========");
+                      }
                     },
                   );
                 }).toList(),
@@ -134,11 +137,11 @@ class _IntrestsState extends State<Intrests> {
                 onSubmitted: (value) {
                   setState(() async {
                     final toastMessage = S.of(context).special_intrests_added;
-                    Prefs.prefs.setString('special_intrests', value);
+                    userProvider.changeSpecialIntrests(value);
                     Fluttertoast.showToast(msg: toastMessage);
                   });
                 },
-                controller: intrestController,
+                controller: TextEditingController(text: userProvider.specialIntrests),
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: Color(0xffbdbdbd)),

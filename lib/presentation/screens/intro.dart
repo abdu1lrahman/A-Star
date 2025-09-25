@@ -174,6 +174,7 @@ class _IntroState extends State<Intro> with SingleTickerProviderStateMixin {
               ),
             ],
           ),
+          // smooth page indicator
           Container(
             alignment: Alignment.center,
             width: 80,

@@ -774,6 +774,31 @@ class S {
       args: [],
     );
   }
+
+  /// `Status`
+  String get status {
+    return Intl.message('Status', name: 'status', desc: '', args: []);
+  }
+
+  /// `Quotes count`
+  String get quotes_count {
+    return Intl.message(
+      'Quotes count',
+      name: 'quotes_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Messages count`
+  String get messages_count {
+    return Intl.message(
+      'Messages count',
+      name: 'messages_count',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

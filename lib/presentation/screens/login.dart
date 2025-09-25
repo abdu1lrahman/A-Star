@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/presentation/screens/signin_form_sheet.dart';
 import 'package:you_are_a_star/presentation/screens/signup_form_sheet.dart';
+import 'package:you_are_a_star/providers/language_provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -38,6 +40,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Stack(
@@ -152,6 +155,18 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             ],
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: S.of(context).language,
+        backgroundColor: Colors.black,
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.language_outlined,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          languageProvider.toggleLanguage();
+        },
       ),
     );
   }

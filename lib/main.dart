@@ -9,6 +9,7 @@ import 'package:you_are_a_star/data/services/notification_service.dart';
 import 'package:you_are_a_star/data/services/quote_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/presentation/routes.dart';
+import 'package:you_are_a_star/presentation/screens/account.dart';
 import 'package:you_are_a_star/providers/notification_time_provider.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/theme_provider.dart';
@@ -22,11 +23,6 @@ void main() async {
   await dotenv.load(fileName: "constants.env");
   // Initialize SharedPreferences
   await Prefs.init();
-  // Initialize Supabase
-  // await Supabase.initialize(
-  //   url: 'https://xgrmklchcfcyntkqxrua.supabase.co',
-  //   anonKey: dotenv.env['SUPABASE_KEY']!,
-  // );
   // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -20,15 +20,13 @@ class NotificationService {
       final status = await Permission.notification.request();
       if (status.isDenied) {
         Fluttertoast.showToast(
-          msg:
-              "Please enable notifications in settings for the best experience",
+          msg: "Please enable notifications in settings for the best experience",
           toastLength: Toast.LENGTH_LONG,
         );
       }
     }
     final bool? granted = await notificationPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.requestExactAlarmsPermission();
 
     if (granted != true) {
@@ -41,8 +39,7 @@ class NotificationService {
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
 
-    const initSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/launcher_icon');
+    const initSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
 
     const initSettingsIOS = DarwinInitializationSettings();
 
@@ -91,8 +88,7 @@ class NotificationService {
   Future<void> scheduleNotification(BuildContext context) async {
     final now = tz.TZDateTime.now(tz.local);
 
-    final timeProvider =
-        Provider.of<NotificationTimeProvider>(context, listen: false);
+    final timeProvider = Provider.of<NotificationTimeProvider>(context, listen: false);
 
     List<TimeOfDay> newTimes = timeProvider.notificationTimes;
 
@@ -123,28 +119,35 @@ class NotificationService {
       ),
     ];
 
-    for (int attempt = 0; attempt < times.length; attempt++) {
-      Map<String, String>? message;
-      try {
-        message = await AiNotifications().requestAIMessage();
-        await Prefs.prefs
-            .setInt('messages_count', UserProvider().messagesCount + 1);
-      } catch (e) {
-        await Future.delayed(const Duration(seconds: 2));
-        message = await AiNotifications().requestAIMessage();
-      }
+    // Get current date in YYYY-MM-DD format
+    final today = DateTime.now().toIso8601String().substring(0, 10);
 
-      await notificationPlugin.zonedSchedule(
-        attempt,
-        message?['title'],
-        message?['body'],
-        times[attempt],
-        notificationDetails(message?['title'], message?['body']),
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        matchDateTimeComponents: DateTimeComponents.time,
-      );
+    // Check if we have a saved quote and if it's from today
+    final lastQuoteDate = Prefs.prefs.getString('last_messages_date');
+
+    if (lastQuoteDate != today) {
+      for (int attempt = 0; attempt < times.length; attempt++) {
+        Map<String, String>? message;
+        try {
+          message = await AiNotifications().requestAIMessage();
+          await Prefs.prefs.setInt('messages_count', UserProvider().messagesCount + 1);
+        } catch (e) {
+          await Future.delayed(const Duration(seconds: 2));
+          message = await AiNotifications().requestAIMessage();
+        }
+
+        await notificationPlugin.zonedSchedule(
+          attempt,
+          message?['title'],
+          message?['body'],
+          times[attempt],
+          notificationDetails(message?['title'], message?['body']),
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          matchDateTimeComponents: DateTimeComponents.time,
+        );
+      }
+      await Prefs.prefs.setString('last_quote_date', today);
     }
   }
 
@@ -162,8 +165,7 @@ class NotificationService {
       body,
       tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute),
       notificationDetails(title, body),
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );

@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:you_are_a_star/core/theme/colors.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
-import 'package:you_are_a_star/providers/language_provider.dart';
 import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
 
@@ -37,12 +36,11 @@ class _Intro2State extends State<Intro2> {
     "fashion",
     "psychology",
   ];
-  String? special_intrests;
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final languageProvider = Provider.of<LanguageProvider>(context);
+    // final languageProvider = Provider.of<LanguageProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final FirebaseFirestore firestoreClient = FirebaseFirestore.instance;
     return Scaffold(
@@ -220,9 +218,9 @@ class _Intro2State extends State<Intro2> {
                                 selectedInterests.remove(interest);
                               }
                             });
-                            Prefs.prefs.setStringList(
+                            Prefs.prefs.setString(
                               'intrests',
-                              selectedInterests.toList(),
+                              selectedInterests.toString(),
                             );
                           },
                         );
@@ -235,10 +233,8 @@ class _Intro2State extends State<Intro2> {
                       onSubmitted: (value) {
                         final toastMessage = S.of(context).special_intrests_added;
                         Prefs.prefs.setString('special_intrests', value);
+                        userProvider.changeSpecialIntrests(value);
                         Fluttertoast.showToast(msg: toastMessage);
-                        setState(() async {
-                          special_intrests = value;
-                        });
                       },
                       controller: intrestController,
                       decoration: InputDecoration(
@@ -270,19 +266,18 @@ class _Intro2State extends State<Intro2> {
                           "name": userProvider.userName,
                           "age": userProvider.userAge,
                           "gender": userProvider.userGender,
-                          "intrests": selectedInterests,
-                          "special_intrests": special_intrests,
+                          "intrests": selectedInterests.toString(),
+                          "special_intrests": userProvider.specialIntrests,
                           "createdAt": DateTime.now().toIso8601String(),
                         });
                         debugPrint(
-                            "=========firestore===========it works==========firestore===========");
+                            "=========firestore===========Data saved to the Database==========firestore===========");
+                      if (!mounted) return;
+                      Navigator.pushNamedAndRemoveUntil(context, "mainPage", (r) => false);
                       } on Exception catch (e) {
                         debugPrint(
-                            "=========firestore===========${e.toString()}==========firestore===========");
+                            "=========firestore=========error while saving data to Database==${e.toString()}==========firestore===========");
                       }
-                      if (!mounted) return;
-
-                      Navigator.pushNamedAndRemoveUntil(context, "mainPage", (r) => false);
                     },
                   ),
                 ],

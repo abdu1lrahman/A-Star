@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:you_are_a_star/data/services/auth_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/user_provider.dart';
 
 class SignUpFormSheet extends StatefulWidget {
@@ -37,6 +38,7 @@ class _SignUpFormSheetState extends State<SignUpFormSheet> {
           _emailController.text,
           _passwordController.text,
         );
+        Prefs.prefs.setString('uuid', _authService.firebaseClient.currentUser!.uid);
         Fluttertoast.showToast(
           msg: "Successfully logged in",
           backgroundColor: Colors.green,
@@ -152,6 +154,9 @@ class _SignUpFormSheetState extends State<SignUpFormSheet> {
                               return "you can't leave the name empty";
                             }
                             return null;
+                          },
+                          onChanged: (value) {
+                            userProvider.changeName(value);
                           },
                         ),
                       ),

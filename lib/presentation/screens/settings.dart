@@ -5,6 +5,7 @@ import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/presentation/widgets/custom_dropdowntile.dart';
 import 'package:you_are_a_star/providers/language_provider.dart';
 import 'package:you_are_a_star/providers/notification_time_provider.dart';
+import 'package:you_are_a_star/providers/prefs.dart';
 import 'package:you_are_a_star/providers/theme_provider.dart';
 
 class Settings extends StatefulWidget {
@@ -113,8 +114,15 @@ class _SettingsPageState extends State<Settings> {
               ),
             ),
             onPressed: () async {
-              await AuthService().signOut();
-              Navigator.pushNamedAndRemoveUntil(context, 'intro', (Route<dynamic> route) => false);
+              try {
+                await AuthService().signOut();
+                
+                Navigator.pushNamedAndRemoveUntil(
+                    context, 'intro', (Route<dynamic> route) => false);
+                    Prefs.prefs.clear();
+              } on Exception catch (e) {
+                debugPrint("++++++++++error while signing out ${e.toString()}+++++++++++++++++++");
+              }
             },
             child: Text(S.of(context).signout),
           ),
