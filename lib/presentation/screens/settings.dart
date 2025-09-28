@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:you_are_a_star/data/database/sqflite_db.dart';
 import 'package:you_are_a_star/data/services/auth_service.dart';
 import 'package:you_are_a_star/generated/l10n.dart';
 import 'package:you_are_a_star/presentation/widgets/custom_dropdowntile.dart';
@@ -114,9 +115,10 @@ class _SettingsPageState extends State<Settings> {
               ),
             ),
             onPressed: () async {
+              // when signing out, clear all the user data, including sqflite table and sharedprefernces 
+              SqfliteDb().deleteData('DROP TABLE IF EXISTS messages');
               try {
                 await AuthService().signOut();
-                
                 Navigator.pushNamedAndRemoveUntil(
                     context, 'intro', (Route<dynamic> route) => false);
                     Prefs.prefs.clear();

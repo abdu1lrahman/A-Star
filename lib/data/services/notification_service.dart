@@ -25,6 +25,16 @@ class NotificationService {
         );
       }
     }
+
+    if (await Permission.scheduleExactAlarm.isDenied){
+      final status = await Permission.scheduleExactAlarm.request();
+      if (status.isDenied) {
+        Fluttertoast.showToast(
+          msg: "Please enable exact alarm permission in settings for precise notifications",
+          toastLength: Toast.LENGTH_LONG,
+        );
+      }
+    }
     final bool? granted = await notificationPlugin
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.requestExactAlarmsPermission();
